@@ -5,11 +5,4 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <typeAliases>
-        <typeAlias type="com.emp.model.EmpDAO" alias="empdao"/>
-        <typeAlias type="com.emp.model.EmpDTO" alias="empdto"/>
-        <typeAlias type="com.emp.model.DeptDTO" alias="deptdto"/>
-    </typeAliases>
-    
-
 </configuration>
