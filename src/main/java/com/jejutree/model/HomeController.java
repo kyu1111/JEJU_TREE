@@ -21,7 +21,12 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		
 		
-		return "main";
+		return "MainPage";
+	}
+	
+	@RequestMapping(value = "/TMAP", method = RequestMethod.GET)
+	public String gifSlider() {
+	    return "TMAP";
 	}
 	
 }
