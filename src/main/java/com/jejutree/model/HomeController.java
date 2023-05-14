@@ -23,7 +23,6 @@ public class HomeController {
 		
 		return "MainPage";
 	}
-	
 	@RequestMapping(value = "/TMAP", method = RequestMethod.GET)
 	public String gifSlider() {
 	    return "TMAP";

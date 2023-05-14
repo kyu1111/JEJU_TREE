@@ -69,8 +69,10 @@
 
 <!-- 상단바 설정하기  -->
 <%@ include file="./include/navbar.jsp" %>
-
-    <div class="container">
+	 <div class = "container">
+	 <%@ include file="./include/sidebar1.jsp" %>
+	 <div class="main_content">
+     <div class="container_wrap">  
         <div class="intro-text" align="center">
             <h2>
                 <i class="fa-solid fa-plane fa-3x" style="position:relative; top:-10px; left:-135px;"></i>
@@ -104,15 +106,17 @@
             </div>
             
             <div class="dots">
+            
                 <span class="dot" onclick="currentSlide(1)"></span>
                 <span class="dot" onclick="currentSlide(2)"></span>
                 <span class="dot" onclick="currentSlide(3)"></span>
                 <span class="dot" onclick="currentSlide(4)"></span>
+                
             </div>
             
         </div>
-
-    </div>
+	</div>
+  
     
     <!-- 인스타 핫플 영역 -->
     <div class="container-insta-hot">
@@ -157,5 +161,7 @@
     <br>
     
     <span class="to-top" onclick="scrollToTop()">&#9650;</span>
-</body>
+	</div>
+	<%@ include file="./include/sidebar2.jsp" %>
+	</div>
 </html>
