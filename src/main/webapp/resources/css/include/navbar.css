@@ -1,10 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        .navbar {
+@charset "UTF-8";
+.navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,14 +25,3 @@
         .navbar a:hover {
             color: #007bff;
         }
-        
-        
-    </style>
-</head>
-<body>
-    <div class="navbar">
-        <a href="#"> <font size="6">MY</font> <font size="4">JEJU</font> </a>
-        <a href="#"><font size="5">LOGIN</font></a>
-    </div>
-</body>
-</html>

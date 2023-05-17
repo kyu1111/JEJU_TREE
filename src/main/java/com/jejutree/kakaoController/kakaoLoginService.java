@@ -38,7 +38,7 @@ public class kakaoLoginService {
 			sb.append("grant_type=authorization_code");
             
 			sb.append("&client_id=b1b9f0baef115c1e6588625cf198429b"); //본인이 발급받은 key
-			sb.append("&redirect_uri=http://localhost:8585/model/login.go"); // 본인이 설정한 주소
+			sb.append("&redirect_uri=http://localhost:8585/model/kakaologin.go"); // 본인이 설정한 주소
             
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
@@ -64,7 +64,7 @@ public class kakaoLoginService {
             
 			access_Token = element.getAsJsonObject().get("access_token").getAsString();
 			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
-            
+           // id = element.getAsJsonObject().get("id").getAsString();
 			System.out.println("access_token : " + access_Token);
 			System.out.println("refresh_token : " + refresh_Token);
             
@@ -101,9 +101,36 @@ public class kakaoLoginService {
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
+			userInfo.put("kakaoToken",access_Token );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return userInfo;
 	}
+	 public void kakaoLogout(String access_Token) {
+	        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+	        try {
+	            URL url = new URL(reqURL);
+	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	            conn.setRequestMethod("GET");
+	            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+	            int responseCode = conn.getResponseCode();
+	            System.out.println("응답결과 스바바바바");
+	            System.out.println("responseCode : " + responseCode);
+
+	            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	            
+	            String result = "";
+	            String line = "";
+
+	            while ((line = br.readLine()) != null) {
+	                result += line;
+	            }
+	            System.out.println(result);
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	    }
 }

@@ -1,6 +1,10 @@
 package com.jejutree.kakaoController;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.google.gson.JsonObject;
 
 @Controller
 public class kakaoLoginController {
@@ -18,18 +24,30 @@ private kakaoLoginService ks;
 		
 		return "login/login";
 	}
-	@RequestMapping(value="login.go", method=RequestMethod.GET)
-	public String kakaoLogin(@RequestParam(value = "code", required = false) String code,Model model ) throws Exception {
+	@RequestMapping(value="kakaologin.go", method=RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code,HttpSession session,HttpServletResponse response) throws Exception {
 		System.out.println("#########" + code);
-		// 여기 까진 나왔었음 return "testPage"; 
 		String access_Token = ks.getAccessToken(code);
-		//얘까진 된다.
 		HashMap<String, Object> userInfo = ks.getUserInfo(access_Token);
+		//연결 테스트
 		System.out.println("###access_Token#### : " + access_Token);
 		System.out.println("###nickname#### : " + userInfo.get("nickname"));
 		System.out.println("###email#### : " + userInfo.get("email"));
-		model.addAttribute("KakaoInfo", userInfo);
-		return "login/testPage";
+		//성공여부
+		
+		if(userInfo.get("email") != null) {
+			
+			session.setAttribute("KakaoInfo", userInfo);
+		}else {
+			System.out.println("오류");
 		}
+		
+		return "MainPage";
+		}
+	@RequestMapping(value="share.go")
+	public String goshare() {
+		
+		return "login/share";
+	}
 }
 

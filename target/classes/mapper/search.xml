@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="searchDao">
+ 	 <select id="getSearchList" resultType="searchDto">
+        SELECT * FROM testDB.search ORDER BY search_log
+    </select>
+ 	<insert id="search_insert" parameterType="searchDto">
+ 		insert into testDB.search values(null,#{search_keyword},default)
+ 	</insert>
+ </mapper>
+ 

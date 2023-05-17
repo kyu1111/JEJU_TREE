@@ -1,0 +1,144 @@
+.sidebar1 {
+	display : flex;
+	flex-direction :column;
+	height: 100%;
+	width: 0px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: white;
+	border : 1px solid black;
+	overflow-x: hidden;
+	transition: 0.3s;/*펼침속도*/
+	padding-top: 60px;
+}
+.sidebar1_header{
+	background-color: black;
+}
+
+.sidebar1 a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+}
+
+/*메뉴열기 hover 시*/
+.sidebar1 a:hover {
+	color: #f1f1f1;
+}
+
+.sidebar1 .closebtn {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	font-size: 36px;
+	margin-left: 50px;
+      }
+
+.openbtn1 {
+	font-size: 15px;
+	cursor: pointer;
+	background-color: #111;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	/* top: 0;
+	position: fixed; */
+}
+
+.openbtn:hover {
+	background-color: #444;
+}
+
+#sidebar1_page {
+	display:flex;
+	justify-content:center;
+	transition: margin-left 0.4s;
+	padding: 16px;
+}
+.search_result1{
+	background-color: white;
+	height: 90%;
+}
+#sidebar_location {
+    background-color: black;
+    /* 기존 스타일 속성 */
+    width: 25%;
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+    z-index: 9999;
+}
+
+#sidebar_location p {
+    color: white; 
+}
+
+/*사이드바 2*/
+.sidebar2 {
+	display :flex;
+	flex-direction :column;
+	height: 100%;
+	width: 0px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	right: 0;
+	background-color: #white;
+	border:1px solid black;
+	overflow-x: hidden;
+	transition: 0.3s;/*펼침속도*/
+	padding-top: 60px;
+}
+.sidebar2_header{
+	background-color: black;
+}
+.sidebar2 a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+}
+
+/*메뉴열기 hover 시*/
+.sidebar2 a:hover {
+	color: #f1f1f1;
+}
+
+
+.sidebar2 .closebtn {
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+.openbtn2 {
+	font-size: 15px;
+	cursor: pointer;
+	background-color: #111;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+      /* top: 0;
+	position: fixed; */
+}
+
+.openbtn2:hover {
+	background-color: #444;
+}
+
+#sidebar2_page {
+	display:flex;
+	justify-content:center;
+	transition: margin-left 0.4s;
+	padding: 16px;
+}
+
