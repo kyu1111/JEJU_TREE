@@ -112,13 +112,13 @@ public class kakaoLoginService {
 	        try {
 	            URL url = new URL(reqURL);
 	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	            conn.setRequestMethod("GET");
+	            conn.setRequestMethod("POST");
 	            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
 	            int responseCode = conn.getResponseCode();
 	            System.out.println("응답결과 스바바바바");
 	            System.out.println("responseCode : " + responseCode);
-
+	            System.out.println(access_Token);
 	            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	            
 	            String result = "";
@@ -133,4 +133,30 @@ public class kakaoLoginService {
 	            e.printStackTrace();
 	        }
 	    }
+	 public String KaKaoUnlink(String access_Token) {
+		    String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+		    try {
+		        URL url = new URL(reqURL);
+		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		        conn.setRequestMethod("POST");
+		        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+		        
+		        int responseCode = conn.getResponseCode();
+		        System.out.println("responseCode : " + responseCode);
+		        
+		        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		        
+		        String result = "";
+		        String line = "";
+		        
+		        while ((line = br.readLine()) != null) {
+		            result += line;
+		        }
+		        return result;
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		    return null;
+		}
+	 
 }

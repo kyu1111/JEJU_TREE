@@ -6,6 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mainpage/mainpage.css"> 
+    <!-- Add jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
+	 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
+	 
     <title>GIF 슬라이드</title>
     <script type="text/javascript">
         let slideIndex = 0;
@@ -70,7 +75,7 @@
 <!-- 상단바 설정하기  -->
 <%@ include file="./include/navbar.jsp" %>
 	 <div class = "container">
-	 <%@ include file="./include/sidebar1.jsp" %>
+	 
 	 <div class="main_content">
      <div class="container_wrap">  
         <div class="intro-text" align="center">
@@ -83,7 +88,8 @@
             <div class="button-container">
                 <button class="btn" onclick="location.href='tmap.go'">일정 만들기</button>
                 <button class="btn">이용 가이드</button>
-				<button class="btn" onclick="location.href='share.go'">일정 공유해볼래?</button>
+                <button class="btn" onclick="location.href='share.go'">일정 공유하기1</button>
+				<button class="btn" onclick="location.href='share2.go'">일정 공유하기2</button>
             </div>
         </div>
         		
@@ -161,6 +167,6 @@
     
     <span class="to-top" onclick="scrollToTop()">&#9650;</span>
 	</div>
-	<%@ include file="./include/sidebar2.jsp" %>
 	</div>
+	<%@ include file="./include/footer.jsp" %>
 </html>

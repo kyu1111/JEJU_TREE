@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+body {
+	height: 1080px;
+}
+
+.title {
+	font-size: 30px;
+	position: relative;
+	top: -15px;
+}
+
+#mypage_wrap{
+	
+    padding-top: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	height: calc(100vh - 80px); /* 상단 여백 조정 */
+}
+
+.mypage_box1{
+	text-align: center;
+	background-color: gray;
+	margin-top: 10%;
+	border: 1px;
+	position: absolute;
+	width: 500px;
+	height: 800px;
+	border-radius: 5px;
+	margin-right: 700px;
+}
+
+/* .mypage_box1 .myplan_box {
+	display: flex;
+	flex-dirction: row;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	text-align: center;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 10px;
+	width: 75px;
+	height: 75px;
+}
+ */
+.mypage_box1 .myplan_box a{
+	display: flex;
+	flex-dirction: row;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	text-align: center;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
+	margin-left: 90px;
+	border-radius: 10px;
+	width: 300px;
+	height: 100px;
+}
+
+
+.plan_img {
+	width: 75px;
+	height: 75px;
+}
+
+.mypage_box2{
+	text-align: center;
+	background-color: gray;
+	margin-top: 10%;
+	bottom: 50;
+	border: 1px;
+	position: absolute;
+	width: 500px;
+	height: 800px;
+	border-radius: 5px;
+	margin-left: 700px;
+}
+
+.mypage_box2 #loggo {
+	margin: auto;
+    display: block;
+	items-align: center;
+	text-align: center;
+	margin-top: 60%;
+	bottom: 50;
+	margin-left: 250px;
+}
+
+.mypage_buttons {
+	items-align: center;
+	text-align: center;
+	margin-top: 55%;;
+	bottom: 50;
+}

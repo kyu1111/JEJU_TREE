@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,9 @@
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/user_join.js"></script> --%>
 </head>
 <body>
-<h2>회원가입(일반)</h2>
-<form method="post" name="joinForm" id="joinForm" action="<%=request.getContextPath()%>/user_join_ok.go" onsubmit="return joinFormCheck()">
+<form method="post" name="joinForm" id="joinForm" action="<%=request.getContextPath()%>/kakao_join_ok.go" onsubmit="return joinFormCheck()">
 	<table>
+		<h1>카카오 계정 연동 회원가입</h1>
 		<tr>
 			<th>아이디</th>
 			<td>
@@ -62,28 +63,12 @@
 				<span id="phonecheck"></span>
 			</td>
 		</tr>
-		<!-- <tr>
-			<th>선호 테마</th>
-			<td>
-				<select name="user_like_keyword" id="user_like_keyword">
-					<option value="thema1">thema1</option>
-					<option value="thema2">thema2</option>
-					<option value="thema3">thema3</option>
-					<option value="thema4">thema4</option>
-		         </select>
-		         <br>
-				 <span id="user_like_keyword_check"></span>
-			</td>
-		</tr> -->
 		<tr>
-			<th>이메일</th>
+			<th>이메일(카카오 이메일)</th>
 			<td>
-				<input type="text" name="user_email" id="user_email" onkeyup="autoEmail()" autocomplete="off" placeholder="이메일을 입력해주세요.">
-				<br>
-				<span id="emailcheck"></span>
+				<input type="text" readonly name="user_email" id="user_email" value = "${param.user_email}">
 			</td>
 		</tr>
-		
 		<tr>
 			<td colspan="2" align = "center">
 			<input type = "submit" value = "회원가입">

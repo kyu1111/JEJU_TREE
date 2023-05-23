@@ -20,10 +20,10 @@ if (request.getProtocol().equals("HTTP/1.1"))
 			<div id="login_main">
 				<div id="login_title">로그인창</div>
 				<div id="login_main_wrap">
-					<form method="post" action="<%=request.getContextPath() %>/user_login.do">
-							<input type="text" id="user_id" name="id" placeholder="아이디">
+					<form method="post" action="<%=request.getContextPath() %>/user_login.go">
+							<input type="text" id="user_id" name="user_id" placeholder="아이디">
 							<br>
-							<input type="password" id="user_pwd" name="pwd" placeholder="비밀번호">
+							<input type="password" id="user_pwd" name="user_pwd" placeholder="비밀번호">
 							<br>
 						<div id="login_main_btn">
 							<input type="submit" id="login_btn" value="LOGIN">
@@ -41,6 +41,8 @@ if (request.getProtocol().equals("HTTP/1.1"))
 						<!-- 저는 redirect_uri을 http://localhost:8080/member/kakaoLogin로 했습니다. -->
 						<!-- 본인걸로 수정 시 띄어쓰기 절대 하지 마세요. 오류납니다. -->
 						<img src="<%=request.getContextPath() %>/resources/icon/kakao_login_medium_narrow.png" style="height:60px">
+			      		<a class="p-2" href="https://kauth.kakao.com/oauth/logout?client_id=b1b9f0baef115c1e6588625cf198429b&logout_redirect_uri=http://localhost:8585/model/logout.go">
+			      		<img src="<%=request.getContextPath() %>/resources/icon/kakao_logout.png" style="height:60px">
 			      		<!-- 이미지는 카카오 개발자센터에서 제공하는 login 이미지를 사용했습니다. -->
 					</div>
 				</div>

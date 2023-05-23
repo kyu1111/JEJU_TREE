@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchDTO {
 	
-	private int search_no;
-	private String search_keyword;
-	private String search_log;
+	private int id;
+	private String user_id;
+	private String search_term;
+	private String search_date;
+	
 }

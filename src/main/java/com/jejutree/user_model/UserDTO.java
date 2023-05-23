@@ -10,12 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-	String user_id;
-	String user_pwd;
-	String user_email;
-	String user_nickname;
-	String is_admin;
-	String user_image;
-	String user_like_keyword;
-	String user_phone;
+	private String user_id;
+	private String user_pwd;
+	private String user_email;
+	private String user_nickname;
+	private String is_admin;
+	private String user_image;
+	private String user_like_keyword;
+	private String user_phone;
+	private int user_iskakao;
+	private String mailKey;
+	private int mailAuth;
+	private int id;
 }

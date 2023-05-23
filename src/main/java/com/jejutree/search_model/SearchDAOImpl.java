@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 @Repository
 public class SearchDAOImpl implements SearchDAO{
 
@@ -13,12 +14,12 @@ public class SearchDAOImpl implements SearchDAO{
 	
 	@Override
 	public int insertSearch(SearchDTO dto) {
-		return this.sqlSession.insert("search_insert", dto);
+		return this.sqlSession.update("search_insert", dto);
 	}
 
 	@Override
-	public List<SearchDTO> getKeywordList() {
-		return sqlSession.selectList("getSearchList");
+	public List<SearchDTO> getKeywordList(String id) {
+		return sqlSession.selectList("getSearchList", id);
 	}
 
 	@Override
@@ -26,5 +27,8 @@ public class SearchDAOImpl implements SearchDAO{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
+
 
 }

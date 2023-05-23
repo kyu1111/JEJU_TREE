@@ -11,5 +11,11 @@
   	<!--user model pacakage  -->
   	<typeAlias type="com.jejutree.user_model.UserDAO" alias="userDao"/>
   	<typeAlias type="com.jejutree.user_model.UserDTO" alias="userDto"/>
+  	<typeAlias type="com.jejutree.user_model.Temporary_kakao_userDTO" alias="TemporaryDto"/>
+	<!-- com.jejutree.plans_model package -->
+	<typeAlias type="com.jejutree.plans_model.UserPlansDTO"
+		alias="userplansDto" /> <!-- 플랜DTO -->
+	<typeAlias type="com.jejutree.plans_model.UserPlansDAO"
+		alias="userplansDao" /> <!-- 플랜DAO -->
   	</typeAliases>
 </configuration>

@@ -187,24 +187,6 @@ function joinFormCheck() {
 	
 }
 
-/* 이메일 자동완성 기능 */
-function autoEmail() {
-    
-	let mailId = $('#user_email').val().split('@');
-    let mailList = ['naver.com','gmail.com','daum.net','hanmail.net'];
-    let mailArr = new Array;
-    
-	for(let i=0; i < mailList.length; i++ ){
-    	mailArr.push( mailId[0] +'@'+ mailList[i] );
-    }
-
-    $('#user_email').autocomplete({
-        source: mailArr,
-        focus: function() {
-            return false;
-        }
-    });
-}
 
 
 /* 약관동의 전체 선택 */

@@ -14,9 +14,9 @@
 	text-align: center;
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-<script type="text/javascript">
+ --><script type="text/javascript">
    var map;
    var infoWindow1, infoWindow2;
    function initTmap() {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jejutree.dao.UserPlansDAO">
+   <insert id="addplans"
+      parameterType="com.jejutree.plans_model.UserPlansDTO">
+      INSERT INTO travel_plans(user_id, title, description, start_date, end_date,
+      location, created_at, updated_at, markerLat, markerLng)   
+      VALUES(#{userId}, #{title }, #{description}, #{start_date}, #{end_date}, #{location},
+      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{markerLat}, #{markerLng});
+   </insert>
+
+   <select id="myplans"
+      resultType="com.jejutree.plans_model.UserPlansDTO">
+      SELECT * FROM travel_plans WHERE user_id = #{userId}
+   </select>
+
+</mapper>
