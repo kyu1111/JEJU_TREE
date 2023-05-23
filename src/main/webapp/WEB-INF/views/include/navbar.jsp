@@ -5,11 +5,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/navbar.css">    
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/sidebar.css"> --%>
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>   --%>
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar.js"></script> --%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/login_main.js"></script>
 </head>
 <body>
     <div class="navbar">

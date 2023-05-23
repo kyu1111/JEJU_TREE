@@ -22,11 +22,12 @@
 			</div>
 		</div>
 		<br>
-
  		<div class="credit"> copyright @ 2023 by <span>JejuTree</span></div>
  		<br>
+ 		<c:if test="${!empty kakao_session and user_join == 0}">
+ 			 <a id = "kakaojoin" onclick="openjoinPage('<%=request.getContextPath()%>//kakaoUser_join.go?user_email=${kakao_id}')">카카오톡 회원가입</a>
+ 		</c:if>
 	</footer>
 	<!-- footer section ends -->
-
 </body>
 </html>

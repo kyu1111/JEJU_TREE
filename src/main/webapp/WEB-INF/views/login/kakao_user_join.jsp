@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>회원가입(일반)</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/user_join.js"></script> --%>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/kakao_join.js"></script>
 </head>
 <body>
 <form method="post" name="joinForm" id="joinForm" action="<%=request.getContextPath()%>/kakao_join_ok.go" onsubmit="return joinFormCheck()">
@@ -57,9 +57,7 @@
 		<tr>
 			<th>휴대전화</th>
 			<td>
-				<div id="user_phone">
-					<input type="text" name="user_phone" id="user_phone" class="phone_number" maxlength="11" placeholder="010-0000-0000" oninput="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-				</div>
+				<input type="text" name="user_phone" id="user_phone"  maxlength="11" placeholder="010-0000-0000">
 				<span id="phonecheck"></span>
 			</td>
 		</tr>

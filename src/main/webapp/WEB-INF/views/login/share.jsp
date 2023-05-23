@@ -9,10 +9,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="content E-Solution" id="content">
+<div class="content E-Solution" id="content" align="center">
+	<h2>카톡계정의 친구에게 일정을 공유해 보세요</h2> 
 	<input type="hidden" onclick="sendLinkCustom();" value="Custom" /> 
+	<h3><a onclick="sendLink();" value="공유하기">친구목록 불러오기</a></h3>
 	<input type="button" onclick="sendLink();" value="공유하기" />
-	
 </div>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script language="javascript">

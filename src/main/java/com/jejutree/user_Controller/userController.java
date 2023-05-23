@@ -46,7 +46,7 @@ public class userController {
 	   return "MainPage";
    }
    @RequestMapping(value={"/user_join_ok.go","/kakao_join_ok.go"})
-   public void user_join_ok(HttpServletResponse response,UserDTO dto,HttpServletRequest request) throws Exception{
+   public void user_join_ok(HttpServletResponse response,UserDTO dto,HttpServletRequest request,HttpSession session) throws Exception{
       
       int check = 0;
       response.setContentType("text/html; charset=UTF-8");
@@ -74,11 +74,17 @@ public class userController {
     	  check = this.dao.insertKakaoUser(dto);
     	  if(check > 0) {
     		 dao.updateKakao(dto.getUser_email());
-             out.println("<script>");
-             out.println("alert('카카오연동계정 회원가입이 완료 되었습니다.')");
-             out.println("window.close()");
-             out.println("window.opener.location.href='MainPage.go'");
-             out.println("</script>");
+    		  out.println("<script>");
+    	        out.println("alert('카카오연동계정 회원가입이 완료 되었습니다.')");
+    	        out.println("window.close()");
+    	        out.println("window.opener.location.href='MainPage.go'");
+    	        out.println("</script>");
+    	        
+    	        
+    	        HashMap<String,Object>hashmap = (HashMap<String,Object>)session.getAttribute("Kakao_info");
+    	        // 세션에 필요한 정보를 업데이트합니다.
+    	        
+    	        session.setAttribute("Kakao_info", hashmap);
  	      }else {
  	         out.println("<script>");
  	         out.println("alert('가입 실패')");
@@ -144,10 +150,20 @@ public class userController {
            out.println("</script>");
            
        }else if(check == 0 && user_dto!=null) {
-    	   out.println("<script>");
-           out.println("alert('이메일 인증 필요~~~')");
-           out.println("history.back()");
-           out.println("</script>");
+    	   //이메일 인증 없이 카카오톡 추가 연동 회원으로 가입 한 경우.
+    	   if(user_dto.getUser_iskakao() == 1) {
+    		   System.out.println("로그인 성공");
+    	         session.setAttribute("user_id", user_dto.getUser_id());
+    	         out.println("<script>");
+    	         out.println("alert('로그인 성공')");
+    	         out.println("location.href='MainPage.go'");
+    	         out.println("</script>"); 
+    	   }else {
+    		   out.println("<script>");
+               out.println("alert('이메일 인증 필요~~~')");
+               out.println("history.back()");
+               out.println("</script>"); 
+    	   }
        } else if(!user_dto.getUser_pwd().equals(user_pwd)  && check == 1  && user_dto!=null) {
     	   out.println("<script>");
            out.println("alert('회원정보 틀림~~~')");
@@ -185,6 +201,25 @@ public class userController {
     	 }else {
     		 out.print(result);
     	 }
+    }
+    @RequestMapping("kakao_user_idCheck.go")
+    public void kakaojoin_idcheck(@RequestParam("user_id")String user_id,HttpServletResponse response) throws IOException {
+    	int result = 0;
+    	
+    	response.setContentType("text/html; charset=UTF-8");
+        
+    	PrintWriter out = response.getWriter();  
+        
+    	UserDTO dto = dao.getuser(user_id);
+    	
+    	if(dto != null ) {
+    		result = -1;
+    		out.print(result);
+    	}else {
+    		result = 1;
+    		out.print(result);
+    	}
+    	
     }
     @RequestMapping("deleteUser.go")
     public void deleteUser(@RequestParam("id") int id, HttpServletResponse response) throws IOException {

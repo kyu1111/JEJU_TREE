@@ -48,10 +48,24 @@
             <th>사용자 변경 비밀번호 확인</th>
             <td> <input type="password" name="db_pwd2" placeholder="변경 비밀번호 확인" ></td>
         </tr>
+         <!--카카오 계정으로 로그인 해서 연동된 계정 정보를 수정하려 하는 경우.  -->
+        <c:if test="${user.user_iskakao == 1}">
+        <tr>
+            <th>사용자 이메일</th>
+            <td><input readonly value="${user.user_email }" name="user_email" ></td>
+            <span>카카오톡 연동  회원 입니다.</span>
+        </tr>
+        </c:if>
+        <c:if test="${user.user_iskakao == 0}">
+        <tr>
+            <th>사용자 이메일</th>
+            <td><input value="${user.user_email }" name="user_email" ></td>
+        </tr>
         <tr>
             <th>사용자 이메일</th>
             <td> <input type="text" value="${user.user_email }" name="user_email" ></td>
         </tr>
+        </c:if>
 	</table>
 	<input type="hidden" value="${user.user_iskakao }" name="user_iskakao"  >
 	<input type="hidden" value="${user.user_like_keyword }" name="user_like_keyword"  >
@@ -59,11 +73,17 @@
 	<input type="hidden" value="${user.mailAuth }" name="mailAuth"  >
 	<input type="hidden" value="${user.is_admin }" name="is_admin"  >
 	<input type="hidden" value="${user.id }" name="id"  >
-	
 	 <input type="submit" value="회원수정" onclick='btn_click("update");'>
 	<button type="reset" value="다시작성">다시작성</button>
+    <c:if test="${empty Kakao_info}">
     <input type="submit" value="회원탈퇴" onclick='btn_click("delete");'>
-    
+    </c:if>
+     <!--카카오 계정으로 로그인 했으나 user_join이 1인 경우.(정회원 연동 외어있는 상태)  -->
+    <c:if test="${!empty Kakao_info}">
+    	<input type="button" value="카카오계정 연동 계정 탈퇴및 연결 해제" onclick="if(confirm('정말로 회원탈퇴 하시겠습니까?(연동 회원가입정보도 소멸됩니다.)')) {
+                                               location.href='deletekakaoUser.go?user_email=${kakao_id}&access_Token=${kakao_token}'
+                                                   } else{return;}" >
+     </c:if> 
      </form>
 	</div>
 	  <!-- footer 설정하기  -->
@@ -71,7 +91,6 @@
     
     
 <script>
-
     function btn_click(str){                             
         if(str=="update"){                                 
             frm1.action="updateUser.go";      
