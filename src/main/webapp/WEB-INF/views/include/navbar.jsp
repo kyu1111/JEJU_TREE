@@ -37,9 +37,7 @@
         		<!--카카오 계정과 함께 로그아웃-->
         		<a class="p-2" href="https://kauth.kakao.com/oauth/logout?client_id=b1b9f0baef115c1e6588625cf198429b&logout_redirect_uri=http://localhost:8585/model/logout.go">
 			      		<img src="<%=request.getContextPath() %>/resources/icon/kakao_logout.png" style="height:60px"></a>
-			    <c:if test="${user_join == 1 }">
 			    <a href="mypage.go"><font size="5">MYPAGE</font></a>
-			    </c:if>  	 		
         	</c:if>
         <c:if test="${empty kakao_session and empty normal_session}">
         <!--어느 계정으로도 로그인 되지 않은 경우  -->

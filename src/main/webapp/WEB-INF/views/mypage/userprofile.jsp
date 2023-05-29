@@ -32,6 +32,13 @@
             <th>사용자 아이디</th>
             <td> <input value="${user.user_id }" name="user_id" ></td>
         </tr>
+        <c:if test="${user.user_iskakao == 1}">
+        <tr>
+            <th>사용자 이메일</th>
+            <td><input readonly value="${user.user_id}" name="user_id" ></td>
+            <span>카카오톡 연동  회원 입니다.</span>
+        </tr>
+        </c:if>
         <tr>
             <th>사용자 전화번호</th>
             <td> <input value="${user.user_phone }" name="user_phone" ></td>
@@ -62,6 +69,8 @@
             <td><input value="${user.user_email }" name="user_email" ></td>
         </tr>
         <tr>
+        </c:if>
+        <c:if test="${user.user_iskakao == 1}">
             <th>사용자 이메일</th>
             <td> <input type="text" value="${user.user_email }" name="user_email" ></td>
         </tr>
@@ -72,7 +81,7 @@
 	<input type="hidden" value="${user.mailKey }" name="mailKey"  >
 	<input type="hidden" value="${user.mailAuth }" name="mailAuth"  >
 	<input type="hidden" value="${user.is_admin }" name="is_admin"  >
-	<input type="hidden" value="${user.id }" name="id"  >
+	<input type="hidden" value="${user.id}" name="id"  >
 	 <input type="submit" value="회원수정" onclick='btn_click("update");'>
 	<button type="reset" value="다시작성">다시작성</button>
     <c:if test="${empty Kakao_info}">

@@ -30,6 +30,15 @@
 <!-- <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" /> -->
 </head>
 <body>
+   <c:set var="is_guest" value="${is_guest}" />
+   <c:set var="user_id" value="${share_id}"/>
+   ${is_guest}
+   <c:if test="${empty is_guest}">
+   		<p>본인이 작성한 일정입니다.</p>
+   </c:if>
+   <c:if test="${!empty is_guest and !empty share_id}">
+   		<p>${share_id}님과 공유 일정에 초대 되었습니다.</p>
+   </c:if>
    <!--  지도가 나타나는 부분. -->
    <div id="map_div"></div>
    
@@ -52,6 +61,7 @@
          <i class="fa-solid fa-angle-right"></i>
       </button>
       <button id="saveAsPDF">PDF로 저장</button>
+      <button id="savePlan" onclick ="isGuestJoingCheck();">일정저장(변경사항)</button>
       <span class="navbar--range"></span>
    </nav>
    <main id="container"></main>
@@ -409,6 +419,18 @@ end: '2023-05-19T23:59:59',
 });
 
  </script>
+ <script type="text/javascript">
+	
+ 	function isGuestJoingCheck(){
+ 		let is_guest = '${is_guest}'
+ 			let share_id = '${share_id}'
+ 			console.log(is_guest);
+ 		if(is_guest != ''){
+ 			alert('로그인이 필요한 서비스 입니다.');
+ 			location.href = 'guest_login_page.go?share_id='+share_id+'';
+ 		}
+ 	}
  
+</script>
 </body>
 </html>

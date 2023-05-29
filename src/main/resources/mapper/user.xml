@@ -32,7 +32,7 @@
 	   		delete from temporary_kakao_user where user_email = #{user_email}
 	    </delete>
 	    <delete id="KaKaoDelete" parameterType="String">
-	   		delete from user where user_email = #{user_email}
+	   		delete from user where user_id = #{user_email}
 	    </delete>
 	    <!--하림님(id로 일반 탈퇴)   -->
 	    <select id="getuserById" parameterType="int" resultType="userDto">
@@ -46,7 +46,7 @@
  		<select id="checkPwd" parameterType="int" resultType="String" >
       		select user_pwd from user where id = #{id}
    		</select>
-
+		
  	<!--카카오 기능 -->
  		
  		<select id="kakao_email_info" parameterType="String" resultType="userDto">
@@ -95,5 +95,15 @@
 	   <select id="emailCheck" parameterType="int" resultType="String" >
            select user_email from user where id = #{id}
    	   </select>
+   
+   <!--공유 관련 기능  --> 
+   		<!--동행자 정보 입력 하기  -->
+		<insert id="insertParticipant" parameterType="participantsDto">
+			insert into plan_participants(user_id,user_share_id)values(#{user_id},#{user_share_id})		
+		</insert>
+		<!--해당 플랜 공유자와 사용자 id 중복 여부 확인  -->
+		<select id="selfShareCheck" parameterType="java.util.HashMap" resultType="int">
+			select count(*) from plan_participants where user_id = #{user_id} and user_share_id= #{user_share_id}
+		</select>
  </mapper>
  

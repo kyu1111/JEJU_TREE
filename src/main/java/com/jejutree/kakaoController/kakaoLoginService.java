@@ -18,11 +18,11 @@ import com.google.gson.JsonParser;
 
 @Service
 public class kakaoLoginService {
-	public String getAccessToken (String authorize_code) {
+	public String getAccessToken (String authorize_code,String expectedRedirectUri) {
 		String access_Token = "";
 		String refresh_Token = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
-
+		
 		try {
 			URL url = new URL(reqURL);
             
@@ -38,7 +38,13 @@ public class kakaoLoginService {
 			sb.append("grant_type=authorization_code");
             
 			sb.append("&client_id=b1b9f0baef115c1e6588625cf198429b"); //본인이 발급받은 key
-			sb.append("&redirect_uri=http://localhost:8585/model/kakaologin.go"); // 본인이 설정한 주소
+			
+			if (expectedRedirectUri.equals("http://localhost:8585/model/invited_kakaologin.go")) {
+		            sb.append("&redirect_uri=" + expectedRedirectUri);
+		    } else {
+		            sb.append("&redirect_uri=" + expectedRedirectUri);
+		        }
+			
             
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
@@ -133,13 +139,13 @@ public class kakaoLoginService {
 	            e.printStackTrace();
 	        }
 	    }
-	 public String KaKaoUnlink(String access_Token) {
+	 public String KaKaoUnlink(String access_token) {
 		    String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 		    try {
 		        URL url = new URL(reqURL);
 		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		        conn.setRequestMethod("POST");
-		        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+		        conn.setRequestProperty("Authorization", "Bearer " + access_token);
 		        
 		        int responseCode = conn.getResponseCode();
 		        System.out.println("responseCode : " + responseCode);

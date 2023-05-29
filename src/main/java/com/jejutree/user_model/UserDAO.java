@@ -1,6 +1,9 @@
 package com.jejutree.user_model;
 
+import java.util.HashMap;
 import java.util.List;
+
+import com.jejutree.plans_model.Plan_participantsDTO;
 
 
 
@@ -41,6 +44,7 @@ public interface UserDAO {
 		// 회원 수정 시 비밀번호 일치 확인 메서드
 		String checkPwd(int id);
 		
+		
 	/* 카카오 기능 */
 	
 		//카카오회원가입
@@ -51,8 +55,13 @@ public interface UserDAO {
 		
 		//temporary 테이블에 있는 유저 정보 조회 
 		Temporary_kakao_userDTO kakao_userInfo(String user_email);
-	
-		
+	/*공유 관련 기능*/
+		//공유 링크 타고온 회원의 공유 플랜 정보 삽입.
+		int insertParticipant(Plan_participantsDTO dto);
+		//공유 받은 경로를 타고 로그인 시 직전에 공유 유저 insert 하기전 본인이 작성한 plan인지 확인 하는 작업.
+		int selfshareCheck(HashMap<String, String> paramMap);
+		    
+
 	/* 이메일 기능 */
 		 
 		

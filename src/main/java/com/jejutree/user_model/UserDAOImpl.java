@@ -1,10 +1,13 @@
 package com.jejutree.user_model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.jejutree.plans_model.Plan_participantsDTO;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -66,6 +69,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	
+	
 	/*카카오 기능*/
 	
 	//최초 카카오 로그인시 임시 회원 정보 등록
@@ -79,15 +83,29 @@ public class UserDAOImpl implements UserDAO {
 	public Temporary_kakao_userDTO kakao_userInfo(String user_email) {
 		return this.sqlSession.selectOne("kakaoUserInfo", user_email);
 	}
+	//카카오 연동 회원가입.
 	@Override
 	public int insertKakaoUser(UserDTO dto) {
 		return this.sqlSession.insert("KaKaoJoin",dto);
 	}
+	//카카오 회원 가입후 임시테이블의 join 여부 최신화.
 	@Override
 	public int updateKakao(String user_email) {
 		return this.sqlSession.update("UpdateIskakao", user_email);
 	}
 	
+	/*공유 관련 기능*/
+	
+	//여행 정보 공유 받은 회원이 동행자의 정보 입력.
+	@Override
+	public int insertParticipant(Plan_participantsDTO dto) {
+		return this.sqlSession.insert("insertParticipant", dto);
+	}
+	//본인이 작성한 기록이 공유 받은 플랜으로 등록 되는것을 방지하는 중복 검사.
+	@Override
+	public int selfshareCheck(HashMap<String, String> paramMap) {
+	    return this.sqlSession.selectOne("selfShareCheck", paramMap);
+	}
 	
 	/*이메일 기능*/
 	@Override
@@ -123,6 +141,8 @@ public class UserDAOImpl implements UserDAO {
 	public int updateMail(UserDTO dto) {
 		return this.sqlSession.update("updateMail", dto);
 	}
+	
+	
 	
 	
 }

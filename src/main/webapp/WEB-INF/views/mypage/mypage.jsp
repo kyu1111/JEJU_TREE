@@ -35,10 +35,18 @@
                                            일정을 친구와 공유하세요
                </h2>
                <!--공유버튼 -->
+               	  <c:if test="${!empty kakao_id }">
 		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <a id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">
+		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${kakao_id}')">
 		          	<img src="<%=request.getContextPath() %>/resources/icon/kakaotalk_sharing_btn_small.png">
 		          </a>
+		          </c:if>
+		          <c:if test="${!empty user_id }">
+		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
+		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${user_id}')">
+		          	<img src="<%=request.getContextPath() %>/resources/icon/kakaotalk_sharing_btn_small.png">
+		          </a>
+		          </c:if>
                <div class="mypage_buttons">
  					<button onclick="location.href='userprofile.go'">프로필 수정</button><br><br>
  					<button onclick="location.href=''">찜한 장소</button><br><br>
@@ -55,7 +63,7 @@
 //공유 버튼을 누를경우 alert 메시지  
 //세션이 있는데 카카오 세션일 경우 카카오 회원가입 창으로 으로 전송
 //일반 유저의 세션인 경우 공유하기 페이지 윈도우 창으로 띄워주기
-function openjoinPage(a){
+function opensharePage(a){
 	 	let uid = '${user_id}';	
 	 	let kid = '${kakao_id}';
 	 	console.log(kid);

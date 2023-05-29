@@ -26,4 +26,10 @@ public class UserPlansImpl implements UserPlansDAO {
 	
 	}
 
+	/*
+	 * @Override public int insertParticipants(Plan_participantsDTO dto) {
+	 * 
+	 * return this.sqlSession.insert("insertParticipant", dto); }
+	 */
+
 }

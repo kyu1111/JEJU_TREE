@@ -34,22 +34,24 @@ public class MypageController {
 	
 	@RequestMapping("userprofile.go")
 	public String userprofile(HttpSession session, Model model) {
-		HashMap<String,Object>hashmap = (HashMap<String,Object>)session.getAttribute("Kakao_info");
-		//세션으로 로그인했지만 정회원인 회원의 이메일 정보.
-		String user_email = (String)hashmap.get("kakao_id");
-	    String user_id = (String) session.getAttribute("user_id");
-	    UserDTO dto = new UserDTO();
-		if (user_email != null || user_id != null) {
-			if(user_id != null) {
-				dto.setUser_id(user_id);
-				dto = this.dao.getuser(user_id);
-				
-			} else if(user_email != null) {
-				dto = this.dao.getkakaouser(user_email);
-			} 
+		// 세션으로 로그인했지만 정회원인 회원의 이메일 정보.
+		HashMap<String, Object> hashmap = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+		String user_id = "";
+		UserDTO dto = null;
+		if (hashmap != null) {
+			user_id = (String) hashmap.get("kakao_id");
+			dto = this.dao.getuser(user_id);
+		} else if (session.getAttribute("user_id") != null) {
+			user_id = (String) session.getAttribute("user_id");
+			dto = this.dao.getuser(user_id);
 		}
+
+		if (dto != null) {
+			dto.setUser_id(user_id);
+		}
+
 		model.addAttribute("UserInfo", dto);
-		
+
 		return "mypage/userprofile";
 	}
 	
@@ -109,7 +111,7 @@ public class MypageController {
 		System.out.println("입력키"+key);
 		System.out.println("db변한 키"+dto.getMailKey());
 		
-		response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("text/html; charset = UTF-8");
 	      PrintWriter out = response.getWriter();
 	      if(key.equals(dto.getMailKey())) {
 	    	  UserDTO updateDTO=(UserDTO) session.getAttribute("updateDto");

@@ -88,8 +88,6 @@
             <div class="button-container">
                 <button class="btn" onclick="location.href='tmap.go'">일정 만들기</button>
                 <button class="btn">이용 가이드</button>
-                <button class="btn" onclick="location.href='share.go'">일정 공유하기1</button>
-				<button class="btn" onclick="location.href='share2.go'">일정 공유하기2</button>
             </div>
         </div>
         		
