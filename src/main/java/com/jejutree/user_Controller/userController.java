@@ -82,7 +82,6 @@ public class userController {
 
 			if (check > 0) {
 				// 세션 띄워주기전 기존 카카오 세션 만료 시키기.
-				request.getSession().invalidate();
 				// 새로 로그인한 세션 띄워주기
 				session.setAttribute("user_id", dto.getUser_id());
 				out.println("<script>");

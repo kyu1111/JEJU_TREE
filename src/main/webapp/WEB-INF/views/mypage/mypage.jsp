@@ -129,7 +129,7 @@ function opensharePage(a){
 	 		    	//temporary 테이블에 이메일이 존재하고 연계회원가입이 되어 있는 경우.
 	 		    	if(result == 1){ 
 	 		        	//수정하는 창으로 보낸다.
-	 		        	location.href='userprofile.go'
+	 		        	location.href='userprofile.go';
 	 		        //temporary 테이블에 이메일이 존재하지만 연계회원가입이 되어 있지 않은 경우.   
 	 		        }else if(result == -1){
 	 		        	let ask_result = confirm('회원님은 sns연동 임시 회원입니다. 추가정보를 입력하여 sns연동 회원가입을 하시겠습니까?');
@@ -148,6 +148,8 @@ function opensharePage(a){
 	 		    } 
 	 			
 	 		}); 
+		}else{
+			location.href='userprofile.go';
 		}
 	}
 </script>

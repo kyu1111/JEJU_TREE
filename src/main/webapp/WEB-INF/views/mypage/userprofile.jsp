@@ -28,15 +28,17 @@
              <th>사용자 닉네임</th>
             <td> <input name="user_nickname" value="${user.user_nickname }"  ></td>
         </tr>
+        <c:if test="${user.user_iskakao == 1}">
+        <tr>
+            <th>사용자 아이디</th>
+            <td><input readonly value="${user.user_id}" name="user_id" ></td>
+            <span>카카오톡 연동  회원 입니다.</span>
+        </tr>
+        </c:if>
+        <c:if test="${user.user_iskakao == 0}">
         <tr>
             <th>사용자 아이디</th>
             <td> <input value="${user.user_id }" name="user_id" ></td>
-        </tr>
-        <c:if test="${user.user_iskakao == 1}">
-        <tr>
-            <th>사용자 이메일</th>
-            <td><input readonly value="${user.user_id}" name="user_id" ></td>
-            <span>카카오톡 연동  회원 입니다.</span>
         </tr>
         </c:if>
         <tr>
@@ -68,12 +70,6 @@
             <th>사용자 이메일</th>
             <td><input value="${user.user_email }" name="user_email" ></td>
         </tr>
-        <tr>
-        </c:if>
-        <c:if test="${user.user_iskakao == 1}">
-            <th>사용자 이메일</th>
-            <td> <input type="text" value="${user.user_email }" name="user_email" ></td>
-        </tr>
         </c:if>
 	</table>
 	<input type="hidden" value="${user.user_iskakao }" name="user_iskakao"  >
@@ -97,8 +93,6 @@
 	</div>
 	  <!-- footer 설정하기  -->
     <%@ include file="../include/footer.jsp" %> 
-    
-    
 <script>
     function btn_click(str){                             
         if(str=="update"){                                 

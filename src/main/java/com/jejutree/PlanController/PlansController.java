@@ -1,4 +1,4 @@
-package com.jejutree.model;
+package com.jejutree.PlanController;
 
 import java.io.IOException;
 import java.io.PrintWriter;

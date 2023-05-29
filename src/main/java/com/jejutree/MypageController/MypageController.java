@@ -26,7 +26,6 @@ public class MypageController {
 	@Autowired
      private JoinEmailService emailService;
 	
-	
 	@RequestMapping("mypage.go")
 	public String mypage() {
 		return "mypage/mypage";
@@ -45,7 +44,6 @@ public class MypageController {
 			user_id = (String) session.getAttribute("user_id");
 			dto = this.dao.getuser(user_id);
 		}
-
 		if (dto != null) {
 			dto.setUser_id(user_id);
 		}
