@@ -15,4 +15,8 @@ public interface JoinEmailService {
 	String CheckEmail(UserDTO userDTO) throws Exception;
 	//이메일 변경시 새로운
 	String emailChangeForm(UserDTO dto) throws Exception;
+
+	void id_search(UserDTO userDTO) throws Exception;
+
+	String pwd_search(UserDTO userDTO) throws Exception;
 }

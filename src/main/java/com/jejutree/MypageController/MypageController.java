@@ -55,7 +55,7 @@ public class MypageController {
 	}
 	
 	@RequestMapping("updateUser.go")
-	public String updateUser(UserDTO dto, HttpServletResponse response, Model model, HttpSession session) throws Exception {
+	public String updateUser(UserDTO dto, HttpServletResponse response, Model model, HttpSession session, @RequestParam("db_pwd") String db_pwd) throws Exception {
 	  int id = dto.getId();
 	  System.out.println(id);
 	  String pwdCheck = dao.checkPwd(id);
@@ -66,6 +66,7 @@ public class MypageController {
 	  response.setContentType("text/html; charset=UTF-8");
 	  PrintWriter out = response.getWriter();
 	  System.out.println(!emailCheck.equals(dto.getUser_email()));
+	  
 	  if(!emailCheck.equals(dto.getUser_email())) {
 			String newKey = emailService.emailChangeForm(dto);
 			dto.setMailKey(newKey);
@@ -78,7 +79,11 @@ public class MypageController {
 			return "mypage/emailChangeForm";
 	  } else {
 		  if(pwdCheck.equals(dto.getUser_pwd())) {
-			
+			    
+			    if(!db_pwd.equals(pwdCheck)) {
+			    	dao.updatepwd(dto);
+			    	dto.setUser_pwd(db_pwd);
+			    }
 				int check = this.dao.updateMember(dto);
 				System.out.println(dto.getUser_phone());
 				if(check > 0) {

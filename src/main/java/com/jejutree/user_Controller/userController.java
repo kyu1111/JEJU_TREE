@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jejutree.Login.JoinEmailService;
 import com.jejutree.kakaoController.kakaoLoginService;
@@ -304,4 +305,136 @@ public class userController {
 	        out.println("</script>");
 	    	} 
 	    }
+    
+
+    @RequestMapping("login_id_search.go")
+    public String loginIdSearch() {
+    	return "login/login_id_search";
+    }
+    
+    
+    // 일반 회원 아이디 찾기
+    @RequestMapping("id_search.go")
+    public void idSearch(@RequestParam("user_email") String curr_email, HttpSession session, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+    	UserDTO dto = this.dao.getUserByEmail(curr_email);
+    	
+    	if(dto == null) {
+    		out.println("<script>");
+            out.println("alert('가입된 이메일이 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    	}
+    	
+    	if(curr_email.equals(dto.getUser_email())) {
+        	emailService.id_search(dto);
+        	
+    		out.println("<script>");
+            out.println("alert('이메일함을 확인해 주세요.')");
+            out.println("location.href='login_page.go'");
+            out.println("</script>");
+            
+    	}
+    	
+    }
+    
+    @RequestMapping("login_pwd_search.go")
+    public String loginPwdSearch() {
+    	return "login/login_pwd_search";
+    }
+    
+    
+    // 일반 회원 비밀번호 찾기
+    @RequestMapping("pwd_search.go")
+    public void pwdSearch(@RequestParam("user_email") String curr_email, @RequestParam("user_id") String curr_id, HttpServletResponse response) throws Exception {
+    	response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        UserDTO dto = this.dao.getUserByEmail(curr_email);
+        
+        if(dto == null) {
+    		out.println("<script>");
+            out.println("alert('가입된 이메일이 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    	}
+    	
+        
+        String user_id = dto.getUser_id();
+    	String email = dto.getUser_email();
+    	
+    	if(email.equals(curr_email) && curr_id.equals(user_id)) {
+    		String tmepkey = emailService.pwd_search(dto);
+    		dto.setUser_pwd(tmepkey);
+    		dao.updatePwd(dto);
+    		out.println("<script>");
+            out.println("alert('이메일함을 확인해 주세요.')");
+            out.println("location.href='login_page.go'");
+            out.println("</script>");
+    	} else if(!curr_id.equals(user_id)) {
+    		
+    		out.println("<script>");
+            out.println("alert('가입된 아이디가 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    		
+    	} else {
+    		out.println("<script>");
+            out.println("alert('가입된 이메일이 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    	}
+    	
+    }
+    
+     // 닉네임 중복검사
+    @RequestMapping("user_idCheck.go")
+    @ResponseBody
+    public String user_idCheck(@RequestParam("id") String curr_id) {
+    	
+    	UserDTO dto = this.dao.getuser(curr_id);
+    	
+    	if(dto == null) {
+    		System.out.println("사용가능");
+    		return "ok";
+    	} else {
+    		System.out.println("중복");
+    		return "db";
+    	}
+    	
+    }
+    
+    
+    
+    // 닉네임 중복검사
+    @RequestMapping("nicknameCheck.go")
+    @ResponseBody
+    public String nicknameCheck(@RequestParam("nickname") String curr_nick) {
+    	
+    	UserDTO dto = this.dao.nickCheck(curr_nick);
+    	
+    	if(dto == null) {
+    		System.out.println("사용가능");
+    		return "ok";
+    	} else {
+    		System.out.println("중복");
+    		return "db";
+    	}
+    	
+    }
+    
+    
+    @RequestMapping("emailCheck.go")
+    @ResponseBody
+    public String emailCheck(@RequestParam("email") String user_email) {
+    	UserDTO dto = this.dao.getUserByEmail(user_email);
+    	if(dto == null) {
+    		System.out.println("사용가능");
+    		return "ok";
+    	} else {
+    		System.out.println("중복");
+    		return "db";
+    	}
+    }
+    
 }

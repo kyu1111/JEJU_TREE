@@ -41,6 +41,9 @@ public interface UserDAO {
 		// 회원 수정 시 비밀번호 일치 확인 메서드
 		String checkPwd(int id);
 		
+		// 회원 비밀번호 수정 메서드
+		void updatepwd(UserDTO dto);
+		
 	/* 카카오 기능 */
 	
 		//카카오회원가입
@@ -70,6 +73,18 @@ public interface UserDAO {
 		   
 		 // 이메일 인증을 안 했으면 0을 반환, 로그인 시 인증했나 안 했나 체크하기 위함
 		 int emailAuthFail(String id) throws Exception;
-		 //
+		 // 회원 수정 시 이메일 변환하는 메서드
 		 int updateMail(UserDTO userDTO);
+		 
+		 // 아이디 비밀번호 찾기 시 이메일로 회원정보 조회 && 이메일 중복체크 시에도 사용
+		 UserDTO getUserByEmail(String user_email);
+		 
+		 // 비밀번호 찾기 시 db의 비밀번호를 임시비밀번호로 업데이트
+		 void updatePwd(UserDTO userDTO);
+		 
+		 // 닉네임 중복검사
+		 UserDTO nickCheck(String user_nickname);
+		 
+		// 아이디 중복검사
+	    UserDTO idCheck(String user_id);
 }

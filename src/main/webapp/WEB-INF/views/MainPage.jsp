@@ -128,9 +128,28 @@
         <div class="insta-hot">
             <h2 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h2>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-                <img src="<%=request.getContextPath()%>/resources/images/image1.jpg" alt="Image 1" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image2.jpg" alt="Image 2" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image3.jpg" alt="Image 3" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
+            <a class="image-container" href="<%=request.getContextPath()%>/">
+			  <img src="<%=request.getContextPath()%>/resources/images/카페 엘리펀트힙-470.jpg" alt="Image 1">
+			  <div class="hidden-content">
+			      <h3>카페 엘리펀트힙</h3>
+			      <p>제주공항 근처 에그인더헬이 맛있는 핫플레이스 브런치카페</p>
+			   </div>
+			</a> 
+			<a class="image-container" href="<%=request.getContextPath()%>/">
+			  <img src="<%=request.getContextPath()%>/resources/images/카페 그계절-470.jpg" alt="Image 2">
+			  <div class="hidden-content">
+			  	<h3>카페 그계절</h3>
+			      <p>제주 구좌읍카페 초록이들 가득한 플렌테리어카페</p>
+			   </div>
+			</a> 
+            <a class="image-container" href="<%=request.getContextPath()%>/">   
+                <img src="<%=request.getContextPath()%>/resources/images/카페 까르네-470.jpg" alt="Image 3">
+                <div class="hidden-content">
+                	<h3>카페 까르네</h3>
+			      <p>구좌읍 상도리에 위치한 작은 디저트 카페.</p>
+			   </div>
+			   
+			</a>
             </div>
         </div>
     </div>
@@ -140,9 +159,28 @@
         <div class="steady-hot">
             <h2 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h2>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-                <img src="<%=request.getContextPath()%>/resources/images/image1.jpg" alt="Image 1" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image2.jpg" alt="Image 2" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image3.jpg" alt="Image 3" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
+                 <a class="image-container" href="<%=request.getContextPath()%>/">
+			  <img src="<%=request.getContextPath()%>/resources/images/오설록티뮤지엄-470.jpg" alt="Image 1">
+			  <div class="hidden-content">
+				  <h3>오설록티뮤지엄</h3>
+				      <p>제주녹차문화의 중심, 차박물관과 카페테리아</p>
+			   </div>
+			</a> 
+			<a class="image-container" href="<%=request.getContextPath()%>/">
+			  <img src="<%=request.getContextPath()%>/resources/images/용머리해안-470.jpg" alt="Image 2">
+			  <div class="hidden-content">
+			  		<h3>용머리해안</h3>
+			      <p>#해변 #휴식/힐링 #부모님 동반 #커플 #맑음 #봄 #자연경관 #유네스코 #무장애관광</p>
+			   </div>
+			</a> 
+            <a class="image-container" href="<%=request.getContextPath()%>/">   
+                <img src="<%=request.getContextPath()%>/resources/images/신창풍차해안도로-470.jpg" alt="Image 3">
+                <div class="hidden-content" >
+                	<h3>신창풍차해안도로</h3>
+			      <p>#커플 #경관/포토 #해안도로 #드라이브 #반려동물동반입장 #반려동물동반_산책로 #반려동물동반_자연 #반려동물동반_관광지</p>
+			   </div>
+			   
+			</a>
             </div>
         </div>
     </div>
@@ -152,11 +190,30 @@
         <div class="photo-hot">
             <h2 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h2>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-                <img src="<%=request.getContextPath()%>/resources/images/image1.png" alt="Image 1" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image2.png" alt="Image 2" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image3.png" alt="Image 3" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
+                 <a class="image-container" href="<%=request.getContextPath()%>/">
+			  <img src="<%=request.getContextPath()%>/resources/images/김녕바닷길-470.jpg" alt="Image 1">
+			  <div class="hidden-content">
+			  	<h3>김녕바닷길</h3>
+			      <p>#지질트레일 #걷기/등산 #친구 #커플 #가을 #겨울 #자연경관 #체험</p>
+			   </div>
+			</a> 
+			<a class="image-container" href="<%=request.getContextPath()%>/">
+			  <img src="<%=request.getContextPath()%>/resources/images/노루손이 오름-470.jpg" alt="Image 2">
+			  <div class="hidden-content" >
+			  	<h3>노루손이 오름</h3>
+			      <p>#자연 #목장 #노루생이오름 #트레킹 #고사리 #고사리꺽기 #검은오름 #노리오름</p>
+			   </div>
+			</a> 
+            <a class="image-container" href="<%=request.getContextPath()%>/">   
+                <img src="<%=request.getContextPath()%>/resources/images/안돌오름-470.jpg" alt="Image 3">
+                <div class="hidden-content">
+                	<h3>안돌오름</h3>
+			      <p>#친구 #아이 #맑음 #오름 #자연경관 #도보여행 #도보 #어린이</p>
+			   </div>
+			   
+			</a>
             </div>
-        </div>
+            </div>
     </div>
     
     <br>
