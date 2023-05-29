@@ -48,7 +48,7 @@
 		          </a>
 		          </c:if>
                <div class="mypage_buttons">
- 					<button onclick="location.href='userprofile.go'">프로필 수정</button><br><br>
+ 					<button onclick="openModifyPage()">프로필 수정</button><br><br>
  					<button onclick="location.href=''">찜한 장소</button><br><br>
  					<button class="">카카오톡 초대링크</button>&nbsp;&nbsp;&nbsp;&nbsp;
  					<button>pdf 내보내기</button>
@@ -112,7 +112,44 @@ function opensharePage(a){
 	 		}else{
 		 		alert('로그인이 필요한 기능입니다.');
 		 	}
- 	} 
+ 	}
+ 	//정회원 회원 여부 구분 후 modify page 이동.
+	function openModifyPage(){
+		let kid = '${kakao_id}';
+		let uid = '${user_id}';	
+		
+		if(kid != '' && uid == ''){
+ 			$.ajax({
+	 			url : "iskakao_check.go",
+	 			type : "POST",
+	 			data : {
+	 				user_email : kid
+	 			},
+	 		    success:function(result){ 
+	 		    	//temporary 테이블에 이메일이 존재하고 연계회원가입이 되어 있는 경우.
+	 		    	if(result == 1){ 
+	 		        	//수정하는 창으로 보낸다.
+	 		        	location.href='userprofile.go'
+	 		        //temporary 테이블에 이메일이 존재하지만 연계회원가입이 되어 있지 않은 경우.   
+	 		        }else if(result == -1){
+	 		        	let ask_result = confirm('회원님은 sns연동 임시 회원입니다. 추가정보를 입력하여 sns연동 회원가입을 하시겠습니까?');
+	 		        	if(ask_result){
+	 		        		var url = "kakaoUser_join.go?user_email=" + kid;
+	 		        		window.open(url,"카카오톡 연동 회원 가입", 
+	 		   					"titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0"
+	 		   					, "");
+	 		        	}
+	 		        }else{
+	 		        	alert('로그인이 필요한 기능입니다.');
+	 		        }
+	 		    },
+	 		    error:function(error){
+	 		        alert("아이디를 다시 입력해 주세요");
+	 		    } 
+	 			
+	 		}); 
+		}
+	}
 </script>
 </body>
 </html>
