@@ -4,22 +4,33 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jejutree.dao.UserPlansDAO">
-   <insert id="addplans"
-      parameterType="com.jejutree.plans_model.UserPlansDTO">
-      INSERT INTO travel_plans(user_id, title, description, start_date, end_date,
-      location, created_at, updated_at, markerLat, markerLng)   
-      VALUES(#{user_id}, #{title }, #{description}, #{start_date}, #{end_date}, #{location},
-      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{markerLat}, #{markerLng});
-   </insert>
+	<insert id="addplans"
+		parameterType="com.jejutree.plans_model.UserPlansDTO">
+		INSERT INTO travel_plans(user_id, title, description,
+		start_date, end_date,
+		location, created_at, updated_at, markerLat,
+		markerLng)
+		VALUES(#{user_id}, #{title }, #{description}, #{start_date},
+		#{end_date}, #{location},
+		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+		#{markerLat}, #{markerLng});
+	</insert>
 
-   <select id="myplans"
-      resultType="com.jejutree.plans_model.UserPlansDTO">
-      SELECT * FROM travel_plans WHERE user_id = #{user_id}
-   </select>
-	
-	
-	<!-- <insert id="com.jejutree.dao.UserPlansDAO"  parameterType="participantsDto" >
-		INSERT INTO PLAN PARICIPANTS(ID,USER_ID,USER_PLAN_ID,CREATED_AT,UPDATED_AT)
-		VALUES(DEFAULT,#{USER_ID},null,default,default); -->
-	<!-- </insert> --> 
+	<select id="myplans"
+		resultType="com.jejutree.plans_model.UserPlansDTO">
+		SELECT * FROM travel_plans WHERE user_id = #{user_id}
+	</select>
+
+	<select id="getPlanById"
+		resultType="com.jejutree.plans_model.UserPlansDTO">
+		SELECT * FROM travel_plans WHERE id = #{id}
+	</select>
+
+	<update id="updatePlan"
+		parameterType="com.jejutree.plans_model.UserPlansDTO">
+		UPDATE travel_plans
+		SET user_id = #{user_id}
+		WHERE id = #{id}
+	</update>
+
 </mapper>

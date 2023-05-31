@@ -271,14 +271,14 @@
             var labelPosition = new Tmapv2.LatLng(lat, lon);
             
             var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
-                + "<input type='hidden' name='title' value='" + item.title + "'>" 
-                + "<input type='hidden' name='address' value='" + item.addr1 + "'>"
-                + "<input type='hidden' name='location' value=" + item.title + ">"
-                + "<input type='hidden' name='markerLat' value='" + latlng._lat + "'>"  // latitude input field
-                + "<input type='hidden' name='markerLng' value='" + latlng._lng + "'>"  // longitude input field
-                + "<div style='padding:10px; width:250px;'>" + item.title + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
-                + "<div>" + item.addr1 + "</div>"
-                + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
+                + "<input type='hidden' name='title' value='" + name + "'>" 
+                + "<input type='hidden' name='address' value='" + address + "'>"
+                + "<input type='hidden' name='location' value='비자림'>"
+                + "<input type='hidden' name='markerLat' value='" + lat + "'>"  // latitude input field
+                + "<input type='hidden' name='markerLng' value='" + lon + "'>"  // longitude input field
+                + "<div style='padding:10px; width:250px;'>" + name + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
+                + "<div>" + address + "</div>"
+                // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
                 + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
                 + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
                 + "</form>";
@@ -318,35 +318,28 @@
    });
    ///////////////////////////////////////////
    function validateAndSubmitForm(){
-	   if(PlanListValidCheck()){
-		   $('#markerDataForm').submit();
-	   }else{
-		   alert('항목을 모두 입력하셔야 합니다.');   
-	   }
-	} 
+      if(PlanListValidCheck()){
+         $('#markerDataForm').submit();
+      }else{
+         alert('항목을 모두 입력하셔야 합니다.');   
+      }
+   } 
    function PlanListValidCheck() {
-	   
-	    if ($('.plan_start_date').val() == '') {
-	        return false;
-	    }
-	    if ($('.plan_end_date').val() == '') {
-	    	return false;
-	    }
-	    return true;
-	} 
+      
+       if ($('.plan_start_date').val() == '') {
+           return false;
+       }
+       if ($('.plan_end_date').val() == '') {
+          return false;
+       }
+       return true;
+   } 
 </script>
 </head>
 <body onload="initTmap()">
+ <c:set var = "normal_session" value="${user_id}"/>
 <!-- 상단바 설정하기  -->
 <%@ include file="./include/navbar.jsp" %>
-<c:choose>
-    <c:when test="${!empty kakao_session}">
-        <c:set var="parameter_id" value="${kakao_id}" />
-    </c:when>
-    <c:when test="${!empty user_id}">
-        <c:set var="parameter_id" value="${user_id}" />
-    </c:when>
-</c:choose>
 <br>
 <br>
 <br>
@@ -374,10 +367,10 @@
 </div>
 <br>
 <c:if test="${!empty user_id}">
-<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${user_id}">상세설정</a></div>
+<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${user_id}&is_guest=n">상세설정</a></div>
 </c:if>
 <c:if test="${!empty kakao_id}">
-<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}">상세설정</a></div>
+<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}&is_guest=n">상세설정</a></div>
 </c:if>
 <br>
 <br>
