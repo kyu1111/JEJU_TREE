@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WeeklyController {
 
-	@RequestMapping(value = "/weekly_calendar.go", method = RequestMethod.POST)
-	public String weekly(@RequestParam("title") String title, @RequestParam("address") String address, Model model) {
-		model.addAttribute("title", title);
-		model.addAttribute("address", address);
-		return "calendar/weekly";
-	}
+   @RequestMapping(value = "/weekly_calendar.go", method = RequestMethod.POST)
+   public String weekly(@RequestParam("title") String title, @RequestParam("address") String address, Model model) {
+      model.addAttribute("title", title);
+      model.addAttribute("address", address);
+      return "calendar/weekly";
+   }
 
 }

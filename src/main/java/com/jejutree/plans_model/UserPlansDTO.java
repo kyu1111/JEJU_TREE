@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class UserPlansDTO {
    
    private int id;
-   private String userId;
+   private String user_id;
    private String description;
    private String title;
    private String start_date;

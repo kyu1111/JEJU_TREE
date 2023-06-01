@@ -30,6 +30,12 @@
 <!-- <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" /> -->
 </head>
 <body>
+   <c:set var="is_guest" value="${is_guest}" />
+   <c:set var="user_id" value="${share_id}"/>
+   <%-- ${is_guest} --%>
+   <c:if test="${empty is_guest}">
+   		<p>본인이 작성한 일정입니다.</p>
+   </c:if>
    <!--  지도가 나타나는 부분. -->
    <div id="map_div"></div>
    
@@ -52,6 +58,7 @@
          <i class="fa-solid fa-angle-right"></i>
       </button>
       <button id="saveAsPDF">PDF로 저장</button>
+      <button id="savePlan">일정저장(변경사항)</button>
       <span class="navbar--range"></span>
    </nav>
    <main id="container"></main>
@@ -361,8 +368,10 @@ calendar.deleteSchedule(eventData.schedule.id, eventData.schedule.calendarId);
 
  var events = [];
  <c:forEach var="plan" items="${List}">
- var event = {
-     id: '${plan.id}',
+
+   var event = {
+     user_id: '${plan.user_id}',
+	 id: '${plan.id}',
      calendarId: '1',
      title: '${plan.title}',
      category: 'time',
@@ -370,10 +379,11 @@ calendar.deleteSchedule(eventData.schedule.id, eventData.schedule.calendarId);
      dueDateClass: '',
      start: '${plan.start_date}T09:00:00+10:00', // 시간 부분을 실제 데이터에 맞게 수정해야 합니다.
      end: '${plan.end_date}T09:00:00+13:00',   // 시간 부분을 실제 데이터에 맞게 수정해야 합니다.
-    // isReadOnly: true  
- };
- events.push(event);
-</c:forEach>
+     // isReadOnly: true
+   };
+
+   events.push(event);
+ </c:forEach>
 
 calendar.createEvents(events);
 
@@ -389,12 +399,64 @@ calendar.createEvents(events);
     calendar.today();                         // 현재 뷰 기준으로 이전 뷰로 이동
 });
 
+ function extractCalendarEvents(events) {
+	  var extractedEvents = [];
+
+	  events.forEach(function (event) {
+	    var user_id = event.user_id;
+		var title = event.title;
+	    var start = event.start;
+	    var end = event.end;
+	    var id = event.id;
+
+	    extractedEvents.push({ user_id,id, title, start, end });
+	  });
+
+	  return extractedEvents;
+	}
+ 
+ 
+ 
  calendar.on('beforeUpdateEvent', function ({ event, changes }) {
-        const { id, calendarId } = event;
-     
-        calendar.updateEvent(id, calendarId, changes);
-        
-      });
+   const { id, calendarId } = event;
+	
+  
+   calendar.updateEvent(id, calendarId, changes);
+
+   for (let i = 0; i < events.length; i++) {
+     if (events[i].id === id) {
+       // 변경된 정보로 업데이트
+       events[i].title = changes.title || events[i].title;
+       events[i].start = changes.start || events[i].start;
+       events[i].end = changes.end || events[i].end;
+       break;
+     }
+   }
+
+   events.sort(function (a, b) {
+     return new Date(a.start) - new Date(b.start);
+   });
+
+   var updatedEvents = extractCalendarEvents(events);
+
+   console.log('이벤트 정보:');
+   updatedEvents.forEach(function (event, index) {
+     var { user_id,id, title, start, end } = event;
+     console.log('user_id:', user_id);
+     console.log('Title:', title);
+     console.log('Start:', start);
+     console.log('End:', end);
+     console.log('캘린더 상 순서:', index + 1);
+   });
+ });
+	  // savePlan 버튼 클릭 이벤트 핸들러에 전달
+	  document.getElementById('savePlan').addEventListener('click', function() {
+		  
+		  updatedEvents = extractCalendarEvents(events);
+		  
+		  isGuestJoinCheck(updatedEvents,event.user_id);
+	  });
+	});
  
 //여러 속성을 바꾸는 경우
 calendar.updateEvent('3', '3', {
@@ -406,9 +468,40 @@ end: '2023-05-19T23:59:59',
 
 //calendar.deleteEvent('1', '1');
 
-});
+
 
  </script>
- 
+ <script type="text/javascript">
+    function isGuestJoinCheck(updatedEvents,user_id){
+        let is_guest = '${is_guest}';
+        let share_id = '${share_id}';
+        console.log(is_guest);
+        if(is_guest != ''){
+            alert('로그인이 필요한 서비스입니다.');
+            location.href = 'guest_login_page.go?share_id=' + share_id;
+        } else {
+            $.ajax({
+                url: "planListUpdateOk.go",
+                type: 'POST',
+                traditional:true,
+                dataType: 'json',
+                data: {data:JSON.stringify(updatedEvents),
+                	   user_id:user_id},
+                contentType: 'application/x-www-form-urlencoded',
+                headers: {
+                    "Accept": "application/json"
+                },
+                success: function(res){
+                    if (res.result) {
+                        alert("완료되었습니다.");
+                    }
+                },
+                error: function(){
+                    alert('요청 실패!');
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>

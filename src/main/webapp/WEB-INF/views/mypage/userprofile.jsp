@@ -17,13 +17,15 @@
     <!-- 상단바 설정하기  -->
     <%@ include file="../include/navbar.jsp" %> 
     <div class="userProfile">
-    <form method="post" id="frm1">
+    <form method="post" id="frm1" enctype="multipart/form-data" >
     
     <table>
         <tr>
         <td>
-            <label id="user_nickname" for="user_nickname">사용자 프로필</label>
-             <input type="file" value="${user.user_image }" name="user_image"  >
+            <label>사용자 프로필</label>
+             <img src="<%=request.getContextPath() %>${user.user_image }" alt="profile" >
+             <input type="file" name="upload" value="${user.user_image }" >
+             <input type="hidden" name="user_image" value="${user.user_image }">
          </td>
         </tr>
         <tr>
@@ -48,7 +50,7 @@
         <tr>
         <td> 
             <label id="user_pwd" for="user_pwd">사용자 현재 비밀번호</label>
-            <input type="password" name="user_pwd"  placeholder="현재 비밀번호"></td>
+            <input type="password" value="${user.user_pwd }" name="user_pwd"  placeholder="현재 비밀번호"></td>
         </tr>
         <tr>
          <td>
@@ -67,9 +69,8 @@
          <td>
             <label id="user_email" for="user_email">사용자 이메일</label>
            <input type="text" value="${user.user_email }" class="user_email" name="user_email" >
-           <p id="email_check" class="email_check"></p>
-          </td>
-        </tr>
+            <p id="email_check" class="email_check"></p>
+			
 	</table>
 	<input type="hidden" value="${user.user_iskakao }" name="user_iskakao"  >
 	<input type="hidden" value="${user.user_like_keyword }" name="user_like_keyword"  >
@@ -80,7 +81,15 @@
 	
 	 <input type="submit" value="회원수정" id="update" onclick='btn_click("update");'>
 	<button type="reset" value="다시작성">다시작성</button>
+      <c:if test="${empty Kakao_info}">
     <input type="submit" value="회원탈퇴" onclick='btn_click("delete");'>
+    </c:if>
+     <!--카카오 계정으로 로그인 했으나 user_join이 1인 경우.(정회원 연동 외어있는 상태)  -->
+    <c:if test="${!empty Kakao_info}">
+    	<input type="button" value="카카오계정 연동 계정 탈퇴및 연결 해제" onclick="if(confirm('정말로 회원탈퇴 하시겠습니까?(연동 회원가입정보도 소멸됩니다.)')) {
+                                               location.href='deletekakaoUser.go?user_email=${kakao_id}&access_Token=${kakao_token}'
+                                                   } else{return;}" >
+     </c:if> 
     
      </form>
 	</div>
@@ -114,6 +123,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/mypage/userUpdate.js"></script>
 <script>
+	
+	
 
     function btn_click(str){                             
         if(str=="update"){                                 
@@ -126,5 +137,7 @@
     }
 </script>
 
+
+    
 </body>
 </html>

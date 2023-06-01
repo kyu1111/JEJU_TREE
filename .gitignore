@@ -12,9 +12,15 @@ local.properties
 .recommenders
 
 datasource.properties
-JejuTree\target\m2e-wtp\web-resources\META-INF\maven\com.jejutree\model\pom.properties
-JejuTree\target\m2e-wtp\web-resources\META-INF\maven\com.jejutree\model\pom.properties
-JejuTree\src\main\resources\config\
+
+# Created by https://www.toptal.com/developers/gitignore/api/maven
+# Edit at https://www.toptal.com/developers/gitignore?templates=maven
+
+
+src/main/resources/config/
+target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+target/m2e-wtp/web-resources/META-INF/maven/com.jejutree/model/pom.properties
+
 # External tool builders
 .externalToolBuilders/
 

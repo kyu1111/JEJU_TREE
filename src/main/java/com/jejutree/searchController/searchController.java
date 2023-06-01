@@ -88,7 +88,7 @@ public class searchController {
 		List<SearchDTO> list = this.dao.getKeywordList(dto.getUser_id());
 	    String keyword = "key";
 	    map.put(keyword, list);
-	    System.out.println(list);
+	    //System.out.println(list);
 	    System.out.println(map);
 	    String jsonString = gson.toJson(map);
 	    PrintWriter out = response.getWriter();

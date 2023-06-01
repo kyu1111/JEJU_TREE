@@ -10,7 +10,7 @@
  		 	<selectKey keyProperty="id" resultType="int" order="BEFORE">
        			select count(*) + 1 from user
    			</selectKey>
-       		insert into user values(#{user_id},#{user_pwd},#{user_email},#{user_nickname},default,default,default,#{user_phone},0,default,default,#{id})
+       		insert into user values(#{user_id},#{user_pwd},#{user_email},#{user_nickname},default,#{user_image},default,#{user_phone},0,default,default,#{id})
     	</insert>
  		<!--일반 회원가입 회원 정보조회  -->
 		<select id="UserInfo" parameterType="String" resultType="userDto">
@@ -32,7 +32,7 @@
 	   		delete from temporary_kakao_user where user_email = #{user_email}
 	    </delete>
 	    <delete id="KaKaoDelete" parameterType="String">
-	   		delete from user where user_email = #{user_email}
+	   		delete from user where user_id = #{user_email}
 	    </delete>
 	    <!--하림님(id로 일반 탈퇴)   -->
 	    <select id="getuserById" parameterType="int" resultType="userDto">
@@ -46,7 +46,7 @@
  		<select id="checkPwd" parameterType="int" resultType="String" >
       		select user_pwd from user where id = #{id}
    		</select>
-
+		
  	<!--카카오 기능 -->
  		
  		<select id="kakao_email_info" parameterType="String" resultType="userDto">
@@ -61,7 +61,7 @@
 		        SELECT COUNT(*) + 1 FROM user
 		    </selectKey>
 		    INSERT INTO user (user_id, user_pwd, user_email, user_nickname, is_admin, user_image, user_like_keyword, user_phone, user_iskakao, mailKey, mailAuth, id)
-		    VALUES (#{user_id}, #{user_pwd}, #{user_email}, #{user_nickname}, DEFAULT, DEFAULT, DEFAULT, #{user_phone},1, DEFAULT, DEFAULT, #{id})
+		    VALUES (#{user_id}, #{user_pwd}, #{user_email}, #{user_nickname}, DEFAULT, #{user_image}, DEFAULT, #{user_phone},1, DEFAULT, DEFAULT, #{id})
 		</insert>
 
  		<!--카카오 로그인시 임시 회원정보 삽입  -->
@@ -107,8 +107,16 @@
    	   <select id="userId" parameterType="String" resultType="userDto">
    	      select * from user where user_id = #{user_id}
    	   </select>
-   	   <update id="updatepwd" parameterType="userDto">
-   	       update user set user_pwd = #{user_pwd} where id = #{id}
-   	   </update>
+   	   
+   
+   <!--공유 관련 기능  --> 
+   		<!--동행자 정보 입력 하기  -->
+		<insert id="insertParticipant" parameterType="participantsDto">
+			insert into plan_participants(user_id,user_share_id)values(#{user_id},#{user_share_id})		
+		</insert>
+		<!--해당 플랜 공유자와 사용자 id 중복 여부 확인  -->
+		<select id="selfShareCheck" parameterType="java.util.HashMap" resultType="int">
+			select count(*) from plan_participants where user_id = #{user_id} and user_share_id= #{user_share_id}
+		</select>
  </mapper>
  

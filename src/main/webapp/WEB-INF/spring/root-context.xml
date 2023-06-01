@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-		<!-- 1. 외부 properties 파일을 읽어들을 수 있게 설정하는 작업 
-	                   외부의 프로퍼티 팡리에 저장된 정보를 스프링 파일에서 사용할 수 있게 하는 태그
-	-->
-	<!-- <context:property-placeholder
-	 
-	/> -->
-	
-	<context:property-placeholder location="classpath:config/*.properties"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+   
+   <!-- Root Context: defines shared resources visible to all other web components -->
+      <!-- 1. 외부 properties 파일을 읽어들을 수 있게 설정하는 작업 
+                      외부의 프로퍼티 팡리에 저장된 정보를 스프링 파일에서 사용할 수 있게 하는 태그
+   -->
+   <!-- <context:property-placeholder
+    
+   /> -->
+   
+   <context:property-placeholder location="classpath:config/*.properties"
     
     />
-	<!-- 2. DatraSource 정보 설정 -->    
-	<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-	   <property name="driverClassName" value="${jdbc.driver}"></property>
-	   <property name="url" value="${jdbc.url}"></property>
-	   <property name="username" value="${jdbc.username}"></property>
-	   <property name="password" value="${jdbc.password}"></property>
-	</bean>
-	<!-- 3. SqlSessionFactory 클래스 설정 -->	
-	<bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource"></property>
-	    <property name="mapperLocations" value="classpath:/mapper/*.xml"></property>
-	    <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
-	</bean>
-	<!-- 4. SqlSessionTemplate 클래스 설정 -->
-	<bean name="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-	    <constructor-arg ref="sqlSessionFactory" />
-	</bean>
-		    
+   <!-- 2. DatraSource 정보 설정 -->    
+   <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="${jdbc.driver}"></property>
+      <property name="url" value="${jdbc.url}"></property>
+      <property name="username" value="${jdbc.username}"></property>
+      <property name="password" value="${jdbc.password}"></property>
+   </bean>
+   <!-- 3. SqlSessionFactory 클래스 설정 -->   
+   <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+       <property name="dataSource" ref="dataSource"></property>
+       <property name="mapperLocations" value="classpath:/mapper/*.xml"></property>
+       <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
+   </bean>
+   <!-- 4. SqlSessionTemplate 클래스 설정 -->
+   <bean name="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+       <constructor-arg ref="sqlSessionFactory" />
+   </bean>
+          
     <!-- 메일 보내기 (SEND) -->
    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
       <property name="host" value="smtp.gmail.com" />
@@ -54,4 +54,11 @@
          </props>
       </property>
    </bean>
+       <!-- fileUpload --> 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="52428800"/> <!-- 50MB -->
+        <property name="maxInMemorySize" value="1048576"/> <!-- 1MB -->
+    </bean>
+
 </beans>

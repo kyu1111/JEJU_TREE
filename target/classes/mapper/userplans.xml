@@ -4,17 +4,51 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jejutree.dao.UserPlansDAO">
-   <insert id="addplans"
-      parameterType="com.jejutree.plans_model.UserPlansDTO">
-      INSERT INTO travel_plans(user_id, title, description, start_date, end_date,
-      location, created_at, updated_at, markerLat, markerLng)   
-      VALUES(#{userId}, #{title }, #{description}, #{start_date}, #{end_date}, #{location},
-      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{markerLat}, #{markerLng});
-   </insert>
+	<insert id="addplans"
+		parameterType="com.jejutree.plans_model.UserPlansDTO">
+		INSERT INTO travel_plans(user_id, title, description, start_date, end_date,
+		location, created_at, updated_at, markerLat, markerLng)
+		VALUES(#{user_id}, #{title }, #{description}, #{start_date},
+		#{end_date}, #{location},
+		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{markerLat}, #{markerLng});
+	</insert>
 
-   <select id="myplans"
-      resultType="com.jejutree.plans_model.UserPlansDTO">
-      SELECT * FROM travel_plans WHERE user_id = #{userId}
-   </select>
+	<select id="myplans"
+		resultType="com.jejutree.plans_model.UserPlansDTO">
+		SELECT * FROM travel_plans WHERE user_id = #{user_id}
+	</select>
 
+	<select id="getPlanDto" parameterType="String"
+		resultType="com.jejutree.plans_model.UserPlansDTO">
+		select * from travel_plans where user_id = #{user_id}
+	</select>
+	<select id="getPlanDtobyId" parameterType="int"
+		resultType="com.jejutree.plans_model.UserPlansDTO">
+		select * from travel_plans where id = #{id}
+	</select>
+
+	<update id="getUpdateTarget" parameterType="java.util.HashMap">
+		UPDATE travel_plans
+		SET title = #{title},start_date = #{start_date},
+		end_date = #{end_date},
+		location = #{location},created_at =
+		#{createdAt},updatedAt = now(),
+		markerLat = #{markerLat},markerLng =
+		#{markerLng}
+		<!--origin id값 -->
+		WHERE id = #{id}
+	</update>
+
+
+	<select id="getPlanById"
+		resultType="com.jejutree.plans_model.UserPlansDTO">
+		SELECT * FROM travel_plans WHERE id = #{id}
+	</select>
+
+	<update id="updatePlan"
+		parameterType="com.jejutree.plans_model.UserPlansDTO">
+		UPDATE travel_plans
+		SET user_id = #{user_id}
+		WHERE id = #{id}
+	</update>
 </mapper>
