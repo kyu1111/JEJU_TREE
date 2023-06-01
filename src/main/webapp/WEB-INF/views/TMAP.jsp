@@ -53,8 +53,8 @@
 </style>
 
 <!-- Add jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src = "https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/sidebar.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>
@@ -62,6 +62,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
   
 <script type="text/javascript">
+
    var map;
    var infoWindow;
    var marker;
@@ -193,7 +194,7 @@
                   mapX: latlng._lng,
                   mapY: latlng._lat,
                   radius: 100
-              },
+              },         
               success: function(data) {
                   if (data && data.response && data.response.body && data.response.body.items && data.response.body.items.item.length > 0) {
                       var item = data.response.body.items.item[0]; // 첫 번째 아이템
@@ -203,7 +204,7 @@
                           position: new Tmapv2.LatLng(latlng._lat, latlng._lng),
                           map: map
                       });
-                      
+                            
                       var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
                           + "<input type='hidden' name='title' value='" + item.title + "'>" 
                           + "<input type='hidden' name='address' value='" + item.addr1 + "'>"
@@ -216,14 +217,14 @@
                           + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
                           + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
                           + "</form>";
-
+                     
                           infoWindow = new Tmapv2.InfoWindow({
                               position: new Tmapv2.LatLng(latlng._lat, latlng._lng),
                               content: content,
                               type: 2,
                               map: map
                           });
-
+                        
                       // Close button event
                       $(document).on('click', '#closeBtn', function(e) {
                           e.preventDefault();
@@ -316,7 +317,7 @@
         });
    
    });
-   ///////////////////////////////////////////
+   
    function validateAndSubmitForm(){
       if(PlanListValidCheck()){
          $('#markerDataForm').submit();

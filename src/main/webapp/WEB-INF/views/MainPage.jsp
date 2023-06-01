@@ -84,12 +84,11 @@
             </h2>
             <p style="font-size:30px;">
                 	손쉽게 일정을  조정하세요.
-                	<!--  ${user_id}-->
             </p>
             <div class="button-container">
                 <button class="btn" onclick="location.href='tmap.go'">일정 만들기</button>
                 <button class="btn">이용 가이드</button>
-				<button class="btn" onclick="location.href='drag_plan_list.go'">DragFunction</button>
+                <button class="btn" onclick="location.href='drag_plan_list.go'">DragFunction</button>
             </div>
         </div>
         		
@@ -169,5 +168,4 @@
 	</div>
 	</div>
 	<%@ include file="./include/footer.jsp" %>
-
 </html>

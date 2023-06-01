@@ -18,7 +18,6 @@
         <c:set var = "kakao_session" value="${Kakao_info}"/>
         <c:set var = "normal_session" value="${user_id}"/>
         	<c:if test="${!empty user_id}">
-        		${user_id}님 해윙
         		<a href="normal_logout.go"><font size="5">LOGOUT</font></a>
         		<a href="mypage.go"><font size="5">MYPAGE</font></a>
         	</c:if>
@@ -31,8 +30,8 @@
         	<!--둘중 하나가 세션에 있으면 로그아웃 창으로 변경 
         	1.세션명이 user_id 면 일반회원 로그아웃 태그 제공
         	2.두번쨰 로그아웃은 둘중하나는 세션이 있는 상태 이지만 세션이 유저아이디가 아닌경우 이기 떄문에 카카오 로그아웃 경로로 제공 -->
-        		${kakao_nickname}님 안녕하세요
-        		${user_join}
+        		<%-- ${kakao_nickname}님 안녕하세요
+        		${user_join} --%>
         		<a href="logout.go"><font size="5">LOGOUT</font></a>
         		<!--카카오 계정과 함께 로그아웃-->
         		<a class="p-2" href="https://kauth.kakao.com/oauth/logout?client_id=b1b9f0baef115c1e6588625cf198429b&logout_redirect_uri=http://localhost:8585/model/logout.go">
