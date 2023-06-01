@@ -334,7 +334,46 @@
           return false;
        }
        return true;
-   } 
+   }
+   function planList_check(a){
+	   let kid = '${kakao_id}';
+	   let uid = '${user_id}';
+	   let user_id ='';
+	   
+	   if(kid != ''){
+		   user_id = kid;
+	   }else if(uid != ''){
+		   user_id = uid;
+	   }
+	   console.log(user_id);
+		$.ajax({
+ 			url : "planlistCheck.go",
+ 			type : "POST",
+ 			data : {
+ 				user_id : user_id
+ 			},
+ 		    success:function(result){ 
+ 		    	//해당 아이디로 저장된 일정리스트가 있는 경우.
+ 		    	if(result == 1){ 
+ 		        	//수정하는 창으로 보낸다.
+ 		    		let ask_result = confirm('일정정보를 수정하시겠습니까?');
+ 		        	if(ask_result){
+ 		        		let url = a;
+ 		        		location.href = url;
+ 		        	}
+ 		        	//해당 아이디로 저장된 일정리스트가 없는 경우.   
+ 		        }else if(result == -1){
+ 		        	alert('보유하신 일정 리스트가 없습니다. 일정을 먼저 추가해 주세요.')
+ 		        }
+ 		    },
+ 		    error:function(error){
+ 		        alert("통신 오류.");
+ 		    } 
+ 			
+ 		}); 
+	   
+	   	 
+   }
 </script>
 </head>
 <body onload="initTmap()">
@@ -368,10 +407,10 @@
 </div>
 <br>
 <c:if test="${!empty user_id}">
-<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${user_id}&is_guest=n">상세설정</a></div>
+<div align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')">상세설정</a></div>
 </c:if>
 <c:if test="${!empty kakao_id}">
-<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}&is_guest=n">상세설정</a></div>
+<div align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}')">상세설정</a></div>
 </c:if>
 <br>
 <br>

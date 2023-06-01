@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
 public class UserPlansImpl implements UserPlansDAO {
 
 	@Autowired
@@ -28,15 +27,38 @@ public class UserPlansImpl implements UserPlansDAO {
 	}
 
 	@Override
+	public UserPlansDTO getPlandto(String user_id) {
+		return this.sqlSession.selectOne("getPlanDto", user_id);
+	}
+
+	// 업데이트 시 필요한 row 정보 출력
+	@Override
+	public int getUpdateplan(UserPlansDTO dto) {
+		return this.sqlSession.update("getUpdateTarget", dto);
+	}
+
+	@Override
+	public UserPlansDTO getPlandtobyId(int id) {
+		return this.sqlSession.selectOne("getPlanDtobyId", id);
+	}
+
+	@Override
 	public int updatePlan(UserPlansDTO dto) {
-		
+
 		return this.sqlSession.update("updatePlan", dto);
-		
+
 	}
 
 	@Override
 	public UserPlansDTO getPlanById(int planId) {
-		
+
 		return this.sqlSession.selectOne("getPlanById", planId);
 	}
+
+	/*
+	 * @Override public int insertParticipants(Plan_participantsDTO dto) {
+	 * 
+	 * return this.sqlSession.insert("insertParticipant", dto); }
+	 */
+
 }

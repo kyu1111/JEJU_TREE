@@ -272,7 +272,7 @@ public class userController {
 			PrintWriter out = response.getWriter();
 			// 해당 유저 아이디 조회
 			UserDTO user_dto = dao.getuser(user_id);
-			System.out.println(user_dto.getUser_id());
+			//System.out.println(user_dto.getUser_id());
 			System.out.println(user_id);
 			// 해당 유저의 이메일 인증 여부 확인.
 			int check = dao.emailAuthFail(user_id);
@@ -470,10 +470,6 @@ public class userController {
 	public void deletekakaoUser(HttpServletResponse response, HttpSession session,
 			@RequestParam("access_Token") String access_token, @RequestParam("user_email") String user_email)
 			throws IOException {
-		// HashMap<String, Object> hashmap = (HashMap<String, Object>)
-		// session.getAttribute("Kakao_info");
-		// String access_token = (String) hashmap.get("kakao_token");
-		// String user_email = (String) hashmap.get("kakao_id");
 		System.out.println("토큰이 받아졌나?");
 		System.out.println(access_token);
 		response.setContentType("text/html; charset=UTF-8");
