@@ -38,6 +38,16 @@
      			</c:forEach>
      		</c:if>
      	</div>
+     	
+     	<div id="blist-container">
+     		<table id="blist_td" border="1" cellspacing="0">
+	     		<tr>
+	     			<th>찜한 장소</th>
+	     			<th>해제</th>	
+	     		</tr>
+     		</table>
+     	</div>
+     	
      	<%-- <div id="sidebar_location">
 	      <div class="location" data-lat="33.4588" data-lng="126.9423">
 	         <img

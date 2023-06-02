@@ -11,17 +11,16 @@
             left: 0;
             width: 100%;
             z-index: 20;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .navbar a {
             color: black;
             text-decoration: none;
             font-size: 20px;
-            margin-right: 40px;
+            margin-right: 55px;
             margin-left: 10px;
         }
 
         .navbar a:hover {
-            color: #007bff;
+            color: #99dce6;
         }

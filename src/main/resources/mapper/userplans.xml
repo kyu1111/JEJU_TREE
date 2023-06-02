@@ -51,4 +51,22 @@
 		SET user_id = #{user_id}
 		WHERE id = #{id}
 	</update>
+	
+	<delete id="deleteBm" parameterType="bookmarkDto">
+		delete from bookmark where user_id = #{user_id} and location = #{location}
+	</delete>
+
+	<insert id="insertBm" parameterType="bookmarkDto">
+		INSERT INTO bookmark (user_id, location)
+		VALUES (#{user_id}, #{location})
+	</insert>
+	
+	<select id="bm_loc" resultType="bookmarkDto">
+		SELECT * FROM bookmark WHERE user_id = #{user_id}
+	</select>
+	
+    <select id="checkBm" resultType="int" parameterType="bookmarkDto">
+        SELECT COUNT(*) FROM bookmark WHERE location = #{location} and user_id = #{user_id}
+    </select>
+	
 </mapper>

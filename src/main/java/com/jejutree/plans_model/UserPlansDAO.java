@@ -23,5 +23,13 @@ public interface UserPlansDAO {
 	UserPlansDTO getPlanById(int planId); // New method for fetching a plan by its ID
 
 	int updatePlan(UserPlansDTO dto); // New method for updating a plan
+	
+	int bmInsert(BookmarkDTO bdto);
+	
+	int bmDelete(BookmarkDTO bdto);
+	
+	List<BookmarkDTO> bmList(String user_id);
+	
+	boolean checkBookmark(BookmarkDTO bdto);
 
 }

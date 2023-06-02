@@ -60,8 +60,123 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
+
+<!-- 폰트어썸 cdn링크 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   
 <script type="text/javascript">
+
+//사이드바에 북마크 목록+해제버튼 생성
+$('.openbtn1').click(function(){
+	 $.ajax({
+        url: "bm_list.go",
+        method: "POST",
+        dataType : "json",
+        contentType : "application/json; charset:UTF-8",
+        async: false,
+        success: function(data) {
+       	 console.log(data);
+       	 let list = data.list;
+       	 let table = "";
+       	 for(let i=0;i<list.length;i++){
+       		 let cont = list[i];
+       		 table += "<tr>" +
+		        		 	"<td>"+cont.location+"</td>" +
+		        		 	"<td><input type='button' value='해제' onclick='bookmark_del(\""+cont.location+"\",this)'></td>" +
+       		 		"</tr>";
+       	 }
+       	 
+       	 console.log($('#blist_td').find('tr:gt(0)'));
+       	 $('#blist_td').find('tr:gt(0)').remove();
+       	 $('#blist_td').append(table);
+        },
+        error : function(request, status, error) {
+        	console.log("code:" + request.status + "\n" + "error:" + error + "\n" + "errortext:" + request.responseText );
+        }
+    });
+	 
+});
+
+
+//사용자 ID를 가져오는 함수
+function getUserID(userId, title) {
+  $.ajax({
+    url: "/get_user_id.go", // 사용자 ID를 가져오는 서버 엔드포인트 URL
+    method: "POST",
+    dataType: "text",
+    success: function(response) {
+      userId = response; // 수정된 부분: 서버로부터 가져온 사용자 ID 값을 변수에 저장
+      toggleBm(itemId, userId, title);
+    },
+    error: function(xhr, status, error) {
+   	 console.log("에러 발생 (상태 코드: " + xhr.status + "): " + xhr.responseText);
+    }
+  });
+}
+
+// 북마크 해제
+function bookmark_del(location, self){
+	$.ajax({
+        url: "bm_delete_ok.go",
+        method: "POST",
+        data: {
+       	 location: location
+        },
+        dataType : "text",
+        async: false,
+        success: function(data) {
+       	 console.log(data);
+       	 
+       	 if(data>0){
+       		 $(self).parent().parent().remove();
+       	 }else{
+       		 alert('실패');
+       	 }
+       	 
+        },
+        error : function(request, status, error) {
+        	console.log("code:" + request.status + "\n" + "error:" + error + "\n" + "errortext:" + request.responseText );
+        }
+    });
+}
+
+// 북마크 클릭 함수
+function toggleBm(title) {
+ var h = $('#heart');
+ let userId = $(".user_id").val();
+	console.log(title);
+	console.log("아이디", userId);
+
+ $.ajax({
+   url: "toggle_like.go",
+   method: "get",
+   data: { 
+   	user_id : userId,
+   	location : title 
+   },
+   dataType: "text",
+   success: function(response) {
+   	if(response>0) {
+	    	
+   		 let table = "<tr>" +
+		        		 	"<td>"+title+"</td>" +
+		        		 	"<td><input type='button' value='해제' onclick='bookmark_del(\""+title+"\",this)'></td>" +
+      		 			 "</tr>";
+
+		   $('#blist_td').append(table);
+	    }else if(response == -1){
+	    	alert('이미 등록된 장소입니다');
+	    }else{
+	    	alert('실패');
+	    }
+   
+   },
+   error: function(xhr, status, error) {
+   	console.log("에러 발생 (상태 코드: " + xhr.status + "): " + xhr.responseText);
+   }
+ });
+}
+
 
    var map;
    var infoWindow;
@@ -208,6 +323,7 @@
                       var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
                           + "<input type='hidden' name='title' value='" + item.title + "'>" 
                           + "<input type='hidden' name='address' value='" + item.addr1 + "'>"
+                          + "<a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>"
                           + "<input type='hidden' name='location' value=" + item.title + ">"
                           + "<input type='hidden' name='markerLat' value='" + latlng._lat + "'>"  // latitude input field
                           + "<input type='hidden' name='markerLng' value='" + latlng._lng + "'>"  // longitude input field

@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+	.jt {
+		color: #6a6a6a;
+		font-size: 11px;
+		padding-bottom: 5px;
+		padding-top: 30px;
+	}
+	
+	.footer-p {
+		color: #6a6a6a;
+		font-size: 11px;
+	}
+	
+	.terms {
+		text-decoration: none;
+		color: #6a6a6a;
+		font-size: 11px;
+	}
+	
+	.personalInfo {
+		text-decoration: none;
+		color: #6a6a6a;
+		font-size: 11px;
+	}
+
+	
+	.email {
+		text-decoration: none;
+		color: #6a6a6a;
+	}
+	
+	.footer {
+	  line-height: 0;
+	  padding-left: 15px;
+	  padding-bottom: 30px;
+	  padding-top: 30px;
+	}
+	
+	.credit {
+		padding-top: 15px;
+	}
+	
+	* {
+        user-select: none;
+     }

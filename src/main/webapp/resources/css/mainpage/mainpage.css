@@ -1,13 +1,13 @@
 @charset "UTF-8";
 
-	 .container{
+    .container{
           display: flex;
           justify-content: center;
           align-items: center;
      }
      
       .container_wrap {
-     
+     	 margin-bottom: 120px;
          display: flex;
          justify-content: center;
          align-items: center;
@@ -19,11 +19,11 @@
          margin: 10px 0;
       }
 
-	.container-hot {
-		padding-left: 6%;
-		padding-right: 6%;
-	} 
-	
+   .container-hot {
+      padding-left: 6%;
+      padding-right: 6%;
+   } 
+   
      .slider {
          width: 100%;
          position: relative;
@@ -48,7 +48,7 @@
          padding-right: 20px;
          
      }
-	
+   
       .arrows {
       
           position: absolute;
@@ -60,18 +60,18 @@
           z-index: 10;
           
       }
-	      
-	 .round-button {
-	    display: inline-block;
-	    padding: 8px 15px; /* 필요에 따라 조정하세요 */
-	    background-color: rgba(0, 0, 0, 0.3); /* 필요에 따라 조정하세요 */
-	    color: #fff; /* 필요에 따라 조정하세요 */
-	    text-align: center;
-	    border-radius: 50%;
-	    transition: background-color 0.3s ease;
-	    cursor: pointer;
-	 }
-	
+         
+    .round-button {
+       display: inline-block;
+       padding: 8px 15px; /* 필요에 따라 조정하세요 */
+       background-color: rgba(0, 0, 0, 0.3); /* 필요에 따라 조정하세요 */
+       color: #fff; /* 필요에 따라 조정하세요 */
+       text-align: center;
+       border-radius: 50%;
+       transition: background-color 0.3s ease;
+       cursor: pointer;
+    }
+   
       .dots {
       
           position: absolute;
@@ -100,7 +100,7 @@
           background-color: rgba(255, 255, 255, 0.9);
           
       }
-	      
+         
       .button-container {
       
           margin-top: 20px;
@@ -136,7 +136,7 @@
           background-color: #8bc9d2;
           
       }
-	      
+         
       .btn-guide {
       
           font-size: 18px;
@@ -155,65 +155,105 @@
           align-items: center; /* 추가 */
           
       }
-	
+   
      .btn-guide:hover {
      
          background-color: #8bc9d2;
          
      }
+     
     
     .image-container {
-	  position: relative;
-	  display: inline-block;
-	  width: 30%;
-	  margin-bottom: 20px;
-	  overflow: hidden; /* 이미지가 부모 요소를 넘어갈 경우를 대비하여 가리도록 설정 */
-		}
-	
+     position: relative;
+     display: inline-block;
+     width: 26%;
+     margin-bottom: 20px;
+     overflow: hidden; /* 이미지가 부모 요소를 넘어갈 경우를 대비하여 가리도록 설정 */
+     min-width:300px;
+      }
+   
     .image-container img {
-	  width: 100%;
-	  height: auto;
-	  filter: blur(0); /* 기본적으로 이미지에 blur 효과를 주지 않음 */
-	  transition: filter 0.3s; /* 효과가 일어날 시간 설정 */
-	}
+     min-width:320PX;
+     width: 100%;
+     height: auto;
+     filter: blur(0); /* 기본적으로 이미지에 blur 효과를 주지 않음 */
+     transition: filter 0.3s; /* 효과가 일어날 시간 설정 */
+   }
 
-	.image-container:hover img {
-	  filter: blur(5px); /* hover 시 이미지에 blur 효과를 주어 흐려지게 함 */
-	}
-		
-	.hidden-content {
+   .image-container:hover img {
+     filter: blur(5px); /* hover 시 이미지에 blur 효과를 주어 흐려지게 함 */
+   }
+      
+   .hidden-content {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: rgba(0, 0, 0, 0.3);
+     color: white;
+     display: none;
+     transition: background 0.3s; /* 효과가 일어날 시간 설정 */
+   }
+   
+   .image-container:hover .hidden-content {
+     display: block;
+     background: rgba(0, 0, 0, 0.5); /* hover 시 배경을 더 어둡게 함 */
+   }
+   
+   .sp-title {
+   	 font-size: 20px;
+   	 color: white;
+   	 font-weight: 550;
+   	 padding-bottom: 50%;
+   }
+   
+   .sp-cont {
+   	 padding-bottom: 5%;
+   }
+   
+   .sp-title,
+	.sp-cont {
 	  position: absolute;
-	  top: 0;
-	  left: 0;
-	  width: 100%;
-	  height: 100%;
-	  background: rgba(0, 0, 0, 0.3);
-	  color: white;
-	  display: none;
-	  transition: background 0.3s; /* 효과가 일어날 시간 설정 */
+	  bottom: 0;
+	  right: 0;
+	  text-align: right;
+	  padding-right: 5%;
+	  padding-left: 5%;
 	}
 	
-	.image-container:hover .hidden-content {
-	  display: block;
-	  background: rgba(0, 0, 0, 0.7); /* hover 시 배경을 더 어둡게 함 */
+	@media (max-width: 900px) {
+	  .sp-title {
+	    font-size: 16px;
+	  }
+	
+	  .sp-cont {
+	    font-size: 12px;
+	  }
 	}
-		      
+	
+	
+	
+
 	.to-top {
-	
-		display: inline-block;
-	    padding: 7px 10px; /* 필요에 따라 조정하세요 */
-  		position: fixed;
- 		bottom: 20px;
-  		right: 20px;
-  		z-index: 99;
-  		font-size: 18px;
-  		background-color: rgba(0, 0, 0, 0.3);
-  		color: white;
-  		border-radius: 50%;
-  		cursor: pointer;
-	  		
-	}
-	      
+   
+      display: inline-block;
+       padding: 7px 10px; /* 필요에 따라 조정하세요 */
+        position: fixed;
+       bottom: 20px;
+        right: 20px;
+        z-index: 99;
+        font-size: 18px;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+        border-radius: 50%;
+        cursor: pointer;
+           
+   }
+         
      * {
-     	user-select: none;
-	 }
+        user-select: none;
+    }
+
+	
+

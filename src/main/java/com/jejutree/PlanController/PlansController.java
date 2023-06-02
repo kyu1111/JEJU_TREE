@@ -200,4 +200,56 @@ public class PlansController {
     * binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true)); }
     */
     
+    @RequestMapping("toggle_like.go")
+	@ResponseBody
+	public String toggleBm(BookmarkDTO bdto) {
+		
+		boolean checkBm = dao.checkBookmark(bdto);
+
+		Integer re = -1;
+		
+		if (!checkBm) {
+			re = dao.bmInsert(bdto);
+		}
+		System.out.println(re);
+
+		return re.toString();
+	}
+
+	 @RequestMapping(value = "bm_list.go", produces = "application/json; charset=UTF-8")
+	 @ResponseBody
+	 public String BmList(HttpSession session, Model model, HttpServletResponse response) throws IOException { 
+		 
+		 String user_id = (String) session.getAttribute("user_id");
+		 List<BookmarkDTO> blist = dao.bmList(user_id);
+		 response.setCharacterEncoding("UTF-8");
+		 
+
+		 String str = "{\"list\":[";
+		 
+		 for(int i=0;i<blist.size();i++) {
+			 BookmarkDTO d = blist.get(i);
+			 str += "{\"user_id\": \""+d.getUser_id()
+			 		+ "\" , \"location\": \""+d.getLocation()+"\"}";
+			 if(i!=blist.size()-1) {
+				 str += ",";
+			 }
+		 }
+		 str += "]}";
+		 
+		 return str;
+	 }
+
+	@RequestMapping("bm_delete_ok.go")
+	@ResponseBody
+	public String bmDeleteOk(BookmarkDTO bdto, HttpSession session) {
+		String user_id = (String) session.getAttribute("user_id");
+		bdto.setUser_id(user_id);
+		
+		System.out.println(bdto);
+		
+		Integer check = this.dao.bmDelete(bdto);
+		return check.toString();
+	}
+    
 }

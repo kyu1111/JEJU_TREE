@@ -25,5 +25,7 @@
 			alias="userplansDao" /> <!-- 플랜DAO -->
 		<typeAlias type="com.jejutree.plans_model.Plan_participantsDTO"
 		 alias="participantsDto"/><!--동행자DTO  -->
+		 <!-- bookmarkDTO -->
+		 <typeAlias type="com.jejutree.plans_model.BookmarkDTO" alias="bookmarkDto" />
 	</typeAliases>
 </configuration>
