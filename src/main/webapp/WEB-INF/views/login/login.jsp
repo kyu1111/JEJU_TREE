@@ -9,7 +9,6 @@ if (request.getProtocol().equals("HTTP/1.1"))
 %>
 <html>
 <head>
-
 	<title>login</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/user/login_main.css">	
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/login_main.js"></script> --%>

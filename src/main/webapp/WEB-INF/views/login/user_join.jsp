@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입(일반)</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/navbar.css">   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/user_join.js"></script> --%>
 </head>
