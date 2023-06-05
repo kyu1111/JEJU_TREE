@@ -85,4 +85,10 @@ public class UserPlansImpl implements UserPlansDAO {
         return count > 0;
 	}
 
+	
+	@Override
+	   public int updatePlan2(UserPlansDTO dto) {
+	      return this.sqlSession.update("updatePlan2", dto);
+	   }
+	
 }

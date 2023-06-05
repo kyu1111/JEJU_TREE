@@ -13,7 +13,7 @@
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar.js"></script> --%>
 </head>
 <body>
-    <div class="navbar">
+    <nav class="navbar">
     <div class="left">
         <a href="<%=request.getContextPath()%>/MainPage.go"><img src="/model/resources/images/title.png"></a>
         </div>
@@ -48,6 +48,6 @@
         </c:if>
             </div>
 
-    </div>
+    </nav>
 </body>
 </html>

@@ -68,5 +68,12 @@
     <select id="checkBm" resultType="int" parameterType="bookmarkDto">
         SELECT COUNT(*) FROM bookmark WHERE location = #{location} and user_id = #{user_id}
     </select>
+    
+    <update id="updatePlan2"
+      parameterType="com.jejutree.plans_model.UserPlansDTO">
+      UPDATE travel_plans
+      SET start_date = #{start_date}, end_date = #{end_date}
+      WHERE id = #{id}
+   </update>
 	
 </mapper>
