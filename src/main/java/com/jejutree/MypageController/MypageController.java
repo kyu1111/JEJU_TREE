@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.mail.Multipart;
@@ -41,24 +42,23 @@ public class MypageController {
 	
 	@RequestMapping("userprofile.go")
 	public String userprofile(HttpSession session, Model model) {
-		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	     String user_id = (String) session.getAttribute("user_id");
-	     UserDTO dto = new UserDTO();
-		if (KakaoInfo != null || user_id != null) {
-			if(user_id != null) {
-				dto.setUser_id(user_id);
-				dto = this.dao.getuser(user_id);
-				
-			} else if(KakaoInfo != null) {
-				dto.setUser_id(KakaoInfo);
-				dto = this.dao.getuser(KakaoInfo);
-			} 
+		// 세션으로 로그인했지만 정회원인 회원의 이메일 정보.
+		HashMap<String, Object> hashmap = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+		String user_id = "";
+		UserDTO dto = null;
+		if (hashmap != null) {
+			user_id = (String) hashmap.get("kakao_id");
+			dto = this.dao.getuser(user_id);
+		} else if (session.getAttribute("user_id") != null) {
+			user_id = (String) session.getAttribute("user_id");
+			dto = this.dao.getuser(user_id);
 		}
-		
-		
-		
+		if (dto != null) {
+			dto.setUser_id(user_id);
+		}
+
 		model.addAttribute("UserInfo", dto);
-		
+
 		return "mypage/userprofile";
 	}
 	

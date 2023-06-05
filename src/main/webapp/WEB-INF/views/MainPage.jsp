@@ -86,7 +86,7 @@
             <div class="button-container">
                 <button class="btn-day" onclick="location.href='tmap.go'">일정 만들기</button>
                 <button class="btn-guide" onclick="location.href='guidePage.go'">이용 가이드</button>
-                <!-- <button class="btn" onclick="location.href='drag_plan_list.go'">DragFunction</button> -->
+              <!--  <button class="btn-drag" onclick="location.href='drag_plan_list.go'">DragFunction</button> -->
             </div>
         </div>
         		

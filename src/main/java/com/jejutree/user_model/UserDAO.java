@@ -15,8 +15,8 @@ public interface UserDAO {
 		
 		//개인정보 수정
 		int updateKakao(String user_email);
-		
-		List<UserDTO> getUserList();
+		//user_table의 iskakao 1로 변경
+		int updateisKakao(String user_email);
 		
 		//일반회원 테이블만 삭제
 		int deleteUser(int id);
@@ -58,7 +58,9 @@ public interface UserDAO {
 		
 		//temporary 테이블에 있는 유저 정보 조회 
 		Temporary_kakao_userDTO kakao_userInfo(String user_email);
-	/*공유 관련 기능*/
+	
+		
+		/*공유 관련 기능*/
 		//공유 링크 타고온 회원의 공유 플랜 정보 삽입.
 		int insertParticipant(Plan_participantsDTO dto);
 		//공유 받은 경로를 타고 로그인 시 직전에 공유 유저 insert 하기전 본인이 작성한 plan인지 확인 하는 작업.

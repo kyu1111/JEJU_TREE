@@ -1,0 +1,155 @@
+@charset "UTF-8";
+ body {
+    overflow-y: scroll;
+}
+
+#container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#join_title {
+	font-size: 36px;
+	font-weight: 550;
+	letter-spacing: 6px;
+	text-align: center;
+	margin-bottom: 10px;
+	margin-top: 100px;
+}
+
+.title-account {
+	font-size: 12px;
+	letter-spacing: -0.9px;
+	color: #6a6a6a;
+	padding-bottom: 50px;
+	padding-right: 5px;
+	text-align: center;
+}
+#user_join_form_area {
+    height: 70%;
+    width : 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-bottom: 10px;
+}
+
+#joinForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.form_field{
+	width: 100%;
+	height: 20%;
+	margin-bottom: 3px;
+    align-items: center
+}
+.form_field_agree {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 10px;
+    white-space: nowrap;
+    width: 100%;
+    height: auto;
+}
+
+.check_box_area {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+.check_box_area label {
+    white-space: nowrap;
+}
+.form_field_agree a {
+    margin-left: auto;
+    white-space: nowrap;
+}
+.check_box_area input {
+    margin-right: 5px;
+    margin-bottom:0;
+    padding-bottom: 0;
+}
+
+.form_field_submit {
+	width : 100%;
+	text-align: center;
+}
+#joinForm input {
+	text-align : left;
+    width: 100%;
+    box-sizing: border-box; /* 추가: 너비에 패딩과 테두리를 포함하도록 설정 */
+    padding: 10px; /* 예시: 원하는 패딩 크기로 설정 */
+    border : none;
+    border-bottom: 0.5px solid #6a6a6a;
+    margin-bottom: 5px;
+    padding-left: 0;
+    font-size: 15px;
+    margin-bottom: 15px;
+
+}
+#joinForm input:focus {
+    border-bottom: 0.5px solid #99dce6;
+    outline: none;
+}
+#joinForm input[type="submit"].join_submit-btn {
+  border: none;
+  color: white;
+}
+ .form_field input[type="file"] {
+    font-size: 12px;
+    /* 다른 스타일 속성 */
+  }
+
+  /* Placeholder 스타일 */
+  .form_field input[type="file"]::-webkit-file-upload-button::before {
+    content: attr(placeholder);
+    color: #6a6a6a;
+    font-size: 12px;
+  }
+
+  .form_field input[type="file"]::-webkit-file-upload-button {
+    background-color: #99dce6;
+    color: white;
+    border: none;
+    outline: none;
+  }
+#joinForm span{
+	display : block;
+	width: auto;
+    border : none;
+    font-size: 12px;
+    margin-top: 3px;
+    color: #99dce6;;
+    font-weight: bold;
+} 
+.join_submit-btn {
+	font-size: 18px;
+    width: 350px; /* 버튼 너비 지정 */
+    height: 55px; /* 버튼 높이 지정 */
+    margin: 8px 0; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    display: flex; /* 추가 */
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+.join_submit-btn:hover {
+	background-color : #8bc9d2;
+}
