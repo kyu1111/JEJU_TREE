@@ -31,5 +31,7 @@ public interface UserPlansDAO {
 	List<BookmarkDTO> bmList(String user_id);
 	
 	boolean checkBookmark(BookmarkDTO bdto);
+	
+	int updatePlan2(UserPlansDTO dto); // New method for updating a plan
 
 }
