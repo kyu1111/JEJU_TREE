@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<c:set var="user" value="${UserInfo}" />
+<c:set var="user" value="${updateDto}" />
     <!-- 상단바 설정하기  -->
     <%@ include file="../include/navbar.jsp" %> 
   <div class="userProfile">

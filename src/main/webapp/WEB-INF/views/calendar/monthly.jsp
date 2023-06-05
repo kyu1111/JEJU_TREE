@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<<<<<<< HEAD
  <body>
 <label for="from">From</label>
 <div id="from" ></div>
@@ -64,9 +63,6 @@ if(typeof $.datepicker.regional == 'object') {
 	    }
    });
   </script>
-=======
-<body>
 
->>>>>>> 1bbfc16b419bb1b3d438e2a76e6c21feb86d5f26
 </body>
 </html>

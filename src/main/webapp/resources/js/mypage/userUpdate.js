@@ -7,10 +7,6 @@ let user_nickname= $(".user_nickname").val();
 let user_id = $(".user_id").val();
 let user_email = $(".user_email").val();
 
-console.log(user_nickname);
-console.log(user_id);
-console.log(user_email);
-
 let isValid;
 
  
@@ -48,6 +44,21 @@ $.validator.addMethod("phoneCheck", function(value, elements) {
 
 	return pattern.test(value);
 
+});
+$.validator.addMethod("db_pwd_check", function(value, element) {
+  if (value === null || value === "") {
+    return true; // db_pwd is null or empty, validation passes
+  } else {
+    var minlength = 6;
+    var maxlength = 12;
+    var specialCharsPattern = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+    return (
+      value.length >= minlength &&
+      value.length <= maxlength &&
+      specialCharsPattern.test(value)
+    );
+  }
 });
 
 // id_check 메서드를 정의
@@ -192,14 +203,8 @@ $("#frm1").validate({
 
 	rules: {
 
-
 		db_pwd: {
-			required: true,
-			minlength: 6,
-			maxlength: 12,
-			specialChars: true,
-			capitalLetters: true
-			
+		   db_pwd_check : true
 		},
 
 		user_id: {
@@ -227,12 +232,8 @@ $("#frm1").validate({
 
 	messages: {
 		db_pwd: {
-			required: "비밀번호 입력은 필수 입니다.",
-			minlength: "최소 6글자 이상 입력해주세요.",
-			maxlength: "12글자를 넘지 말아주세요.",
-			capitalLetters: "대문자 하나 입력해주세요",
-			specialChars: "특수문자 입력해주세요."
-		},
+			db_pwd_check : "비밀번호는 특수문자를 포함한 6~12글자 범위에서 작성해주세요."
+ 		},
 
 		user_id: {
 			required: "아이디는 필수 입니다.",

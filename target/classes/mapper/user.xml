@@ -8,7 +8,7 @@
 	 	<insert id="UserJoin" parameterType="userDto">
 	 		<!-- //여기가 insert임 -->
  		 	<selectKey keyProperty="id" resultType="int" order="BEFORE">
-       			select count(*) + 1 from user
+       			select max(id) + 1 from user
    			</selectKey>
        		insert into user values(#{user_id},#{user_pwd},#{user_email},#{user_nickname},default,#{user_image},default,#{user_phone},0,default,default,#{id})
     	</insert>
@@ -40,7 +40,7 @@
 	 	</select>
  		<!-- 회원정보 수정(하림님) -->
 	    <update id="updateMember" parameterType="userDto">
-	    	update user set user_id = #{user_id}, user_pwd = #{user_pwd}, user_phone = #{user_phone}, user_nickname = #{user_nickname}, user_email = #{user_email}, user_image = #{user_image} where id = #{id}
+	    	update user set user_pwd = #{user_pwd}, user_phone = #{user_phone}, user_nickname = #{user_nickname}, user_email = #{user_email}, user_image = #{user_image} where id = #{id}
 	    </update>
 	    <!--수정시 비번 체크(하림님)  -->
  		<select id="checkPwd" parameterType="int" resultType="String" >

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Multipart;
@@ -23,6 +24,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.jejutree.Login.JoinEmailService;
 import com.jejutree.kakaoController.kakaoLoginService;
+import com.jejutree.plans_model.UserPlansDAO;
+import com.jejutree.plans_model.UserPlansDTO;
 import com.jejutree.user_model.UserDAO;
 import com.jejutree.user_model.UserDTO;
 import com.mysql.cj.Session;
@@ -33,9 +36,39 @@ public class MypageController {
 	private UserDAO dao;
 	@Autowired
      private JoinEmailService emailService;
+	@Autowired
+	private UserPlansDAO plansdao;
 	
 	@RequestMapping("mypage.go")
-	public String mypage() {
+	public String mypage(HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("user_id");
+		List<UserPlansDTO> list = this.plansdao.getPlanList(userId);
+		if (!list.isEmpty()) {
+			UserPlansDTO startPlan = list.get(0);
+			UserPlansDTO endPlan = list.get(list.size() - 1);
+			model.addAttribute("startPlan", startPlan);
+			model.addAttribute("endPlan", endPlan);
+		}
+		model.addAttribute("List", list);
+		
+		
+		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
+	     String user_id = (String) session.getAttribute("user_id");
+	     UserDTO dto = new UserDTO();
+		if (KakaoInfo != null || user_id != null) {
+			if(user_id != null) {
+				dto.setUser_id(user_id);
+				dto = this.dao.getuser(user_id);
+				
+			} else if(KakaoInfo != null) {
+				dto.setUser_id(KakaoInfo);
+				dto = this.dao.getuser(KakaoInfo);
+			} 
+		}
+		
+		
+		
+		model.addAttribute("UserInfo", dto);
 		return "mypage/mypage";
 	}
 	
@@ -68,7 +101,7 @@ public class MypageController {
 		  System.out.println(id);
 		  String pwdCheck = dao.checkPwd(id);
 		  String emailCheck = dao.emailCheck(id);
-		  System.out.println(pwdCheck);
+		  System.out.println("회원 원래 비번"+pwdCheck);
 		  System.out.println(dto.getUser_pwd());
 	  String profile = dto.getUser_image();
 	  System.out.println(profile);
@@ -127,22 +160,27 @@ public class MypageController {
 	 
 	  if(!emailCheck.equals(dto.getUser_email())) {
 			String newKey = emailService.emailChangeForm(dto);
-			dto.setMailKey(newKey);
+			
+			this.dao.updateMail(dto);
 			System.out.println(dao.updateMail(dto));
 			System.out.println("회원 아이디"+dto.getId());
 			System.out.println("회원 새 이메일"+dto.getUser_email());
-			model.addAttribute("UserInfo", dto);
 			session.setAttribute("updateDto", dto);
 			return "mypage/emailChangeForm";
 	  } else {
 		  if(pwdCheck.equals(dto.getUser_pwd())) {
-			  if(db_pwd != null) {
+			  if(db_pwd != null && !db_pwd.equals("")) {
 				  dto.setUser_pwd(db_pwd);
+				  System.out.println("비번 변경함"+dto.getUser_pwd());
+			  } else {
+				  dto.setUser_pwd(pwdCheck);
+				  System.out.println("비번 변경안함"+dto.getUser_pwd());
 			  }
-				int check = this.dao.updateMember(dto);
-				System.out.println(dto.getUser_phone());
+				
+			  int check = this.dao.updateMember(dto);
 				if(check > 0) {
 				model.addAttribute("UserInfo", dto);
+
 				out.println("<script>");
 				out.println("alert('회원정보 수정 성공')");
 				out.println("location.href='userprofile.go'");
@@ -165,22 +203,22 @@ public class MypageController {
 	}
 	
 	@RequestMapping("emailChange.go")
-	public void CheckEmail(HttpServletResponse response, Model model, HttpSession session, @RequestParam("id") int id, @RequestParam("emailKey") String key) throws Exception {
-		UserDTO dto = this.dao.getuserById(id);
+	public void CheckEmail(UserDTO dto, HttpServletResponse response, Model model, HttpSession session, @RequestParam("id") int id, @RequestParam("emailKey") String key) throws Exception {
 		System.out.println("사용자 아이디");
+		System.out.println("사용자 이메일"+dto.getUser_email());
 		System.out.println("입력키"+key);
 		System.out.println("db변한 키"+dto.getMailKey());
-		
+		dto.setMailKey(key);
 		response.setContentType("text/html; charset=UTF-8");
 	      PrintWriter out = response.getWriter();
-	      this.dao.updateMember(dto);
 	      dao.updateMail(dto);
 	      if(key.equals(dto.getMailKey())) {
-	    	 model.addAttribute("UserInfo", dto);
+	    	  this.dao.updateMember(dto);
 	         out.println("<script>");
 	         out.println("alert('이메일 인증이 완료 되었습니다.')");
 	         out.println("location.href='userprofile.go'");
 	         out.println("</script>");
+	         session.removeAttribute("updateDto");
 	      }else {
 	         out.println("<script>");
 	         out.println("alert('이메일 인증번호가 틀렸습니다.')");

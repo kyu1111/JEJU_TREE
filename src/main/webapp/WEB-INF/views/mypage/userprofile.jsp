@@ -23,8 +23,8 @@
         <tr>
         <td>
             <label>사용자 프로필</label>
-             <img src="<%=request.getContextPath() %>${user.user_image }" alt="profile" >
-             <input type="file" name="upload" value="${user.user_image }" >
+             <img id="previewImg"  src="<%=request.getContextPath() %>${user.user_image }" alt="profile" >
+             <input type="file" name="upload" id="upload" value="${user.user_image }" onchange="previewProfileImage(event)">
              <input type="hidden" name="user_image" value="${user.user_image }">
          </td>
         </tr>
@@ -50,7 +50,7 @@
         <tr>
         <td> 
             <label id="user_pwd" for="user_pwd">사용자 현재 비밀번호</label>
-            <input type="password" value="${user.user_pwd }" name="user_pwd"  placeholder="현재 비밀번호"></td>
+            <input type="password" name="user_pwd"  placeholder="현재 비밀번호"></td>
         </tr>
         <tr>
          <td>
@@ -134,6 +134,19 @@
         		 frm1.action="deleteUser.go";
             } else{return;}     
         }
+    }
+    
+ // 바꾼 프로필 이미지 보여주기
+    function previewProfileImage(event) {
+       let input = event.target;
+       let reader = new FileReader();
+       reader.onload = function() {
+          let previewImg =  document.getElementById('previewImg');
+          previewImg.src = reader.result;
+       };
+       reader.readAsDataURL(input.files[0]);
+       $('#upload').val(1);
+       
     }
 </script>
 
