@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
  <!-- 폰트어썸 cdn링크 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage/mypage.css">
   <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
 </head>
@@ -80,7 +79,39 @@
 				
 			</div>
 		</div>
+<<<<<<< HEAD
         <!-- footer 영역 설정 -->
+=======
+       <div class="mypage_box2">
+			<p class="box_text title">일정을 친구와 공유하세요</p> 
+				<h2>
+				  <img src="<%=request.getContextPath() %>/resources/images/mypageLogo.png" class="loggo" />
+                                           일정을 친구와 공유하세요
+               </h2>
+               <!--공유버튼 -->
+               	  <c:if test="${!empty kakao_session}">
+		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
+		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${kakao_id}')">
+		          	<img src="<%=request.getContextPath() %>/resources/icon/kakaotalk_sharing_btn_small.png">
+		          </a>
+		          </c:if>
+		          <c:if test="${!empty user_id}">
+		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
+		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${user_id}')">
+		          	<img src="<%=request.getContextPath() %>/resources/icon/kakaotalk_sharing_btn_small.png">
+		          </a>
+		          </c:if>
+               <div class="mypage_buttons">
+ 					<button onclick="openModifyPage()">프로필 수정</button><br><br>
+ 					<button onclick="location.href=''">찜한 장소</button><br><br>
+ 					<button class="">카카오톡 초대링크</button>&nbsp;&nbsp;&nbsp;&nbsp;
+ 					<button>pdf 내보내기</button>
+ 				</div>
+		</div>
+       
+   </div>
+   <!-- footer 영역 설정 -->
+>>>>>>> 4506dd762bc7c24984bb10f4af3475b4e8cf98c7
    <%@ include file="../include/footer.jsp" %>
   </div>
 <!--굥유 버튼 ajax스크립트 태그  -->   
@@ -114,9 +145,7 @@ function opensharePage(a){
 		 		        	let ask_result = confirm('일정 공유 기능은 카카오톡연동회원만 가능합니다. 추가정보를 입력하여 가입하겠습니까?');
 		 		        	if(ask_result){
 		 		        		var url = "kakaoUser_join.go?user_email=" + kid;
-		 		        		window.open(url,"카카오톡 연동 회원 가입", 
-		 		   					"titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0"
-		 		   					, "");
+		 		        		location.href = url;
 		 		        	}
 		 		        }else{
 		 		        	alert('로그인이 필요한 기능입니다.');
@@ -189,9 +218,7 @@ function opensharePage(a){
 	 		        	let ask_result = confirm('회원님은 sns연동 임시 회원입니다. 추가정보를 입력하여 sns연동 회원가입을 하시겠습니까?');
 	 		        	if(ask_result){
 	 		        		var url = "kakaoUser_join.go?user_email=" + kid;
-	 		        		window.open(url,"카카오톡 연동 회원 가입", 
-	 		   					"titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0"
-	 		   					, "");
+	 		        		location.href = url;
 	 		        	}
 	 		        }else{
 	 		        	alert('로그인이 필요한 기능입니다.');

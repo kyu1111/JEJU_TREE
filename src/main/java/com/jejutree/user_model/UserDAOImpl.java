@@ -26,11 +26,6 @@ public class UserDAOImpl implements UserDAO {
 	public int insertUser(UserDTO dto) {
 		return this.sqlSession.insert("UserJoin",dto);
 	}
-	@Override
-	public List<UserDTO> getUserList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	//일반 유저 회원 탈퇴
 	@Override
 	public int deleteUser(int id) {
@@ -95,9 +90,13 @@ public class UserDAOImpl implements UserDAO {
 	//카카오 회원 가입후 임시테이블의 join 여부 최신화.
 	@Override
 	public int updateKakao(String user_email) {
-		return this.sqlSession.update("UpdateIskakao", user_email);
+		return this.sqlSession.update("UpdatekakaoJoin", user_email);
 	}
-	
+	//카카오 회원 가입후 user_table의 is_kakao 1로 변경
+	@Override
+	public int updateisKakao(String user_email) {
+		return this.sqlSession.update("updateIsKaKao",user_email);
+	}
 	/*공유 관련 기능*/
 	
 	//여행 정보 공유 받은 회원이 동행자의 정보 입력.
@@ -165,6 +164,7 @@ public class UserDAOImpl implements UserDAO {
     public void updatepwd(UserDTO dto) {
         this.sqlSession.update("updatepwd", dto);
     }
+	
 	
 	
 }

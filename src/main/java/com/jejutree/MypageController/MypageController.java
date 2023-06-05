@@ -125,18 +125,13 @@ public class MypageController {
 	  if(!originalFileName.isEmpty()) {
 		  System.out.println("originalFileName: " + originalFileName);
 	        
-	         String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
-	         String saveFolder2 = prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\"+year+month+day;
+	         String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\"+year+month+day;
 	         String saveFileName = "";
 	         
 		        File path1 = new File(saveFolder);
-		        File path2 = new File(saveFolder2);
 
 		        if (!path1.exists()) {
-		            path1.mkdirs();
-		        }
-		        if (!path2.exists()) {
-		        	path2.mkdirs();
+		        	path1.mkdirs();
 		        }
 		        
 
@@ -146,7 +141,7 @@ public class MypageController {
 		            	
 		            	dto.setUser_image("/resources/images/profile/" +year+month+day +"/" +saveFileName);
 		            try {
-		            	mFile.transferTo(new File(saveFolder2, saveFileName));
+		            	mFile.transferTo(new File(saveFolder, saveFileName));
 
 		            } catch (IOException e) {
 		                e.printStackTrace();

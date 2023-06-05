@@ -12,6 +12,14 @@
    			</selectKey>
        		insert into user values(#{user_id},#{user_pwd},#{user_email},#{user_nickname},default,#{user_image},default,#{user_phone},0,default,default,#{id})
     	</insert>
+    	<!--카카오 유저 회원가입  -->
+    	<insert id="KaKaoJoin" parameterType="userDto">
+		    <selectKey keyProperty="id" resultType="int" order="BEFORE">
+		        SELECT COUNT(*) + 1 FROM user
+		    </selectKey>
+		    INSERT INTO user (user_id, user_pwd, user_email, user_nickname, is_admin, user_image, user_like_keyword, user_phone, user_iskakao, mailKey, mailAuth, id)
+			VALUES (#{user_id}, #{user_pwd}, #{user_email}, #{user_nickname}, default, #{user_image}, default, #{user_phone},default, default, default, #{id});
+		</insert>
  		<!--일반 회원가입 회원 정보조회  -->
 		<select id="UserInfo" parameterType="String" resultType="userDto">
 			select * from testDB.user where user_id = #{user_id}
@@ -56,23 +64,17 @@
  		<select id="kakaoUserInfo" parameterType="String" resultType="TemporaryDto">
  			select * from testDB.temporary_kakao_user where user_email = #{user_email}
  		</select>
- 		<insert id="KaKaoJoin" parameterType="userDto">
-		    <selectKey keyProperty="id" resultType="int" order="BEFORE">
-		        SELECT COUNT(*) + 1 FROM user
-		    </selectKey>
-		    INSERT INTO user (user_id, user_pwd, user_email, user_nickname, is_admin, user_image, user_like_keyword, user_phone, user_iskakao, mailKey, mailAuth, id)
-		    VALUES (#{user_id}, #{user_pwd}, #{user_email}, #{user_nickname}, DEFAULT, #{user_image}, DEFAULT, #{user_phone},1, DEFAULT, DEFAULT, #{id})
-		</insert>
-
  		<!--카카오 로그인시 임시 회원정보 삽입  -->
  		<insert id="kakao_insert" parameterType="String">
  			INSERT INTO testDB.temporary_kakao_user(user_email, user_join) VALUES(#{user_email},0);
  		</insert>
- 		<update id="UpdateIskakao">
- 			update testDB.temporary_kakao_user set user_join = 1 where user_email = #{user_email}
+ 		<update id="UpdatekakaoJoin" parameterType="String">
+ 			update temporary_kakao_user set user_join = 1 where user_email = #{user_email}
  		</update>
- 	
- 	
+ 		<!--user_Table iskakao update  -->
+ 		<update id="updateIsKaKao" parameterType="String">
+ 			update user set user_iskakao = 1 where user_id = #{user_email}
+ 		</update>
  	<!--이메일 관련 기능 -->
 	 	<update id="updateMailKey" parameterType="userDto">
 	       update user set mailKey = #{mailKey} where user_email = #{user_email} and user_id = #{user_id}

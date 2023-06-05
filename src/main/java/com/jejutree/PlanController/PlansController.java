@@ -145,6 +145,7 @@ public class PlansController {
             List<Map<String, Object>> updatePlans = new Gson().fromJson(String.valueOf(data),
                     new TypeToken<List<Map<String, Object>>>() {}.getType());
             System.out.println(":::::::::::::::::여기까지 됩니다:1::::::::::::::::::::");
+            System.out.println();
             for (Map<String, Object> updatePlan : updatePlans) {
                 int new_id = Integer.parseInt((String) updatePlan.get("id"));
                 String title = (String) updatePlan.get("title");

@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/navbar.css">    
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/sidebar.css"> --%>
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>   --%>
@@ -22,7 +23,7 @@
            <c:if test="${!empty user_id}">
            <a href="mypage.go" class="nav_mypage"><font size="4">MYPAGE</font></a>&nbsp;&nbsp;&nbsp;
               <a href="normal_logout.go"  class="logout"><font size="4">LOGOUT</font></a>
-              
+
            </c:if>
            <c:if test="${!empty kakao_session}">
            <c:set var="kakaoInfo" value="${sessionScope.Kakao_info}" />
