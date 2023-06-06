@@ -9,55 +9,80 @@
  <!-- 폰트어썸 cdn링크 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage/mypage.css">
+  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
 </head>
 <body>
    <!-- 상단바 설정하기  -->
    <%@ include file="../include/navbar.jsp" %>
-   <div id="mypage_wrap">
-       <div class="mypage_box1">
-			<p class="box_text title">일정 리스트</p> 
-			<div class="myplan_box">
-				<c:forEach begin="1" end="5" var="i">
-					<a href="<%=request.getContextPath() %>/#" class="">
-	  					<span class="planList">${i }</span>
-	  					<img src="<%=request.getContextPath() %>/resources/images/image1.jpg" class="plan_img" />
-	  					<div class="">여행제목</div>
-	  					<div class="">메모</div>
-	  					<div class="">여행날짜</div>
-					</a>
-				</c:forEach>
+   
+   <c:set var="user" value="${UserInfo}" />
+   <div>
+    <div id="mypage_profile">
+        <img src="<%=request.getContextPath() %>${user.user_image }" alt="profile" class="profile_img" />
+        <input type="hidden" name="user_image" value="${user.user_image }">
+        <p>${user.user_nickname }</p>
+         <button onclick="openModifyPage()">프로필 수정</button><br><br>
+        
+   </div>
+   <br>
+   <br>
+   <br>
+   <br>
+   <div class="container">
+			<div id="your-plans" ondrop="drop(event)"
+				ondragover="allowDrop(event)">
+				<h4>Your Plans</h4>
+				<c:set var="plan" value="${List }" />
+				<c:if test="${!empty plan }">
+					<c:forEach items="${plan }" var="dto">
+						<p id="${dto.title}" draggable="true" ondragstart="drag(event)">
+							<span class="details" style="display: none;"> Description:
+								${dto.description}<br> Location: ${dto.location}<br>
+								Marker Latitude: ${dto.markerLat}<br> Marker Longitude:
+								${dto.markerLng}<br>
+							</span> Plan ID: ${dto.id}<br> User ID: ${dto.user_id}<br>
+							Title: ${dto.title}<br> Start Date: ${dto.start_date}<br>
+							End Date: ${dto.end_date}<br>
+						</p>
+						
+					</c:forEach>
+					
+				</c:if>
+				
+			</div>
+
+			<div id="others-plans" ondrop="drop(event)"
+				ondragover="allowDrop(event)">
+				<h4>Others' Plans</h4>
+
+				<form method="POST" action="get_others_plans.go">
+					<input type="text" name="otherUserId"
+						placeholder="Enter user's id..." required> <input
+						type="submit" value="Search">
+				</form>
+
+				<c:if test="${!empty otherUserList }">
+					<c:forEach items="${otherUserList }" var="dto">
+						<div class="plan" draggable="true" ondragstart="drag(event)">
+							<p id="${dto.title}" draggable="true" ondragstart="drag(event)">
+								<span class="details" style="display: none;">
+									Description: ${dto.description}<br> Location:
+									${dto.location}<br> Marker Latitude: ${dto.markerLat}<br>
+									Marker Longitude: ${dto.markerLng}<br>
+								</span> Plan ID: ${dto.id}<br> User ID: ${dto.user_id}<br>
+								Title: ${dto.title}<br> Start Date: ${dto.start_date}<br>
+								End Date: ${dto.end_date}<br>
+							</p>
+						</div>
+					</c:forEach>
+				</c:if>
+				
+				
 			</div>
 		</div>
-       <div class="mypage_box2">
-			<p class="box_text title">일정을 친구와 공유하세요</p> 
-				<h2>
-				  <img src="<%=request.getContextPath() %>/resources/images/mypageLogo.png" class="loggo" />
-                                           일정을 친구와 공유하세요
-               </h2>
-               <!--공유버튼 -->
-               	  <c:if test="${!empty kakao_id }">
-		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${kakao_id}')">
-		          	<img src="<%=request.getContextPath() %>/resources/icon/kakaotalk_sharing_btn_small.png">
-		          </a>
-		          </c:if>
-		          <c:if test="${!empty user_id }">
-		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${user_id}')">
-		          	<img src="<%=request.getContextPath() %>/resources/icon/kakaotalk_sharing_btn_small.png">
-		          </a>
-		          </c:if>
-               <div class="mypage_buttons">
- 					<button onclick="openModifyPage()">프로필 수정</button><br><br>
- 					<button onclick="location.href=''">찜한 장소</button><br><br>
- 					<button class="">카카오톡 초대링크</button>&nbsp;&nbsp;&nbsp;&nbsp;
- 					<button>pdf 내보내기</button>
- 				</div>
-		</div>
-       
-   </div>
-   <!-- footer 영역 설정 -->
+        <!-- footer 영역 설정 -->
    <%@ include file="../include/footer.jsp" %>
+  </div>
 <!--굥유 버튼 ajax스크립트 태그  -->   
 <script type="text/javascript">
 //공유 버튼을 누를경우 alert 메시지  
@@ -179,6 +204,60 @@ function opensharePage(a){
 	 		}); 
 		}else{
 			location.href='userprofile.go';
+		}
+	}
+</script>
+<script type="text/javascript">
+   function allowDrop(ev) {
+   
+	   ev.preventDefault();
+   
+   }
+
+   function drag(ev) {
+	   
+      ev.dataTransfer.setData("text", ev.target.id);
+      
+   }
+
+   function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      var droppedElement = document.getElementById(data);
+      ev.target.appendChild(droppedElement);
+
+      var planId = droppedElement.innerText.split("\n")[0].split(": ")[1];
+      var userId;
+
+      if (ev.target.id === "others-plans") {
+         userId = $("input[name='otherUserId']").val();
+
+         $.ajax({
+            url : 'drag_update.go', // The URL of your server-side script
+            method : 'POST',
+            data : {
+               'planId' : planId,
+               'userId' : userId
+            },
+            success : function(response) {
+               alert('공유 성공!!');
+            }
+         });
+      }
+      else if (ev.target.id === "your-plans") {
+         var userId = '<%=request.getSession().getAttribute("user_id")%>';
+
+			$.ajax({
+				url : 'drag_update_back.go', // The URL of your server-side script for this direction
+				method : 'POST',
+				data : {
+					'planId' : planId,
+					'userId' : userId
+				},
+				success : function(response) {
+					alert('공유 성공!!');
+				}
+			});
 		}
 	}
 </script>

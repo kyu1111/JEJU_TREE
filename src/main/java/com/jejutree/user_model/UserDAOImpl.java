@@ -1,8 +1,12 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package com.jejutree.user_model;
 
 import java.util.HashMap;
 import java.util.List;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,11 +25,6 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public int insertUser(UserDTO dto) {
 		return this.sqlSession.insert("UserJoin",dto);
-	}
-	@Override
-	public List<UserDTO> getUserList() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	//일반 유저 회원 탈퇴
 	@Override
@@ -91,9 +90,13 @@ public class UserDAOImpl implements UserDAO {
 	//카카오 회원 가입후 임시테이블의 join 여부 최신화.
 	@Override
 	public int updateKakao(String user_email) {
-		return this.sqlSession.update("UpdateIskakao", user_email);
+		return this.sqlSession.update("UpdatekakaoJoin", user_email);
 	}
-	
+	//카카오 회원 가입후 user_table의 is_kakao 1로 변경
+	@Override
+	public int updateisKakao(String user_email) {
+		return this.sqlSession.update("updateIsKaKao",user_email);
+	}
 	/*공유 관련 기능*/
 	
 	//여행 정보 공유 받은 회원이 동행자의 정보 입력.
@@ -142,6 +145,25 @@ public class UserDAOImpl implements UserDAO {
 		return this.sqlSession.update("updateMail", dto);
 	}
 	
+	public void updatePwd(UserDTO dto) {
+        this.sqlSession.update("updatePwd", dto);
+    }
+
+    public UserDTO getUserByEmail(String user_email) {
+        return (UserDTO)this.sqlSession.selectOne("getUserByEmail", user_email);
+    }
+
+    public UserDTO nickCheck(String user_nickname) {
+        return (UserDTO)this.sqlSession.selectOne("nickCheck", user_nickname);
+    }
+
+    public UserDTO idCheck(String user_id) {
+        return (UserDTO)this.sqlSession.selectOne("userId", user_id);
+    }
+
+    public void updatepwd(UserDTO dto) {
+        this.sqlSession.update("updatepwd", dto);
+    }
 	
 	
 	

@@ -1,10 +1,15 @@
 package com.jejutree.user_Controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.http.HttpRequest;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jejutree.Login.JoinEmailService;
 import com.jejutree.kakaoController.kakaoLoginService;
@@ -68,9 +75,52 @@ public class userController {
 
 	@RequestMapping(value = { "/user_join_ok.go", "/kakao_join_ok.go", "/invitedUser_join_ok.go",
 			"invitedKakao_join_ok.go" })
-	public void user_join_ok(HttpServletResponse response, UserDTO dto, HttpServletRequest request, HttpSession session,
+	public void user_join_ok(@RequestParam(value = "upload") MultipartFile mFile, HttpServletResponse response, UserDTO dto, HttpServletRequest request, HttpSession session,
 			@RequestParam(value = "share_id", required = false) String user_share_id) throws Exception {
+		 // 절대경로 가져오기
+	    Properties prop = new Properties();
+	    FileInputStream fis = new FileInputStream(request.getRealPath("WEB-INF\\classes\\config\\fileupload.properties"));
+	    System.out.println();
+	    prop.load(new InputStreamReader(fis, "UTF-8"));
+	    fis.close();
+	    
+	    Calendar cal = Calendar.getInstance();
+	    int year = cal.get(Calendar.YEAR);
+	    int month = cal.get(Calendar.MONTH) + 1;
+	    int day = cal.get(Calendar.DAY_OF_MONTH);
+		  
+		  String originalFileName = mFile.getOriginalFilename();
+		  
+		  if(!originalFileName.isEmpty()) {
+			  System.out.println("originalFileName: " + originalFileName);
+		        
+		         String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
+		         String saveFolder2 = prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\"+year+month+day;
+		         String saveFileName = "";
+			        File path1 = new File(saveFolder);
+			        File path2 = new File(saveFolder2);
 
+			        if (!path1.exists()) {
+			            path1.mkdirs();
+			        }
+			        if (!path2.exists()) {
+			        	path2.mkdirs();
+			        }
+			        if (!originalFileName.equals(dto.getUser_image())) {
+			            saveFileName = System.currentTimeMillis() + "_" + originalFileName;
+			            	
+			            	dto.setUser_image("/resources/images/profile/" +year+month+day +"/" +saveFileName);
+			            try {
+			            	mFile.transferTo(new File(saveFolder2, saveFileName));
+
+			            } catch (IOException e) {
+			                e.printStackTrace();
+			            }
+			        } 
+			    } else {
+		            // 기본이미지 세팅
+			    	dto.setUser_image("/resources/images/profile/default_profileImg.jpg");
+		        }
 		int check = 0;
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -86,7 +136,6 @@ public class userController {
 				session.setAttribute("user_id", dto.getUser_id());
 				out.println("<script>");
 				out.println("alert('회원가입이 완료 되었습니다.')");
-				out.println("window.close()");
 				out.println("location.href='MainPage.go'");
 				out.println("</script>");
 			} else {
@@ -100,14 +149,17 @@ public class userController {
 			check = this.dao.insertKakaoUser(dto);
 			if (check > 0) {
 
-				dao.updateKakao(dto.getUser_email());
+				int update1 = dao.updateKakao(dto.getUser_email());
+				int update2 = dao.updateisKakao(dto.getUser_email());
 				// 세션 띄워주기전 기존 카카오 세션 만료 시키기.
 				// 새로 로그인한 세션 띄워주기
-				out.println("<script>");
-				out.println("alert('카카오연동계정 회원가입이 완료 되었습니다.')");
-				out.println("window.close()");
-				out.println("window.opener.location.href='MainPage.go'");
-				out.println("</script>");
+				if(update1 > 0 && update2 > 0){
+					out.println("<script>");
+					out.println("alert('카카오연동계정 회원가입이 완료 되었습니다.')");
+					out.println("location.href='MainPage.go'");
+					out.println("</script>");
+				}
+				
 
 			} else {
 				out.println("<script>");
@@ -117,6 +169,7 @@ public class userController {
 			}
 			// 공유 화면을 통해 유입된 회원의 회원가입(임시로 미리가입,최초 가입 둘다 해당)
 		} else if (request.getServletPath().equals("/invitedKakao_join_ok.go")) {
+			System.out.println(user_share_id);
 			// 공유 정보 먼저 넣어 주기.
 			Plan_participantsDTO kakaoParticipantdto = new Plan_participantsDTO();
 			// 회원 user_id(본인) 아이디 입력
@@ -133,37 +186,44 @@ public class userController {
 				// 공유자 id 정보 먼저 등록
 				int share_check = this.dao.insertParticipant(kakaoParticipantdto);
 				// 새로 로그인한 세션 띄워주기
-				session.setAttribute("user_id", dto.getUser_id());
 				out.println("<script>");
 				out.println("alert('회원가입이 완료되었습니다.');");
-				out.println("window.close();");
 				out.println("if (confirm('공유된 일정을 다시 확인하시겠습니까?')) {");
-				out.println("window.opener.location.href='plan_list.go?id=" + user_share_id + "';");
+				out.println("location.href='plan_list.go?id=" + user_share_id + "'");
 				out.println("} else {");
 				out.println("  alert('메인 페이지로 이동합니다.');");
-				out.println("window.opener.location.href='MainPage.go';");
+				out.println("location.href='MainPage.go'");
 				out.println("}");
 				out.println("</script>");
 			}
 
-		} else if (request.getServletPath().equals("invitedUser_join_ok.go")) {
+		} else if (request.getServletPath().equals("/invitedUser_join_ok.go")) {
 			// 여기에 invited 아이디 파라미터로 받아서 넣어야 할듯.
 			Plan_participantsDTO userParticipantdto = new Plan_participantsDTO();
 			// 회원 user_id(본인) 아이디 입력
+			System.out.println(userParticipantdto);
 			userParticipantdto.setUser_id(dto.getUser_id());
 			// share_id(계획을 초대한 사람의 아이디)
 			userParticipantdto.setUser_share_id(user_share_id);
-
+			
 			// 공유자의 정보가 적절히 등록 되면 회원가입 진행.
 			check = this.emailService.insertUser(dto);
-
+			
 			if (check > 0) {
 				int share_check = this.dao.insertParticipant(userParticipantdto);
-				out.println("<script>");
-				out.println("alert('회원가입이 완료 되었습니다.')");
-				out.println("window.close()");
-				out.println("window.opener.location.href='plan_list.go?id=" + user_share_id);
-				out.println("</script>");
+				
+				if(share_check > 0) {
+					out.println("<script>");
+					out.println("alert('회원가입이 완료 되었습니다.')");
+					out.println("location.href='plan_list.go?id=" + user_share_id + "'");
+					out.println("</script>");
+				}else {
+					out.println("<script>");
+					out.println("alert('공유정보를 불러오지 못했습니다.')");
+					out.println("history.back()");
+					out.println("</script>");
+				}
+				
 			} else {
 				out.println("<script>");
 				out.println("alert('가입 실패')");
@@ -373,6 +433,7 @@ public class userController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		Temporary_kakao_userDTO dto = dao.kakao_userInfo(user_email);
+		System.out.println(dto);
 		// 해당 이메일과 일치하는 임시등록 유저 조회
 		if (dto != null) {
 			// 해당 유저의 정회원 가입여부 확인(임시회원 테이블에 user_join이 1일시 정규 회원으로 전환된 회원)
@@ -527,5 +588,130 @@ public class userController {
 			out.println("</script>");
 		}
 	}
+
+
+    @RequestMapping("login_id_search.go")
+    public String loginIdSearch() {
+    	return "login/login_id_search";
+    }
+    
+    
+    // 일반 회원 아이디 찾기
+    @RequestMapping("id_search.go")
+    public void idSearch(@RequestParam("user_email") String curr_email, HttpSession session, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+    	UserDTO dto = this.dao.getUserByEmail(curr_email);
+    	
+    	if(dto == null) {
+    		out.println("<script>");
+            out.println("alert('가입된 이메일이 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    	}
+    	
+    	if(curr_email.equals(dto.getUser_email())) {
+        	emailService.id_search(dto);
+        	
+    		out.println("<script>");
+            out.println("alert('이메일함을 확인해 주세요.')");
+            out.println("location.href='login_page.go'");
+            out.println("</script>");
+            
+    	}
+    	
+    }
+    
+    @RequestMapping("login_pwd_search.go")
+    public String loginPwdSearch() {
+    	return "login/login_pwd_search";
+    }
+    
+    
+    // 일반 회원 비밀번호 찾기
+    @RequestMapping("pwd_search.go")
+    public void pwdSearch(@RequestParam("user_email") String curr_email, @RequestParam("user_id") String curr_id, HttpServletResponse response) throws Exception {
+    	response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        UserDTO dto = this.dao.getUserByEmail(curr_email);
+        
+        if(dto == null) {
+    		out.println("<script>");
+            out.println("alert('가입된 이메일이 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    	}
+    	
+        
+        String user_id = dto.getUser_id();
+    	String email = dto.getUser_email();
+    	
+    	if(email.equals(curr_email) && curr_id.equals(user_id)) {
+    		String tmepkey = emailService.pwd_search(dto);
+    		dto.setUser_pwd(tmepkey);
+    		dao.updatePwd(dto);
+    		out.println("<script>");
+            out.println("alert('이메일함을 확인해 주세요.')");
+            out.println("location.href='login_page.go'");
+            out.println("</script>");
+    	} else if(!curr_id.equals(user_id)) {
+    		
+    		out.println("<script>");
+            out.println("alert('가입된 아이디가 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    		
+    	} else {
+    		out.println("<script>");
+            out.println("alert('가입된 이메일이 아닙니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+    	}
+    	
+    }
+    
+     // 닉네임 중복검사
+    @RequestMapping("user_idCheck.go")
+    @ResponseBody
+    public String user_idCheck(@RequestParam("id") String curr_id) {
+    	
+    	UserDTO dto = this.dao.getuser(curr_id);
+    	
+    	if(dto == null) {
+    		return "ok";
+    	} else {
+    		return "db";
+    	}
+    	
+    }
+    
+    
+    
+    // 닉네임 중복검사
+    @RequestMapping("nicknameCheck.go")
+    @ResponseBody
+    public String nicknameCheck(@RequestParam("nickname") String curr_nick) {
+    	
+    	UserDTO dto = this.dao.nickCheck(curr_nick);
+    	
+    	if(dto == null) {
+    		return "ok";
+    	} else {
+    		return "db";
+    	}
+    	
+    }
+    
+    
+    @RequestMapping("emailCheck.go")
+    @ResponseBody
+    public String emailCheck(@RequestParam("email") String user_email) {
+    	UserDTO dto = this.dao.getUserByEmail(user_email);
+    	if(dto == null) {
+    		return "ok";
+    	} else {
+    		return "db";
+    	}
+    }
 
 }

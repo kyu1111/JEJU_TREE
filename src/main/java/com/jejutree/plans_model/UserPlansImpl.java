@@ -60,5 +60,35 @@ public class UserPlansImpl implements UserPlansDAO {
 	 * 
 	 * return this.sqlSession.insert("insertParticipant", dto); }
 	 */
+	
+	@Override
+	public List<BookmarkDTO> bmList(String user_id) {
+		
+		return sqlSession.selectList("bm_loc", user_id);
+	}
 
+	@Override
+	public int bmInsert(BookmarkDTO bdto) {
+		
+		return sqlSession.insert("insertBm", bdto);
+	}
+
+	@Override
+	public int bmDelete(BookmarkDTO bdto) {
+		
+		return sqlSession.delete("deleteBm", bdto);
+	}
+
+	@Override
+	public boolean checkBookmark(BookmarkDTO bdto) {
+		int count = sqlSession.selectOne("checkBm", bdto);
+        return count > 0;
+	}
+
+	
+	@Override
+	   public int updatePlan2(UserPlansDTO dto) {
+	      return this.sqlSession.update("updatePlan2", dto);
+	   }
+	
 }

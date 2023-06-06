@@ -33,7 +33,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.jejutree.plans_model.*;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 @Controller
 public class PlansController {
    
@@ -121,83 +124,97 @@ public class PlansController {
     	System.out.println(result);
     	out.print(result);
     }
-    @RequestMapping(value = "planListUpdateOk.go", produces = MediaType.APPLICATION_JSON_VALUE)
+    
+    
+
+    @RequestMapping(value = "updateEvent.go", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> updatePlan(@RequestParam String data, @RequestParam String user_id) {
-    	System.out.println(user_id);
-    	//기존의 리스트 추출 해당 리스트의 차수 id 값이 필요함.
-    	 if (user_id == null || user_id.isEmpty()) {
-    	        // 유효하지 않은 user_id 처리
-    	        Map<String, Object> result = new HashMap<String, Object>();
-    	        result.put("result", false);
-    	        return result;
-    	    }
-    	
-    	
-        List<UserPlansDTO> origin_list = this.dao.getPlanList(user_id);
-        
-        int origin_index = 0;
-        
-        Map<String, Object> result = new HashMap<String, Object>();
-        int update_check = 0;
-        try {
-            System.out.println(String.valueOf(data));
-            List<Map<String, Object>> updatePlans = new Gson().fromJson(String.valueOf(data),
-                    new TypeToken<List<Map<String, Object>>>() {}.getType());
-            System.out.println(":::::::::::::::::여기까지 됩니다:1::::::::::::::::::::");
-            for (Map<String, Object> updatePlan : updatePlans) {
-                int new_id = Integer.parseInt((String) updatePlan.get("id"));
-                String title = (String) updatePlan.get("title");
-                // "start" 값에서 날짜 및 시간 정보 추출
-                Map<String, Object> start = (Map<String, Object>) updatePlan.get("start");
-                Map<String, Object> startDateTime = (Map<String, Object>) start.get("d");
-                String start_date = (String) startDateTime.get("d");
+    public ResponseEntity<Void> updateEvent(@RequestParam("id") String id, @RequestParam("start") String start,
+          @RequestParam("end") String end) {
+       // TODO: id, start, end를 이용하여 실제 일정을 업데이트하는 로직을 작성해야 합니다.
+       UserPlansDTO dto = new UserPlansDTO();
+       int planId = Integer.parseInt(id);
 
-                // "end" 값에서 날짜 및 시간 정보 추출
-                Map<String, Object> end = (Map<String, Object>) updatePlan.get("end");
-                Map<String, Object> endDateTime = (Map<String, Object>) end.get("d");
-                String end_date = (String) endDateTime.get("d");
-                
-                System.out.println("변수 저장은 됬습니다.");
-                
-                
-                // 기존의 유저 아이디로 전체 리스트 뽑고 dto로 받아서 거기서 id만 추출, 받은 배열의 해당 번째에서 추출한 아이디에 해당하는 플랜의 정보를 기존의 유저 아이디 정보로 업데이트
-                UserPlansDTO origin_dto = origin_list.get(origin_index);
-                System.out.println("dto는 뽑힙니다." + origin_dto);
-                // 업데이트할 row의 id where 조건
-                int origin_id = origin_dto.getId();
-                System.out.println(":::::::::::::::::여기까지 됩니다:1::::::::::::::::::::");
-                // 받아온 새로운 순서로 등록될 플랜의 정보를 id로 조회해서 dto로 받기
-                UserPlansDTO new_dto = this.dao.getPlandtobyId(new_id);
-                System.out.println("dto는 뽑힙니다2." + new_dto);
-                // 출력한 dto의 id만 origin_id로 변경해서 update 메서드의 parameter로 넣어주기
-                new_dto.setId(origin_id);
-                new_dto.setStart_date(start_date);
-                new_dto.setEnd_date(end_date);
-                System.out.println("dto가 바꼈나?." + new_dto);
-                // 업데이트 메서드 진행
-                update_check = dao.getUpdateplan(new_dto);
-                
-                // 기존 리스트 dto 출력을 위한 인덱스 
-                origin_index += 1;
-                System.out.println(":::::::::::::::::여기까지 됩니다2:::::::::::::::::::::");
-            }
-            if(update_check > 0) {
-            	result.put("result", true);
-            }else {
-            	result.put("result", false);
-            }
-            System.out.println(":::::::::::::::::여기까지 됩니다3:::::::::::::::::::::");
-        } catch (Exception e) {
-            result.put("result", false);
-        }
+       dto.setId(planId);
 
-        return result; 
+       dto.setStart_date(start);
+
+       dto.setEnd_date(end);
+
+       int rowsUpdated = dao.updatePlan2(dto);
+       
+       System.out.println("출력이 된다면 여기까지는 일단 목록을 뽑아오는데 성공한 겁니다.");
+       System.out.println("변경하는 플래너의 아이디   >>>>>>>>> " + id);
+       System.out.println("변경 후의 플래너 시작 날짜 >>>>>>>>> " + start);
+       System.out.println("변경 후의 플래너 종료 날짜 >>>>>>>>> " + end);
+
+       if (rowsUpdated > 0) {
+          // Plan update was successful.
+          return new ResponseEntity<Void>(HttpStatus.OK);
+       } else {
+          // Plan update failed.
+          return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+       }
+
     }
+    
+    
    /*
     * @InitBinder public void initBinder(WebDataBinder binder) { SimpleDateFormat
     * sdf = new SimpleDateFormat("yyyy-MM-dd");
     * binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true)); }
     */
+    
+    @RequestMapping("toggle_like.go")
+	@ResponseBody
+	public String toggleBm(BookmarkDTO bdto) {
+		
+		boolean checkBm = dao.checkBookmark(bdto);
+
+		Integer re = -1;
+		
+		if (!checkBm) {
+			re = dao.bmInsert(bdto);
+		}
+		System.out.println(re);
+
+		return re.toString();
+	}
+
+	 @RequestMapping(value = "bm_list.go", produces = "application/json; charset=UTF-8")
+	 @ResponseBody
+	 public String BmList(HttpSession session, Model model, HttpServletResponse response) throws IOException { 
+		 
+		 String user_id = (String) session.getAttribute("user_id");
+		 List<BookmarkDTO> blist = dao.bmList(user_id);
+		 response.setCharacterEncoding("UTF-8");
+		 
+
+		 String str = "{\"list\":[";
+		 
+		 for(int i=0;i<blist.size();i++) {
+			 BookmarkDTO d = blist.get(i);
+			 str += "{\"user_id\": \""+d.getUser_id()
+			 		+ "\" , \"location\": \""+d.getLocation()+"\"}";
+			 if(i!=blist.size()-1) {
+				 str += ",";
+			 }
+		 }
+		 str += "]}";
+		 
+		 return str;
+	 }
+
+	@RequestMapping("bm_delete_ok.go")
+	@ResponseBody
+	public String bmDeleteOk(BookmarkDTO bdto, HttpSession session) {
+		String user_id = (String) session.getAttribute("user_id");
+		bdto.setUser_id(user_id);
+		
+		System.out.println(bdto);
+		
+		Integer check = this.dao.bmDelete(bdto);
+		return check.toString();
+	}
     
 }

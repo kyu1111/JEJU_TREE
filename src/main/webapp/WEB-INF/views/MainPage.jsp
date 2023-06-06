@@ -9,7 +9,6 @@
     <!-- Add jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-	 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
 	 
     <title>GIF 슬라이드</title>
     <script type="text/javascript">
@@ -79,16 +78,14 @@
 	 <div class="main_content">
      <div class="container_wrap">  
         <div class="intro-text" align="center">
-            <h2>
-                <i class="fa-solid fa-plane fa-3x" style="position:relative; top:-10px; left:-135px;"></i>
-            </h2>
-            <p style="font-size:30px;">
-                	손쉽게 일정을  조정하세요.
+            <p style="font-size:26px; text-align: left; padding-left: 21%">
+           		<b style="font-size:28px;">JEJU TREE</b> 에서 손쉽게 <br>
+               	여행 일정을 계획하세요.
             </p>
             <div class="button-container">
-                <button class="btn" onclick="location.href='tmap.go'">일정 만들기</button>
-                <button class="btn">이용 가이드</button>
-                <button class="btn" onclick="location.href='drag_plan_list.go'">DragFunction</button>
+                <button class="btn-day" onclick="location.href='tmap.go'">일정 만들기</button>
+                <button class="btn-guide" onclick="location.href='guidePage.go'">이용 가이드</button>
+              <!--  <button class="btn-drag" onclick="location.href='drag_plan_list.go'">DragFunction</button> -->
             </div>
         </div>
         		
@@ -126,10 +123,35 @@
     <div class="container-insta-hot">
         <div class="insta-hot">
             <h2 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h2>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-                <img src="<%=request.getContextPath()%>/resources/images/image1.jpg" alt="Image 1" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image2.jpg" alt="Image 2" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image3.jpg" alt="Image 3" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
+            <a class="image-container" href="<%=request.getContextPath()%>/">
+           <img src="<%=request.getContextPath()%>/resources/images/카페 엘리펀트힙-470.jpg" alt="Image 1">
+           <div class="hidden-content">
+               <span class="sp-cont"><span class="sp-title">카페 엘리펀트힙</span><br>
+               	제주공항 근처 에그인더헬이 맛있는 <br>
+               	핫플레이스 브런치카페 <br><br>
+                #제주공항 #브런치 #카페 #맛집</span>
+           </div>
+         </a> 
+         <a class="image-container" href="<%=request.getContextPath()%>/">
+           <img src="<%=request.getContextPath()%>/resources/images/카페 그계절-470.jpg" alt="Image 2">
+           <div class="hidden-content">
+              <span class="sp-cont"><span class="sp-title">카페 그계절</span><br>
+               	제주 구좌읍 초록이들 가득한 <br>
+               	플렌테리어 카페 <br><br>
+                #반려동물가능 #카페 #포토존 #싱그러움</span>
+           </div>
+         </a> 
+            <a class="image-container" href="<%=request.getContextPath()%>/">   
+                <img src="<%=request.getContextPath()%>/resources/images/카페 까르네-470.jpg" alt="Image 3">
+                <div class="hidden-content">
+                   <span class="sp-cont"><span class="sp-title">카페 까르네</span><br>
+               		제철 과일을 이용한 디저트와  <br>
+               		음료를 즐길 수 있는 구좌읍 상도리 카페<br><br>
+               		#야외석 #카페 #디저트 #반려동물</span>
+            </div>
+            
+         </a>
             </div>
         </div>
     </div>
@@ -138,10 +160,35 @@
     <div class="container-steady-hot">
         <div class="steady-hot">
             <h2 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h2>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-                <img src="<%=request.getContextPath()%>/resources/images/image1.jpg" alt="Image 1" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image2.jpg" alt="Image 2" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image3.jpg" alt="Image 3" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
+                 <a class="image-container" href="<%=request.getContextPath()%>/">
+           <img src="<%=request.getContextPath()%>/resources/images/오설록티뮤지엄-470.jpg" alt="Image 1">
+           <div class="hidden-content">
+              <span class="sp-cont"><span class="sp-title">오설록티뮤지엄</span><br>
+                  	제주 녹차 문화의 중심<br>
+                  	차 박물관과 카페테리아 <br><br>
+                  	#녹차 #여름포토스팟 #디저트 #카페</span>
+            </div>
+         </a> 
+         <a class="image-container" href="<%=request.getContextPath()%>/">
+           <img src="<%=request.getContextPath()%>/resources/images/용머리해안-470.jpg" alt="Image 2">
+           <div class="hidden-content">
+                 <span class="sp-cont"><span class="sp-title">용머리해안</span><br>
+                 	한국의 그랜드 캐니언<br>
+                 	멋진 지질트레일 덕분에 핫플레이스<br><br>
+               		#서귀포 #해변 #유네스코 #시간확인필수</span>
+            </div>
+         </a> 
+            <a class="image-container" href="<%=request.getContextPath()%>/">   
+                <img src="<%=request.getContextPath()%>/resources/images/신창풍차해안도로-470.jpg" alt="Image 3">
+                <div class="hidden-content" >
+                   <span class="sp-cont"><span class="sp-title">신창풍차해안도로</span><br>
+                   		예쁜 바다와 풍차를 한번에 찍을 수 있는 곳<br>
+                   		해질녘 드라이브 최고의 명소<br><br>
+                   		#커플 #노을맛집 #드라이브 #사진필수</span>
+            </div>
+            
+         </a>
             </div>
         </div>
     </div>
@@ -150,12 +197,37 @@
     <div class="container-photo-hot">
         <div class="photo-hot">
             <h2 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h2>
-            <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-                <img src="<%=request.getContextPath()%>/resources/images/image1.png" alt="Image 1" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image2.png" alt="Image 2" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
-                <img src="<%=request.getContextPath()%>/resources/images/image3.png" alt="Image 3" style="width: 30%; height: auto; margin-bottom: 20px; border-radius: 5px;">
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
+                 <a class="image-container" href="<%=request.getContextPath()%>/">
+           <img src="<%=request.getContextPath()%>/resources/images/김녕바닷길-470.jpg" alt="Image 1">
+           <div class="hidden-content">
+              <span class="sp-cont"><span class="sp-title">김녕바닷길</span><br>
+              		제주 동쪽 여행 중 바닷가 필수 코스<br>
+              		제주 바다 감성을 물씬 느낄 수 있는 명소<br><br>
+               		#제주감성 #예쁜바다 #인생샷 #스노쿨링</span>
             </div>
-        </div>
+         </a> 
+         <a class="image-container" href="<%=request.getContextPath()%>/">
+           <img src="<%=request.getContextPath()%>/resources/images/노루손이 오름-470.jpg" alt="Image 2">
+           <div class="hidden-content" >
+              <span class="sp-cont"><span class="sp-title">노루손이 오름</span><br>
+              		등린이도 도전할 수 있는 등산코스<br>
+              		뷰가 예뻐서 사진 찍기에 좋은 오름<br><br>
+               		#자연 #트레킹 #뷰맛집 #반려동물가능</span>
+            </div>
+         </a> 
+         <a class="image-container" href="<%=request.getContextPath()%>/">   
+            <img src="<%=request.getContextPath()%>/resources/images/안돌오름-470.jpg" alt="Image 3">
+            <div class="hidden-content">
+               <span class="sp-cont"><span class="sp-title">안돌오름</span><br>
+	               	숲길 사진으로 유명한 안돌오름 비밀의 숲<br>
+	               	스냅 촬영의 성지이자 요즘 핫한 명소<br><br>
+	           		#사진필수 #커플 #초원 #숲길</span>
+            </div>
+            
+         </a>
+            </div>
+            </div>
     </div>
     
     <br>

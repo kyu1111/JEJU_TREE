@@ -17,70 +17,71 @@
     <!-- 상단바 설정하기  -->
     <%@ include file="../include/navbar.jsp" %> 
     <div class="userProfile">
-    <form method="post" id="frm1">
+    <form method="post" id="frm1" enctype="multipart/form-data" >
     
     <table>
         <tr>
-            <th>사용자 프로필</th>
-            <td> <input value="${user.user_image }" name="user_image"  ></td>
+        <td>
+            <label>사용자 프로필</label>
+             <img id="previewImg"  src="<%=request.getContextPath() %>${user.user_image }" alt="profile" >
+             <input type="file" name="upload" id="upload" value="${user.user_image }" onchange="previewProfileImage(event)">
+             <input type="hidden" name="user_image" value="${user.user_image }">
+         </td>
         </tr>
         <tr>
-             <th>사용자 닉네임</th>
-            <td> <input name="user_nickname" value="${user.user_nickname }"  ></td>
-        </tr>
-        <c:if test="${user.user_iskakao == 1}">
-        <tr>
-            <th>사용자 아이디</th>
-            <td><input readonly value="${user.user_id}" name="user_id" ></td>
-            <span>카카오톡 연동  회원 입니다.</span>
-        </tr>
-        </c:if>
-        <c:if test="${user.user_iskakao == 0}">
-        <tr>
-            <th>사용자 아이디</th>
-            <td> <input value="${user.user_id }" name="user_id" ></td>
-        </tr>
-        </c:if>
-        <tr>
-            <th>사용자 전화번호</th>
-            <td> <input value="${user.user_phone }" name="user_phone" ></td>
+          <td>
+             <label id="user_nickname" for="user_nickname">사용자 닉네임</label>
+           <input name="user_nickname" class="user_nickname" value="${user.user_nickname }"  >
+            <p id="name_check" class="name_check"></p>
+            </td>
         </tr>
         <tr>
-            <th>사용자 현재 비밀번호</th>
-            <td> <input type="password" name="user_pwd"  placeholder="현재 비밀번호"></td>
+        <td>
+            <label for="user_id">사용자 아이디</label>
+             <input value="${user.user_id }" class="user_id" name="user_id" >
+            <p id="id_check" class="id_check"></p>
+            </td>
         </tr>
         <tr>
-            <th>사용자 변경 비밀번호</th>
-            <td> <input type="password" name="db_pwd" placeholder="변경 비밀번호"></td>
+         <td> 
+            <label id="user_phone" for="user_phone">사용자 전화번호</label>
+           <input value="${user.user_phone }" name="user_phone" ></td>
         </tr>
         <tr>
-            <th>사용자 변경 비밀번호 확인</th>
-            <td> <input type="password" name="db_pwd2" placeholder="변경 비밀번호 확인" ></td>
+        <td> 
+            <label id="user_pwd" for="user_pwd">사용자 현재 비밀번호</label>
+            <input type="password" name="user_pwd"  placeholder="현재 비밀번호"></td>
         </tr>
-         <!--카카오 계정으로 로그인 해서 연동된 계정 정보를 수정하려 하는 경우.  -->
-        <c:if test="${user.user_iskakao == 1}">
         <tr>
-            <th>사용자 이메일</th>
-            <td><input readonly value="${user.user_email }" name="user_email" ></td>
-            <span>카카오톡 연동  회원 입니다.</span>
+         <td>
+           <label id="db_pwd" for="db_pwd">사용자 변경 비밀번호</label>
+            <input type="password" name="db_pwd" class="db_pwd" id="db_pwd" placeholder="변경 비밀번호"  autocomplete="off">
+            </td>
         </tr>
-        </c:if>
-        <c:if test="${user.user_iskakao == 0}">
+        <tr> 
+        <td>
+            <label id="db_pwdCheck" for="db_pwdCheck">사용자 변경 비밀번호 확인</label>
+             <input type="password" name="db_pwdCheck" class="db_pwdCheck" placeholder="변경 비밀번호 확인"  autocomplete="off">
+             <span id="dp_pwdspan"></span>
+        </td>
+        </tr>
         <tr>
-            <th>사용자 이메일</th>
-            <td><input value="${user.user_email }" name="user_email" ></td>
-        </tr>
-        </c:if>
+         <td>
+            <label id="user_email" for="user_email">사용자 이메일</label>
+           <input type="text" value="${user.user_email }" class="user_email" name="user_email" >
+            <p id="email_check" class="email_check"></p>
+			
 	</table>
 	<input type="hidden" value="${user.user_iskakao }" name="user_iskakao"  >
 	<input type="hidden" value="${user.user_like_keyword }" name="user_like_keyword"  >
 	<input type="hidden" value="${user.mailKey }" name="mailKey"  >
 	<input type="hidden" value="${user.mailAuth }" name="mailAuth"  >
 	<input type="hidden" value="${user.is_admin }" name="is_admin"  >
-	<input type="hidden" value="${user.id}" name="id"  >
-	 <input type="submit" value="회원수정" onclick='btn_click("update");'>
+	<input type="hidden" value="${user.id }" name="id" class="id" >
+	
+	 <input type="submit" value="회원수정" id="update" onclick='btn_click("update");'>
 	<button type="reset" value="다시작성">다시작성</button>
-    <c:if test="${empty Kakao_info}">
+      <c:if test="${empty Kakao_info}">
     <input type="submit" value="회원탈퇴" onclick='btn_click("delete");'>
     </c:if>
      <!--카카오 계정으로 로그인 했으나 user_join이 1인 경우.(정회원 연동 외어있는 상태)  -->
@@ -89,11 +90,42 @@
                                                location.href='deletekakaoUser.go?user_email=${kakao_id}&access_Token=${kakao_token}'
                                                    } else{return;}" >
      </c:if> 
+    
      </form>
 	</div>
 	  <!-- footer 설정하기  -->
     <%@ include file="../include/footer.jsp" %> 
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+	$(".db_pwdCheck").keyup(function() {
+			
+			let db_pwd = $(".db_pwd").val();
+			let db_pwd2 = $(".db_pwdCheck").val();
+			
+			console.log($(".db_pwd").val());
+			console.log($(".db_pwdCheck").val());
+			if(db_pwd != null) {
+				if(db_pwd == db_pwd2){
+					$("#dp_pwdspan").text("");
+					$("#dp_pwdspan").text("일치");
+					$("#dp_pwdspan").show();
+				}else{
+					$("#dp_pwdspan").text("");
+					$("#dp_pwdspan").text("불일치");
+					$("#dp_pwdspan").show();
+				}
+				
+			}
+		});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/mypage/userUpdate.js"></script>
+<script>
+	
+	
+
     function btn_click(str){                             
         if(str=="update"){                                 
             frm1.action="updateUser.go";      
@@ -103,7 +135,22 @@
             } else{return;}     
         }
     }
+    
+ // 바꾼 프로필 이미지 보여주기
+    function previewProfileImage(event) {
+       let input = event.target;
+       let reader = new FileReader();
+       reader.onload = function() {
+          let previewImg =  document.getElementById('previewImg');
+          previewImg.src = reader.result;
+       };
+       reader.readAsDataURL(input.files[0]);
+       $('#upload').val(1);
+       
+    }
 </script>
+
+
     
 </body>
 </html>

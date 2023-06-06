@@ -1,153 +1,259 @@
 @charset "UTF-8";
-		 .container{
-		 	display: flex;
-            justify-content: center;
-            align-items: center;
-		 }
-         .container_wrap {
-        
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 80px); /* 상단 여백 조정 */
-            
-        }
-        
-        .container-insta-hot, .container-steady-hot, .container-photo-hot {
-  			margin: 10px 0;
-		}
 
-        .slider {
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
+    .container{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+     }
+     
+      .container_wrap {
+     	 margin-bottom: 120px;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: calc(100vh - 80px); /* 상단 여백 조정 */
+         
+     }
+        
+      .container-insta-hot, .container-steady-hot, .container-photo-hot {
+         margin: 10px 0;
+      }
 
-        .slides {
-            display: flex;
-            transition: transform 0.6s ease-in-out;
-        }
+   .container-hot {
+      padding-left: 6%;
+      padding-right: 6%;
+   } 
+   
+     .slider {
+         width: 100%;
+         position: relative;
+         overflow: hidden;
+     }
 
-        .slide {
-            flex-shrink: 0;
-            width: 100%;
-            height: 540px; /* 슬라이드의 크기 조정 */
-            object-fit: cover;
-        }
+     .slides {
+         display: flex;
+         transition: transform 0.6s ease-in-out;
+     }
 
-        .intro-text {
-        
-            width: 50%;
-            padding-right: 20px;
-            
-        }
+     .slide {
+         flex-shrink: 0;
+         width: 100%;
+         height: 540px; /* 슬라이드의 크기 조정 */
+         object-fit: cover;
+     }
 
-        .arrows {
-        
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            z-index: 10;
-            
-        }
+     .intro-text {
+     
+         width: 50%;
+         padding-right: 20px;
+         
+     }
+   
+      .arrows {
+      
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          z-index: 10;
+          
+      }
+         
+    .round-button {
+       display: inline-block;
+       padding: 8px 15px; /* 필요에 따라 조정하세요 */
+       background-color: rgba(0, 0, 0, 0.3); /* 필요에 따라 조정하세요 */
+       color: #fff; /* 필요에 따라 조정하세요 */
+       text-align: center;
+       border-radius: 50%;
+       transition: background-color 0.3s ease;
+       cursor: pointer;
+    }
+   
+      .dots {
+      
+          position: absolute;
+          bottom: 10px;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          z-index: 10;
+          
+      }
 
-        .prev, .next {
-        
-            cursor: pointer;
-            font-size: 24px;
-            padding: 8px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border-radius: 50%;
-            
-        }
+      .dot {
+      
+          cursor: pointer;
+          height: 10px;
+          width: 10px;
+          margin: 0 4px;
+          background-color: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          display: inline-block;
+          
+      }
 
-        .dots {
-        
-            position: absolute;
-            bottom: 10px;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            z-index: 10;
-            
-        }
+      .dot.active {
+      
+          background-color: rgba(255, 255, 255, 0.9);
+          
+      }
+         
+      .button-container {
+      
+          margin-top: 20px;
+          display: flex;
+          justify-content: center;
+          flex-direction: column; /* 버튼을 세로로 나열 */
+          align-items: center; /* 버튼을 수직으로 가운데 정렬 */
+          cursor: pointer;
+          
+      }
 
-        .dot {
-        
-            cursor: pointer;
-            height: 10px;
-            width: 10px;
-            margin: 0 4px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            display: inline-block;
-            
-        }
+      .btn-day {
+      
+          font-size: 18px;
+          width: 310px; /* 버튼 너비 지정 */
+          height: 45px; /* 버튼 높이 지정 */
+          padding: 12px 24px;
+          margin: 8px 0; /* 버튼 간격 조정 */
+          cursor: pointer;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          background-color: #99dce6;
+          transition: background-color 0.3s;
+          display: flex; /* 추가 */
+          justify-content: center; /* 추가 */
+          align-items: center; /* 추가 */
+          
+      }
 
-        .dot.active {
-        
-            background-color: rgba(255, 255, 255, 0.9);
-            
-        }
-        
-        .button-container {
-        
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            flex-direction: column; /* 버튼을 세로로 나열 */
-            align-items: center; /* 버튼을 수직으로 가운데 정렬 */
-            
-        }
+      .btn-day:hover {
+      
+          background-color: #8bc9d2;
+          
+      }
+         
+      .btn-guide {
+      
+          font-size: 18px;
+          width: 310px; /* 버튼 너비 지정 */
+          height: 45px; /* 버튼 높이 지정 */
+          padding: 12px 24px;
+          margin: 8px 0; /* 버튼 간격 조정 */
+          cursor: pointer;
+          border: none;
+          border-radius: 5px;
+          color: white;
+          background-color: #99dce6;
+          transition: background-color 0.3s;
+          display: flex; /* 추가 */
+          justify-content: center; /* 추가 */
+          align-items: center; /* 추가 */
+          
+      }
+   
+     .btn-guide:hover {
+     
+         background-color: #8bc9d2;
+         
+     }
+     
+    
+    .image-container {
+     position: relative;
+     display: inline-block;
+     width: 26%;
+     margin-bottom: 20px;
+     overflow: hidden; /* 이미지가 부모 요소를 넘어갈 경우를 대비하여 가리도록 설정 */
+     min-width:300px;
+      }
+   
+    .image-container img {
+     min-width:320PX;
+     width: 100%;
+     height: auto;
+     filter: blur(0); /* 기본적으로 이미지에 blur 효과를 주지 않음 */
+     transition: filter 0.3s; /* 효과가 일어날 시간 설정 */
+   }
 
-        .btn {
-        
-            font-size: 18px;
-            width: 350px; /* 버튼 너비 지정 */
-            height: 45px; /* 버튼 높이 지정 */
-            padding: 12px 24px;
-            margin: 8px 0; /* 버튼 간격 조정 */
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            background-color: #007bff;
-            transition: background-color 0.3s;
-            display: flex; /* 추가 */
-            justify-content: center; /* 추가 */
-            align-items: center; /* 추가 */
-            
-        }
+   .image-container:hover img {
+     filter: blur(5px); /* hover 시 이미지에 blur 효과를 주어 흐려지게 함 */
+   }
+      
+   .hidden-content {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: rgba(0, 0, 0, 0.3);
+     color: white;
+     display: none;
+     transition: background 0.3s; /* 효과가 일어날 시간 설정 */
+   }
+   
+   .image-container:hover .hidden-content {
+     display: block;
+     background: rgba(0, 0, 0, 0.5); /* hover 시 배경을 더 어둡게 함 */
+   }
+   
+   .sp-title {
+   	 font-size: 20px;
+   	 color: white;
+   	 font-weight: 550;
+   	 padding-bottom: 50%;
+   }
+   
+   .sp-cont {
+   	 padding-bottom: 5%;
+   }
+   
+   .sp-title,
+	.sp-cont {
+	  position: absolute;
+	  bottom: 0;
+	  right: 0;
+	  text-align: right;
+	  padding-right: 5%;
+	  padding-left: 5%;
+	}
+	
+	@media (max-width: 900px) {
+	  .sp-title {
+	    font-size: 16px;
+	  }
+	
+	  .sp-cont {
+	    font-size: 12px;
+	  }
+	}
+	
+	
+	
 
-        .btn:hover {
-        
-            background-color: #0056b3;
-            
-        }
-        
-		.to-top {
-		
-    		position: fixed;
-   		    bottom: 20px;
-    		right: 20px;
-    		z-index: 99;
-    		font-size: 24px;
-    		padding: 8px;
-    		background-color: rgba(0, 0, 0, 0.5);
-    		color: white;
-    		border-radius: 50%;
-    		cursor: pointer;
-    		
-		}
-		
-        .insta-hot {
-        
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            
-        }
+	.to-top {
+   
+      display: inline-block;
+       padding: 7px 10px; /* 필요에 따라 조정하세요 */
+        position: fixed;
+       bottom: 20px;
+        right: 20px;
+        z-index: 99;
+        font-size: 18px;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+        border-radius: 50%;
+        cursor: pointer;
+           
+   }
+         
+     * {
+        user-select: none;
+    }
+
+	
+

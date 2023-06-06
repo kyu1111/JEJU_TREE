@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="org.jsoup.Jsoup" %>
+<%@ page import="org.jsoup.nodes.Document" %>
+<%@ page import="org.jsoup.nodes.Element" %>
+<%@ page import="org.jsoup.select.Elements" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,8 +64,123 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
+
+<!-- 폰트어썸 cdn링크 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   
 <script type="text/javascript">
+
+//사이드바에 북마크 목록+해제버튼 생성
+$('.openbtn1').click(function(){
+    $.ajax({
+        url: "bm_list.go",
+        method: "POST",
+        dataType : "json",
+        contentType : "application/json; charset:UTF-8",
+        async: false,
+        success: function(data) {
+           console.log(data);
+           let list = data.list;
+           let table = "";
+           for(let i=0;i<list.length;i++){
+              let cont = list[i];
+              table += "<tr>" +
+                        "<td>"+cont.location+"</td>" +
+                        "<td><input type='button' value='해제' onclick='bookmark_del(\""+cont.location+"\",this)'></td>" +
+                    "</tr>";
+           }
+           
+           console.log($('#blist_td').find('tr:gt(0)'));
+           $('#blist_td').find('tr:gt(0)').remove();
+           $('#blist_td').append(table);
+        },
+        error : function(request, status, error) {
+           console.log("code:" + request.status + "\n" + "error:" + error + "\n" + "errortext:" + request.responseText );
+        }
+    });
+    
+});
+
+
+//사용자 ID를 가져오는 함수
+function getUserID(userId, title) {
+  $.ajax({
+    url: "/get_user_id.go", // 사용자 ID를 가져오는 서버 엔드포인트 URL
+    method: "POST",
+    dataType: "text",
+    success: function(response) {
+      userId = response; // 수정된 부분: 서버로부터 가져온 사용자 ID 값을 변수에 저장
+      toggleBm(itemId, userId, title);
+    },
+    error: function(xhr, status, error) {
+       console.log("에러 발생 (상태 코드: " + xhr.status + "): " + xhr.responseText);
+    }
+  });
+}
+
+// 북마크 해제
+function bookmark_del(location, self){
+   $.ajax({
+        url: "bm_delete_ok.go",
+        method: "POST",
+        data: {
+           location: location
+        },
+        dataType : "text",
+        async: false,
+        success: function(data) {
+           console.log(data);
+           
+           if(data>0){
+              $(self).parent().parent().remove();
+           }else{
+              alert('실패');
+           }
+           
+        },
+        error : function(request, status, error) {
+           console.log("code:" + request.status + "\n" + "error:" + error + "\n" + "errortext:" + request.responseText );
+        }
+    });
+}
+
+// 북마크 클릭 함수
+function toggleBm(title) {
+ var h = $('#heart');
+ let userId = $(".user_id").val();
+   console.log(title);
+   console.log("아이디", userId);
+
+ $.ajax({
+   url: "toggle_like.go",
+   method: "get",
+   data: { 
+      user_id : userId,
+      location : title 
+   },
+   dataType: "text",
+   success: function(response) {
+      if(response>0) {
+          
+          let table = "<tr>" +
+                        "<td>"+title+"</td>" +
+                        "<td><input type='button' value='해제' onclick='bookmark_del(\""+title+"\",this)'></td>" +
+                       "</tr>";
+
+         $('#blist_td').append(table);
+       }else if(response == -1){
+          alert('이미 등록된 장소입니다');
+       }else{
+          alert('실패');
+       }
+   
+   },
+   error: function(xhr, status, error) {
+      console.log("에러 발생 (상태 코드: " + xhr.status + "): " + xhr.responseText);
+   }
+ });
+}
+
 
    var map;
    var infoWindow;
@@ -186,6 +305,7 @@
       // Map click event listener
       map.addListener("click", function(e) {
           var latlng = e.latLng; // 클릭한 위치의 위도, 경도 정보
+          var defaultImgSrc = "<%=request.getContextPath()%>/resources/images/title.png"; // 기본 이미지 URL
           console.log(latlng);
           $.ajax({
               url: 'https://apis.data.go.kr/B551011/KorService1/locationBasedList1?MobileOS=ETC&MobileApp=AppTest&_type=json&numOfRows=10&pageNo=1',
@@ -193,12 +313,17 @@
                   serviceKey: decodeURIComponent('h25GokrXt4MRvyzdkh5DJNs8HRscb9jBf6OX/Fy3AiiTckC7U+HPtX+hXL7yWVJdYWnq4FrIDyjNbM6XQ5iPwA=='),
                   mapX: latlng._lng,
                   mapY: latlng._lat,
-                  radius: 100
+                  radius: 100,
               },         
               success: function(data) {
                   if (data && data.response && data.response.body && data.response.body.items && data.response.body.items.item.length > 0) {
-                      var item = data.response.body.items.item[0]; // 첫 번째 아이템
+                      var item = data.response.body.items.item[0]; // 첫 번째 아이템\
+                     
+                      
 
+                   // Check if item.firstimage2 is null or empty
+                   var Src = item.firstimage2 ? item.firstimage2 : defaultImgSrc;
+                      
                       // Add a marker and infoWindow at the click position
                       marker = new Tmapv2.Marker({
                           position: new Tmapv2.LatLng(latlng._lat, latlng._lng),
@@ -207,17 +332,18 @@
                             
                       var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
                           + "<input type='hidden' name='title' value='" + item.title + "'>" 
-                          + "<input type='hidden' name='address' value='" + item.addr1 + "'>"
+                          + "<input type='hidden' name='addr' value='" + item.addr1 + "'>"
+                          + "<a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>"
                           + "<input type='hidden' name='location' value=" + item.title + ">"
                           + "<input type='hidden' name='markerLat' value='" + latlng._lat + "'>"  // latitude input field
                           + "<input type='hidden' name='markerLng' value='" + latlng._lng + "'>"  // longitude input field
                           + "<div style='padding:10px; width:250px;'>" + item.title + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
                           + "<div>" + item.addr1 + "</div>"
-                          + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
+                          + "<div><img src='" + Src + "' name='image' alt='Image' style='width:100px; height:auto;'></div>"
                           + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
                           + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
                           + "</form>";
-                     
+                          
                           infoWindow = new Tmapv2.InfoWindow({
                               position: new Tmapv2.LatLng(latlng._lat, latlng._lng),
                               content: content,
@@ -275,15 +401,18 @@
                 + "<input type='hidden' name='title' value='" + name + "'>" 
                 + "<input type='hidden' name='address' value='" + address + "'>"
                 + "<input type='hidden' name='location' value='비자림'>"
+                + "<input type='hidden' name='location' value='비자림'>"
+                + "<input type='hidden' name='image' value='"+ item.firstimage2 +"'>"
                 + "<input type='hidden' name='markerLat' value='" + lat + "'>"  // latitude input field
                 + "<input type='hidden' name='markerLng' value='" + lon + "'>"  // longitude input field
                 + "<div style='padding:10px; width:250px;'>" + name + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
                 + "<div>" + address + "</div>"
-                // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
+                //+ "<div><img src='" + item.firstimage2 + "' name='image' alt='Image' style='width:100px; height:auto;'></div>"
                 + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
                 + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
                 + "</form>";
-                  
+                
+            
              // 마커를 띄우는게 아니라 해당 위치 마커의 '라벨창'을 띄우는 코드입니다.     
              var labelInfo = new Tmapv2.Label({
                position : labelPosition,
@@ -319,8 +448,16 @@
    });
    
    function validateAndSubmitForm(){
-      if(PlanListValidCheck()){
-         $('#markerDataForm').submit();
+      if (PlanListValidCheck()) {
+          // Get the src value from the img tag
+          var imgSrc = $("img[name='image']").attr("src");
+          
+          // Add the hidden input field with the imgSrc value
+          var content = "<input type='hidden' name='image' value='" + imgSrc + "'>";
+          
+          // Rest of your code...
+          $('#markerDataForm').append(content);
+          $('#markerDataForm').submit();
       }else{
          alert('항목을 모두 입력하셔야 합니다.');   
       }
@@ -336,43 +473,43 @@
        return true;
    }
    function planList_check(a){
-	   let kid = '${kakao_id}';
-	   let uid = '${user_id}';
-	   let user_id ='';
-	   
-	   if(kid != ''){
-		   user_id = kid;
-	   }else if(uid != ''){
-		   user_id = uid;
-	   }
-	   console.log(user_id);
-		$.ajax({
- 			url : "planlistCheck.go",
- 			type : "POST",
- 			data : {
- 				user_id : user_id
- 			},
- 		    success:function(result){ 
- 		    	//해당 아이디로 저장된 일정리스트가 있는 경우.
- 		    	if(result == 1){ 
- 		        	//수정하는 창으로 보낸다.
- 		    		let ask_result = confirm('일정정보를 수정하시겠습니까?');
- 		        	if(ask_result){
- 		        		let url = a;
- 		        		location.href = url;
- 		        	}
- 		        	//해당 아이디로 저장된 일정리스트가 없는 경우.   
- 		        }else if(result == -1){
- 		        	alert('보유하신 일정 리스트가 없습니다. 일정을 먼저 추가해 주세요.')
- 		        }
- 		    },
- 		    error:function(error){
- 		        alert("통신 오류.");
- 		    } 
- 			
- 		}); 
-	   
-	   	 
+      let kid = '${kakao_id}';
+      let uid = '${user_id}';
+      let user_id ='';
+      
+      if(kid != ''){
+         user_id = kid;
+      }else if(uid != ''){
+         user_id = uid;
+      }
+      console.log(user_id);
+      $.ajax({
+          url : "planlistCheck.go",
+          type : "POST",
+          data : {
+             user_id : user_id
+          },
+           success:function(result){ 
+              //해당 아이디로 저장된 일정리스트가 있는 경우.
+              if(result == 1){ 
+                  //수정하는 창으로 보낸다.
+                 let ask_result = confirm('일정정보를 수정하시겠습니까?');
+                  if(ask_result){
+                     let url = a;
+                     location.href = url;
+                  }
+                  //해당 아이디로 저장된 일정리스트가 없는 경우.   
+               }else if(result == -1){
+                  alert('보유하신 일정 리스트가 없습니다. 일정을 먼저 추가해 주세요.')
+               }
+           },
+           error:function(error){
+               alert("통신 오류.");
+           } 
+          
+       }); 
+      
+          
    }
 </script>
 </head>
