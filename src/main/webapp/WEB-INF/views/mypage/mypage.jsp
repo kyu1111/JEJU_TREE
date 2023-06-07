@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>JEJU TREE</title>
  <!-- 폰트어썸 cdn링크 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage/mypage.css">
@@ -13,6 +13,8 @@
 <body>
    <!-- 상단바 설정하기  -->
    <%@ include file="../include/navbar.jsp" %>
+   <div class = "mypage_container">
+   <div class="mypage_content">
    <div id="mypage_wrap">
        <div class="mypage_box1">
 			<p class="box_text title">일정 리스트</p> 
@@ -54,10 +56,17 @@
  					<button>pdf 내보내기</button>
  				</div>
 		</div>
-       
    </div>
-   <!-- footer 영역 설정 -->
+   </div>
+   </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+   <div>
    <%@ include file="../include/footer.jsp" %>
+   </div>
 <!--굥유 버튼 ajax스크립트 태그  -->   
 <script type="text/javascript">
 //공유 버튼을 누를경우 alert 메시지  

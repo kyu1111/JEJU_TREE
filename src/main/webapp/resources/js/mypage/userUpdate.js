@@ -14,11 +14,6 @@ console.log(user_email);
 let isValid;
 
  
- $.validator.addMethod("engAndNum", function(value, element) {
-	var pattern = /^[A-Za-z0-9]*$/;
-
-	return pattern.test(value);
-});
 
 $.validator.addMethod("specialChars", function(value, element) {
 	// Define the pattern to match special characters
@@ -50,49 +45,7 @@ $.validator.addMethod("phoneCheck", function(value, elements) {
 
 });
 
-// id_check 메서드를 정의
-$.validator.addMethod("id_check", function(value, element, param) {
-   var validater = this;
-   // 아이디 중복 여부 확인
-    if (user_id == $(element).val()) {
-       isValid = true;
-   } else {
-       let user_id = $(element).val();
-       let messageElement = $(".id_check"); // 메세지를 표시할 요소 선택
-       console.log("id:", id);
-      
-	    
-		$.ajax({
-			ContentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			async:false,
-			type: "post",
-			url: "user_idCheck.go",
-			data: { id: user_id,
-			        num: id },
-			datatype: "text",
-			success: function(data) {
-				messageElement.empty(); // 기존 메세지 초기화
-        		
-			
-				console.log(data);
-				if (data === "db") {
-					isValid = false;
-				} else {
-					isValid = true;
-				}
-			},
 
-			error: function() {
-                alert("데이터 통신 오류입니다.");
-            }
-		
-	});
-	
-       
-      }
-	
-   return isValid;
-});
 
 $.validator.addMethod("nick_check", function(value, element, param) {
    var validater = this;
@@ -202,14 +155,6 @@ $("#frm1").validate({
 			
 		},
 
-		user_id: {
-			required: true,
-			minlength: 4,
-			maxlength: 20,
-			engAndNum: true,
-			id_check : true
-		},
-
 		user_email: {
 		    required: true,
 			emailCheck: true,
@@ -232,14 +177,6 @@ $("#frm1").validate({
 			maxlength: "12글자를 넘지 말아주세요.",
 			capitalLetters: "대문자 하나 입력해주세요",
 			specialChars: "특수문자 입력해주세요."
-		},
-
-		user_id: {
-			required: "아이디는 필수 입니다.",
-			minlength: "최소 4글자 이상 입력해주세요",
-			maxlength: "20글자를 넘지 말아주세요",
-			engAndNum: "아이디는 영문과 숫자로만 작성해 주세요.",
-			id_check: "중복 아이디 입니다.!!!"
 		},
 
 		user_email: {

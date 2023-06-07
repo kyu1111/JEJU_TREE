@@ -5,52 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>simpleMap</title>
-
-<style type="text/css">
-
-#container{
-  
-      display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50%;
-    width: 100%;
-    position: relative;
-    z-index: 1; /* container2 보다 앞에 표시되도록 설정 */
-
-}
-
-#sidebar {
-
-    width: 25%; /* adjust this value to change the width of the sidebar */
-    height: 100%;
-    position: fixed;
-    overflow: auto;
-    z-index: 1; /* add this line to ensure the sidebar appears above the map */
-
-}
-
-#map_div {
-
-    margin-top: 70px;
-    margin-right: auto;
-    margin-left:auto;
-    display: block;
-
-}
-
-#container2{
-   
-   display: block;
-   justify-content: center;
-   align-items: center;
-   height: 50%;
-   width: 100%;
-   position: absolute; /* 추가: container2를 절대적인 위치로 설정 */
-   bottom: 0; /* 추가: container 하단에 고정 */
-
-}
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/tmap/tmap.css">
 
 <!-- Add jQuery library -->
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -60,14 +15,17 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/tmap/tmap.css">
+  
 <!-- 폰트어썸 cdn링크 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  
+<script src="https://kit.fontawesome.com/cbcad42a26.js" crossorigin="anonymous"></script>
+
+
 <script type="text/javascript">
 
 //사이드바에 북마크 목록+해제버튼 생성
-$('.openbtn1').click(function(){
+$('.openbtn2').click(function(){
 	 $.ajax({
         url: "bm_list.go",
         method: "POST",
@@ -165,7 +123,7 @@ function toggleBm(title) {
 
 		   $('#blist_td').append(table);
 	    }else if(response == -1){
-	    	alert('이미 등록된 장소입니다');
+	    	alert('이미 등록된 장소입니다.');
 	    }else{
 	    	alert('실패');
 	    }
@@ -323,15 +281,16 @@ function toggleBm(title) {
                       var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
                           + "<input type='hidden' name='title' value='" + item.title + "'>" 
                           + "<input type='hidden' name='address' value='" + item.addr1 + "'>"
-                          + "<a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>"
+                          + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>"
+                          + "　<button id='selectBtn' type='button'>일정 추가</button><a id='closeBtn'>×</a></div>"
                           + "<input type='hidden' name='location' value=" + item.title + ">"
                           + "<input type='hidden' name='markerLat' value='" + latlng._lat + "'>"  // latitude input field
                           + "<input type='hidden' name='markerLng' value='" + latlng._lng + "'>"  // longitude input field
-                          + "<div style='padding:10px; width:250px;'>" + item.title + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
-                          + "<div>" + item.addr1 + "</div>"
-                          + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
-                          + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
-                          + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
+                          + "<div class='div_title' style='padding:10px; width:250px;'>" + item.title +  "</div>"
+                          + "<div class='div_addr1'>" + item.addr1 + "</div>"
+                          + "<div class='div_img'><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
+                          + "<p class='start'>입장 : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
+                          + "<p class='end'>퇴장 : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
                           + "</form>";
                      
                           infoWindow = new Tmapv2.InfoWindow({
@@ -390,14 +349,15 @@ function toggleBm(title) {
             var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
                 + "<input type='hidden' name='title' value='" + name + "'>" 
                 + "<input type='hidden' name='address' value='" + address + "'>"
+                + "　<button id='selectBtn' type='button'>일정 추가</button><a id='closeBtn'>X</a></div>"
                 + "<input type='hidden' name='location' value='비자림'>"
                 + "<input type='hidden' name='markerLat' value='" + lat + "'>"  // latitude input field
                 + "<input type='hidden' name='markerLng' value='" + lon + "'>"  // longitude input field
-                + "<div style='padding:10px; width:250px;'>" + name + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
+                + "<div style='padding:10px; width:250px;'>" + name + "</div>"
                 + "<div>" + address + "</div>"
                 // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
-                + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
-                + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
+                + "<p>입장 : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
+                + "<p>퇴장 : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
                 + "</form>";
                   
              // 마커를 띄우는게 아니라 해당 위치 마커의 '라벨창'을 띄우는 코드입니다.     
@@ -499,38 +459,44 @@ function toggleBm(title) {
 <br>
 <br>
 <br>
-   <div>
-      <input type="text" class="text_custom" id="searchKeyword" name="searchKeyword" value="" placeholder = "장소를 키워드로 검색하세요.">   
-      <button id="btn_select">적용하기</button>
-   </div>
-   <div>
-      <div style="width: 30%; float:left;">
-         <div class="title"><strong>Search</strong> Results</div>
+
+   <div class="search_container">
+      <div class="search_body" style="width: 30%; float:left;">
+      		<div class="search_title">
+		      <input class="search_input" type="text" class="text_custom" id="searchKeyword" name="searchKeyword" value="" placeholder = "장소 키워드 입력 (예시: 카페)">  
+		      &nbsp;&nbsp;&nbsp;<button class="search_bt" id="btn_select">검색</button>
+		    </div>
          <div class="rst_wrap">
-            <div class="rst mCustomScrollbar">
-               <ul id="searchResult" name="searchResult">
-                  <li>검색결과</li>
+            <div class="rst_mCustomScrollbar" style="height: 346.5px; overflow: auto;">
+               <ul id="searchResult" name="searchResult" style="padding-left: 20px;">
+                  <li class="search_list">검색결과</li>
                </ul>
             </div>
          </div>
       </div>
-      <div id="map_div" class="map_wrap" style="float:left"></div>
    </div>
+
+<div id="map_div" class="map_wrap" style="float:left"></div>
+
+   
 <!-- 사이드바 설정하기 -->
 <div id = "container">
+<%@ include file="./include/sidebar2.jsp" %>
+<c:if test="${!empty user_id}">
+<div class="planList_btn_div" align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')"><b>일정 관리</b></a></div>
+</c:if>
+<c:if test="${!empty kakao_id}">
+<div class="planList_btn_div"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}')"><b>일정 관리</b></a></div>
+</c:if>
 <!-- 맵 생성 실행 -->
 <div id="map_div"></div>
 </div>
-<br>
-<c:if test="${!empty user_id}">
-<div align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')">상세설정</a></div>
-</c:if>
-<c:if test="${!empty kakao_id}">
-<div align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}')">상세설정</a></div>
-</c:if>
+
 <br>
 <br>
-<div align="center"><%@ include file="./include/footer.jsp" %></div>
+<div class="tmap_footer">
+	<%@ include file="./include/footer.jsp" %>
+</div>
 <br>
 </body>
 </html>

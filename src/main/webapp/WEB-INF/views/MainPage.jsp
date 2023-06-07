@@ -11,7 +11,7 @@
 	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
 	 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
 	 
-    <title>GIF 슬라이드</title>
+    <title>JEJU TREE</title>
     <script type="text/javascript">
         let slideIndex = 0;
 
@@ -75,7 +75,6 @@
 <!-- 상단바 설정하기  -->
 <%@ include file="./include/navbar.jsp" %>
 	 <div class = "container">
-	 
 	 <div class="main_content">
      <div class="container_wrap">  
         <div class="intro-text" align="center">
@@ -240,5 +239,8 @@
     <span class="to-top" onclick="scrollToTop()">&#9650;</span>
 	</div>
 	</div>
-	<%@ include file="./include/footer.jsp" %>
+	</body>
+	<div>
+   	<%@ include file="./include/footer.jsp" %>
+   </div>
 </html>

@@ -7,10 +7,9 @@ response.setDateHeader("Expires", 0); // Proxies
 if (request.getProtocol().equals("HTTP/1.1"))
    response.setHeader("Cache-Control", "no-cache");
 %>
-<html>
+<html class="login_html">
 <head>
-
-	<title>login</title>
+	<title>JEJU TREE</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/user/login_main.css">	
 <%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/login_main.js"></script> --%>
 </head>

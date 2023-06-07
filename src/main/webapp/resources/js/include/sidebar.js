@@ -34,38 +34,48 @@
          }
      });
  }	
- 	
- 	
  
+// 초기화 함수 호출
+initializeSidebar();
  
- 
- function openMenu(openbtn_className) {
-	
-	
-	if(openbtn_className == 'openbtn1'){
-	  document.getElementById("sidebar1_page").style.marginLeft = "350px";
-      document.querySelector('.sidebar1').style.width = "350px";
-      document.querySelector('.openbtn1').style.display = 'none';	
-	}else{
-	  document.getElementById("sidebar2_page").style.marginRight = "350px";
-      document.querySelector('.sidebar2').style.width = "350px";
-      document.querySelector('.openbtn2').style.display = 'none';	
-	}
-   
+function openMenu(openbtn_className) {
+  if (openbtn_className == 'openbtn1') {
+    document.getElementById("sidebar1_page").style.marginLeft = "0px";
+    document.querySelector('.sidebar1').style.width = "0px";
+    document.querySelector('.openbtn1').style.display = 'none';
+  } else {
+    document.getElementById("sidebar2_page").style.marginRight = "44px";
+    document.querySelector('.sidebar2').style.width = "250px";
+    document.querySelector('.openbtn2').style.display = 'none';
+    document.querySelector('.sidebar2').style.border = '1px solid #6a6a6a'; // 테두리 추가
+  }
 }
 
-function closeMenu(closebtn_className) { 
-	if(closebtn_className == 'closebtn1'){
-	  document.getElementById("sidebar1_page").style.marginLeft= "0";
-      document.querySelector('.sidebar1').style.width = "0";
-      document.querySelector('.openbtn1').style.display = 'block';	
-	}else{
-	  document.getElementById("sidebar2_page").style.marginRight= "0";
-      document.querySelector('.sidebar2').style.width = "0";
-      document.querySelector('.openbtn2').style.display = 'block';
-	}
-    
+function closeMenu(closebtn_className) {
+  if (closebtn_className == 'closebtn1') {
+    document.getElementById("sidebar1_page").style.marginLeft = "0";
+    document.querySelector('.sidebar1').style.width = "0";
+    document.querySelector('.openbtn1').style.display = 'block';
+  } else {
+    document.getElementById("sidebar2_page").style.marginRight = "0";
+    document.querySelector('.sidebar2').style.width = "0";
+    document.querySelector('.openbtn2').style.display = 'block';
+    document.querySelector('.sidebar2').style.border = 'none'; // 테두리 제거
+  }
+  
+  // 닫혀있을 때만 테두리를 제거합니다.
+    if (document.querySelector('.sidebar2').style.width === "0px") {
+      document.querySelector('.sidebar2').style.border = 'none'; // 테두리 제거
+    }
 }
+
+function initializeSidebar() {
+  // 페이지 로드 시 초기화
+  document.querySelector('.sidebar2').style.border = 'none';
+}
+
+// 초기화 함수 호출
+initializeSidebar();
 
 
 
