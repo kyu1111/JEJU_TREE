@@ -22,6 +22,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jejutree.plans_model.UserPlansDAO;
 import com.jejutree.plans_model.UserPlansDTO;
+import com.jejutree.user_model.UserDAO;
+import com.jejutree.user_model.UserDTO;
+
 import org.springframework.http.ResponseEntity;
 
 @Controller
@@ -30,11 +33,12 @@ public class PlanDragFunctionController {
 	private HttpSession session;
 	@Inject
 	private UserPlansDAO dao;
+	@Inject
+	private UserDAO userdao;
 
 	@RequestMapping("drag_plan_list.go")
 	public String cont(Model model) {
 		String user_id = (String) session.getAttribute("user_id");
-		UserPlansDTO dto = new UserPlansDTO();
 		List<UserPlansDTO> list = this.dao.getPlanList(user_id);
 		if (!list.isEmpty()) {
 			UserPlansDTO startPlan = list.get(0);
@@ -43,6 +47,7 @@ public class PlanDragFunctionController {
 			model.addAttribute("endPlan", endPlan);
 		}
 		model.addAttribute("List", list);
+		
 		return "dragplan/dragplan";
 	}
 
@@ -53,7 +58,6 @@ public class PlanDragFunctionController {
 		// Add the other user's plans to the model
 		model.addAttribute("otherUserList", otherUserList);
 		String user_id = (String) session.getAttribute("user_id");
-		UserPlansDTO dto = new UserPlansDTO();
 		List<UserPlansDTO> list = this.dao.getPlanList(user_id);
 		if (!list.isEmpty()) {
 			UserPlansDTO startPlan = list.get(0);
@@ -62,6 +66,26 @@ public class PlanDragFunctionController {
 			model.addAttribute("endPlan", endPlan);
 		}
 		model.addAttribute("List", list);
+		
+
+		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
+	     String userId = (String) session.getAttribute("user_id");
+	     UserDTO dto = new UserDTO();
+		if (KakaoInfo != null || userId != null) {
+			if(user_id != null) {
+				dto.setUser_id(userId);
+				dto = this.userdao.getuser(userId);
+				
+			} else if(KakaoInfo != null) {
+				dto.setUser_id(KakaoInfo);
+				dto = this.userdao.getuser(KakaoInfo);
+			} 
+		}
+		System.out.println(userId);
+		System.out.println(dto.getUser_id());
+		System.out.println(dto.getUser_nickname());
+		model.addAttribute("User", dto);
+		
 		return "dragplan/dragplan";
 	}
 	

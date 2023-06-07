@@ -188,7 +188,9 @@ function toggleBm(title) {
    var infoWindow;
    var marker;
    var markerArr = [], labelArr = [];
-
+   
+   
+   // map 생성
    function initTmap() {
          // map 생성 
          map = new Tmapv2.Map("map_div", {
@@ -200,109 +202,118 @@ function toggleBm(title) {
           // scrollwheel : true
          });
       
-         // 2. POI 통합 검색 API 요청 시작하는 부분,
-      $("#btn_select").click(function(){
-         var searchKeyword = $('#searchKeyword').val();
-         var headers = {}; 
-         headers["appKey"]="857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ";
-         
-         $.ajax({
-            method:"GET", // 요청 방식
-            headers : headers,
-            url:"https://apis.openapi.sk.com/tmap/pois/search/around?version=1&format=json&callback=result", // url 주소
-            data:{
-               "categories" : searchKeyword,
-               "resCoordType" : "EPSG3857",
-               "searchType" : "name",
-               "searchtypCd" : "A",
-               "radius" : 30,
-               "reqCoordType" : "WGS84GEO",
-               "centerLon" : "126.5333",
-               "centerLat" : "33.3666",
-               "count" : 50
-            },
-            success:function(response){
-               console.log(response);
-               
-               var resultpoisData = response.searchPoiInfo.pois.poi;
-               
-               // 2. 기존 마커, 팝업 제거
-               if(markerArr.length > 0){
-                  for(var i in markerArr){
-                     markerArr[i].setMap(null);
-                  }
-                  markerArr = [];
-               }
+      // 2. POI 통합 검색 API 요청
+     $("#btn_select").click(
+        function() {
+           var searchKeyword = $('#searchKeyword').val(); // 검색 키워드
+           var headers = {}; 
+           headers["appKey"]="857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ";
 
-               if(labelArr.length > 0){
-                  for(var i in labelArr){
-                     labelArr[i].setMap(null);
-                  }
-                  labelArr = [];
-               }
-               
-               var innerHtml = ""; // Search Reulsts 결과값 노출 위한 변수
-               var positionBounds = new Tmapv2.LatLngBounds(); //맵에 결과물 확인 하기 위한 LatLngBounds객체 생성
-               
-               // 3. POI 마커 표시
-               for(var k in resultpoisData){
-                  // POI 마커 정보 저장
-                  var noorLat = Number(resultpoisData[k].noorLat);
-                  var noorLon = Number(resultpoisData[k].noorLon);
-                  var name = resultpoisData[k].name;
-                  
-                  // POI 정보의 ID
-                  let id = resultpoisData[k].id;  // 'var'를 'let'으로 바꿉니다.
-                  
-                  // 좌표 객체 생성
-                  var pointCng = new Tmapv2.Point(noorLon, noorLat);
-                  
-                  // EPSG3857좌표계를 WGS84GEO좌표계로 변환
-                  var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
-                  
-                  var lat = projectionCng._lat;
-                  var lon = projectionCng._lng;
-                  
-                  // 좌표 설정
-                  var markerPosition = new Tmapv2.LatLng(lat, lon);
-                  
-                  // Marker 설정. 이 코드 부분이 지도에 마커가 생깁니다. 매우 중요함.
-                  marker = new Tmapv2.Marker({
-                  
-                    position : markerPosition,
-                     icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_a.png",
-                     //icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_" + k + ".png",
-                     iconSize : new Tmapv2.Size(24, 38),
-                     title : name,
-                     // 이부분을 주석 처리하면 지도에 마커가 생성되지 않습니다.
-                     map : map 
-                  });
-                  
-                    // 클릭 이벤트 핸들러 추가
-                  marker.addListener("click", function(){
-                     poiDetail(id);  // id는 해당 마커의 POI ID입니다.
-                  });
-                  
-                  // 결과창에 나타날 검색 결과 html
-                  innerHtml += "<li><div><img src='http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_a.png' style='vertical-align:middle;'/><span>"+name+"</span>  "
-                  +"<button type='button' name='sendBtn' onClick='poiDetail("+id+");'>상세보기</button></div></li>";
-                  
-                  // 마커들을 담을 배열에 마커 저장
-                  markerArr.push(marker);
-                  positionBounds.extend(markerPosition);   // LatLngBounds의 객체 확장
-                  
-               }
-               
-               $("#searchResult").html(innerHtml);   //searchResult 결과값 노출
-               map.panToBounds(positionBounds);   // 확장된 bounds의 중심으로 이동시키기
-               map.zoomOut();
-               
-            },
-            error:function(request,status,error){
-               console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
-         });
-      }); // 종료
+           $.ajax({
+              method : "GET", // 요청 방식
+              headers : headers,
+              url : "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result", // url 주소
+              async : false, // 동기설정
+              data : { // 요청 데이터 정보
+                 "searchKeyword" : searchKeyword, // 검색 키워드
+                 "resCoordType" : "EPSG3857", // 요청 좌표계
+                 "reqCoordType" : "WGS84GEO", // 응답 좌표계
+                   "searchtypCd" : "A",
+                  "radius" : 30,
+                  "centerLon" : "126.5333",
+                 "centerLat" : "33.3666",
+                 "count" : 10 // 가져올 갯수
+              },
+              success : function(response) {
+                 var resultpoisData = response.searchPoiInfo.pois.poi;
+
+                 // 2. 기존 마커, 팝업 제거
+                 if (markerArr.length > 0) {
+                    for(var i in markerArr) {
+                       markerArr[i].setMap(null);
+                    }
+                    markerArr = [];
+                 }
+                 
+                 if (labelArr.length > 0) {
+                    for (var i in labelArr) {
+                       labelArr[i].setMap(null);
+                    }
+                    labelArr = [];
+                 }
+
+                 var innerHtml = ""; // Search Reulsts 결과값 노출 위한 변수
+                 //맵에 결과물 확인 하기 위한 LatLngBounds객체 생성
+                 var positionBounds = new Tmapv2.LatLngBounds(); 
+
+                 // 3. POI 마커 표시
+                 for (var k in resultpoisData) {
+                    // POI 마커 정보 저장
+                    var noorLat = Number(resultpoisData[k].noorLat);
+                    var noorLon = Number(resultpoisData[k].noorLon);
+                    var name = resultpoisData[k].name;
+                    
+                    // POI 정보의 ID
+                    let id = resultpoisData[k].id;
+
+                    // 좌표 객체 생성
+                    var pointCng = new Tmapv2.Point(
+                          noorLon, noorLat);
+                    
+                    // EPSG3857좌표계를 WGS84GEO좌표계로 변환
+                    var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+                          pointCng);
+
+                    var lat = projectionCng._lat;
+                    var lon = projectionCng._lng;
+
+                    // 좌표 설정
+                    var markerPosition = new Tmapv2.LatLng(
+                          lat, lon);
+
+                    // Marker 설정
+                    marker = new Tmapv2.Marker(
+                       {
+                          position : markerPosition, // 마커가 표시될 좌표
+                          //icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_a.png",
+                          icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_"
+                                + k
+                                + ".png", // 아이콘 등록
+                          iconSize : new Tmapv2.Size(
+                                24, 38), // 아이콘 크기 설정
+                          title : name, // 마커 타이틀
+                          map : map // 마커가 등록될 지도 객체
+                       });
+                    
+                          marker.addListener("click",function(){
+                              poiDetail(id); // id는 해당 마커의 POI ID입니다.
+                           });
+
+                    // 결과창에 나타날 검색 결과 html
+                    innerHtml += "<li><div><img src='http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_" + k + ".png' style='vertical-align:middle;'/><span>"
+                          + name
+                          + "</span>  <button type='button' name='sendBtn' onClick='poiDetail("
+                          + id
+                          + ");'>상세보기</button></div></li>";
+                    
+                    // 마커들을 담을 배열에 마커 저장
+                    markerArr.push(marker);
+                    positionBounds.extend(markerPosition); // LatLngBounds의 객체 확장
+                 }
+
+                 $("#searchResult").html(innerHtml); //searchResult 결과값 노출
+                 map.panToBounds(positionBounds); // 확장된 bounds의 중심으로 이동시키기
+                 map.zoomOut();
+              },
+              error : function(request, status, error) {
+                 console.log("code:"
+                       + request.status + "\n"
+                       + "message:"
+                       + request.responseText
+                       + "\n" + "error:" + error);
+              }
+           });
+        }); // 종료.
 
       //현재 날씨 정보 
       // 페이지 진입 시 자동으로 제주시 중앙 좌표 날씨 조회 후 출력
@@ -421,27 +432,27 @@ function toggleBm(title) {
       }
       // 일기예보에 날짜 반영 기능.
       $(document).ready(function () {
-    	   var currentDate = new Date();
+          var currentDate = new Date();
 
-    	   var optionsCurrent = { month: 'numeric', day: 'numeric' };
-    	   var formattedCurrentDate = currentDate.toLocaleDateString('ko-KR', optionsCurrent);
-    	   var splitCurrentDate = formattedCurrentDate.split('.');
-    	   var finalCurrentDate = splitCurrentDate[0] + '월 ' + splitCurrentDate[1] + '일';
-    	   $('#date1').text(finalCurrentDate);
+          var optionsCurrent = { month: 'numeric', day: 'numeric' };
+          var formattedCurrentDate = currentDate.toLocaleDateString('ko-KR', optionsCurrent);
+          var splitCurrentDate = formattedCurrentDate.split('.');
+          var finalCurrentDate = splitCurrentDate[0] + '월 ' + splitCurrentDate[1] + '일';
+          $('#date1').text(finalCurrentDate);
 
-    	   for (var i = 2; i <= 5; i++) {
-    	      var nextDate = new Date();
-    	      nextDate.setDate(currentDate.getDate() + i - 1);
+          for (var i = 2; i <= 5; i++) {
+             var nextDate = new Date();
+             nextDate.setDate(currentDate.getDate() + i - 1);
 
-    	      var optionsNext = { month: 'numeric', day: 'numeric' };
-    	      var formattedNextDate = nextDate.toLocaleDateString('ko-KR', optionsNext);
-    	      var splitNextDate = formattedNextDate.split('.');
-    	      var finalNextDate = splitNextDate[0] + '월 ' + splitNextDate[1] + '일';
+             var optionsNext = { month: 'numeric', day: 'numeric' };
+             var formattedNextDate = nextDate.toLocaleDateString('ko-KR', optionsNext);
+             var splitNextDate = formattedNextDate.split('.');
+             var finalNextDate = splitNextDate[0] + '월 ' + splitNextDate[1] + '일';
 
-    	      $('#date' + i).text(finalNextDate);
-    	   }
-    	});
-
+             $('#date' + i).text(finalNextDate);
+          }
+       });
+     
       
       // Map click event listener
       map.addListener("click", function(e) {
@@ -463,46 +474,46 @@ function toggleBm(title) {
                    // 좌표 클릭 시 addr1과 title 합쳐서 크롤링
                       var searchQuery = item.addr1 +' '+item.title;
                       $.ajax({
-                    	    url: '<%= request.getContextPath() %>/model/tmap.go',
-                    	    type: 'GET',
-                    	    data: { title: searchQuery },
-                    	    dataType: 'html',
-                    	    success: function(response) {
-                    	        console.log("Response:", response);
+                           url: '<%= request.getContextPath() %>/model/tmap.go',
+                           type: 'GET',
+                           data: { title: searchQuery },
+                           dataType: 'html',
+                           success: function(response) {
+                               console.log("Response:", response);
 
-                    	        // 크롤링 결과가 추가되기 전에 기존 데이터 지우기
-                    	        $('#crawlingResult table tr').not(':first').remove();
+                               // 크롤링 결과가 추가되기 전에 기존 데이터 지우기
+                               $('#crawlingResult table tr').not(':first').remove();
 
-                    	        var $responseHtml = $(response);
-                    	        var $tableRows = $responseHtml.find('#crawlingResult table tr');
+                               var $responseHtml = $(response);
+                               var $tableRows = $responseHtml.find('#crawlingResult table tr');
 
-                    	        $tableRows.each(function() {
-                    	            var $currentRow = $(this);
-                    	            var title = $currentRow.find('td:nth-child(1)').text();
-                    	            var url = $currentRow.find('td:nth-child(1) a').attr('href');
-                    	            var thumbnailUrl = $currentRow.find('td:nth-child(1) img').attr('src');
+                               $tableRows.each(function() {
+                                   var $currentRow = $(this);
+                                   var title = $currentRow.find('td:nth-child(1)').text();
+                                   var url = $currentRow.find('td:nth-child(1) a').attr('href');
+                                   var thumbnailUrl = $currentRow.find('td:nth-child(1) img').attr('src');
 
-                    	            console.log("url:::", url);
-                    	            console.log("Thumbnail URL:::", thumbnailUrl);
+                                   console.log("url:::", url);
+                                   console.log("Thumbnail URL:::", thumbnailUrl);
 
-                    	            // 각 행에 대한 제목을 클릭하면 해당 URL로 이동하도록 링크 추가
-                    	            var newRow = '<tr>' +
-                    	                '<td><a href="' + url + '" target="_blank">' + title + '</a></td>' +
-                    	                '</tr>';
-                        	        var $thumbnailImage = $('<img>').attr('src', thumbnailUrl).attr('alt', 'Thumbnail');
+                                   // 각 행에 대한 제목을 클릭하면 해당 URL로 이동하도록 링크 추가
+                                   var newRow = '<tr>' +
+                                       '<td><a href="' + url + '" target="_blank">' + title + '</a></td>' +
+                                       '</tr>';
+                                   var $thumbnailImage = $('<img>').attr('src', thumbnailUrl).attr('alt', 'Thumbnail');
 
-                    	            $('#crawlingResult table').append(newRow);
-                    	            $('#titleHeader').text(item.title);
-                    	            // 썸네일 이미지 추가
-                    	            $('#crawlingResult table tr:last-child td:first-child').append($thumbnailImage);
-                    	        });
-                    	    },
+                                   $('#crawlingResult table').append(newRow);
+                                   $('#titleHeader').text(item.title);
+                                   // 썸네일 이미지 추가
+                                   $('#crawlingResult table tr:last-child td:first-child').append($thumbnailImage);
+                               });
+                           },
 
-                    	    error: function(jqXHR, textStatus, errorThrown) {
-                    	        console.log("AJAX call failed.");
-                    	        console.log("Status: " + textStatus + ", Error: " + errorThrown);
-                    	    }
-                    	});
+                           error: function(jqXHR, textStatus, errorThrown) {
+                               console.log("AJAX call failed.");
+                               console.log("Status: " + textStatus + ", Error: " + errorThrown);
+                           }
+                       });
 
                    // Check if item.firstimage2 is null or empty
                    var Src = item.firstimage2 ? item.firstimage2 : defaultImgSrc;
@@ -562,63 +573,100 @@ function toggleBm(title) {
       
    }  // initTmap() 메서드를 종료시키고 다음 메서드로 넘어갑니다.
    
-   // 4. POI 상세 정보 API
-   function poiDetail(poiId){
-   var headers = {}; 
-   headers["appKey"]="857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ";
-         
+   var popupCount = 0;
+   
+// 4. POI 상세 정보 API
+   function poiDetail(poiId) {
+      console.log(poiId);
+      var headers = {}; 
+      headers["appKey"]="857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ";
+
       $.ajax({
-         method:"GET",
+         method : "GET", // 요청 방식
          headers : headers,
-         url:"   https://apis.openapi.sk.com/tmap/pois/"+poiId+"?version=1&resCoordType=EPSG3857&format=json&callback=result",
-         async:false,
-         success:function(response){
+         url : "https://apis.openapi.sk.com/tmap/pois/"
+               + poiId // 상세보기를 누른 아이템의 POI ID
+               + "?version=1&resCoordType=EPSG3857&format=json&callback=result",
+         async : false, // 동기 설정
+         success : function(response) {
+            console.log(response);
+            //기본 사진 설정
+            
+             var defaultImgSrc = "<%=request.getContextPath()%>/resources/images/title.png"; // 기본 이미지 URL
+            // 응답받은 POI 정보
             var detailInfo = response.poiDetailInfo;
             var name = detailInfo.name;
             var address = detailInfo.address;
-            
+   
             var noorLat = Number(detailInfo.frontLat);
             var noorLon = Number(detailInfo.frontLon);
-            
+   
             var pointCng = new Tmapv2.Point(noorLon, noorLat);
-            var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
-            
+            var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+                  pointCng);
+   
             var lat = projectionCng._lat;
             var lon = projectionCng._lng;
-            
+   
             var labelPosition = new Tmapv2.LatLng(lat, lon);
             
-            var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
-                + "<input type='hidden' name='title' value='" + name + "'>" 
-                + "<input type='hidden' name='address' value='" + address + "'>"
-                + "<input type='hidden' name='location' value='비자림'>"
-                + "<input type='hidden' name='location' value='비자림'>"
-                + "<input type='hidden' name='image' value='"+ item.firstimage2 +"'>"
-                + "<input type='hidden' name='markerLat' value='" + lat + "'>"  // latitude input field
-                + "<input type='hidden' name='markerLng' value='" + lon + "'>"  // longitude input field
-                + "<div style='padding:10px; width:250px;'>" + name + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
-                + "<div>" + address + "</div>"
-                //+ "<div><img src='" + item.firstimage2 + "' name='image' alt='Image' style='width:100px; height:auto;'></div>"
-                + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
-                + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
-                + "</form>";
-                
+            popupCount++;
             
-             // 마커를 띄우는게 아니라 해당 위치 마커의 '라벨창'을 띄우는 코드입니다.     
-             var labelInfo = new Tmapv2.Label({
-               position : labelPosition,
-               content : content,
-               map:map
-            });//popup 생성
+            var popupId = 'popup' + popupCount;
+            var selectButtonId = 'selectBtn' + popupCount;
+            var closeButtonId = 'closeBtn' + popupCount;
             
-            labelArr.push(labelInfo); 
-            
-         },
-         error:function(request,status,error){
-            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-         }
-      });
-   }
+            // 상세보기 클릭 시 지도에 표출할 popup창
+            var content = "<form id='" + popupId + "' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post' style='background-color: white; font-size: 14px;' >"
+                       
+                        + "<input type='hidden' name='title' value='" + name + "'>"
+                        + "<input type='hidden' name='addr' value='" + address + "'>"
+                        + "<input type='hidden' name='location' value='비자림'>"
+                        + "<input type='hidden' name='markerLat' value='" + lat + "'>" // latitude input field
+                        + "<input type='hidden' name='markerLng' value='" + lon + "'>" // longitude input field 
+                        + "&nbsp;&nbsp;<button id='" + selectButtonId + "' type='submit'>Select</button>&nbsp;&nbsp;<button id='" + closeButtonId + "' class='close-btn'>Close</button>"
+                        + "<div>"
+                        + address
+                        + "</div>"
+                        //+ "<div><img src='" + defaultImgSrc + "' name='default' alt='Image' style='width:100px; height:auto;'></div>"
+                        + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+                        + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+                        + "</form>";
+
+                  var labelInfo = new Tmapv2.Label({
+                     position : labelPosition,
+                     content : content,
+                     map : map
+                  });
+
+                  $(document).on('click', '#' + closeButtonId,
+                        function() {
+                           labelInfo.setMap(null); // Removes the label (popup) from the map
+                           $(this).off('click');
+                        });
+
+                  document
+                        .getElementById('selectBtn')
+                        .addEventListener(
+                              'click',
+                              function(e) {
+                                 // 실행하려는 추가 코드 작성
+                                 // 예를 들어, console.log를 사용하여 클릭 이벤트 확인
+                                 console.log('The select button was clicked.');
+                              });
+
+                  //popup 생성
+
+                  // popup들을 담을 배열에 팝업 저장
+                  labelArr.push(labelInfo);
+               },
+               error : function(request, status, error) {
+                  console.log("code:" + request.status + "\n"
+                        + "message:" + request.responseText + "\n"
+                        + "error:" + error);
+               }
+            });
+   } // 종료.
       
    $(document).ready(function() {
         $('.location').click(function() {
@@ -639,20 +687,20 @@ function toggleBm(title) {
    });
    
    function validateAndSubmitForm(){
-      if (PlanListValidCheck()) {
-          // Get the src value from the img tag
-          var imgSrc = $("img[name='image']").attr("src");
-          
-          // Add the hidden input field with the imgSrc value
-          var content = "<input type='hidden' name='image' value='" + imgSrc + "'>";
-          
-          // Rest of your code...
-          $('#markerDataForm').append(content);
-          $('#markerDataForm').submit();
-      }else{
-         alert('항목을 모두 입력하셔야 합니다.');   
-      }
-   } 
+	      if (PlanListValidCheck()) {
+	          // Get the src value from the img tag
+	          var imgSrc = $("img[name='image']").attr("src");
+	          
+	          // Add the hidden input field with the imgSrc value
+	          var content = "<input type='hidden' name='image' value='" + imgSrc + "'>";
+	          
+	          // Rest of your code...
+	          $('#markerDataForm').append(content);
+	          $('#markerDataForm').submit();
+	      }else{
+	         alert('항목을 모두 입력하셔야 합니다.');   
+	      }
+	   } 
    function PlanListValidCheck() {
       
        if ($('.plan_start_date').val() == '') {
@@ -758,14 +806,14 @@ function toggleBm(title) {
 
 
 
-					<!-- 날씨 관련 출력창 -->
+               <!-- 날씨 관련 출력창 -->
           <div id="weather-widget" style="float:center" height="400" width="800">
     <table>
         <tr>
             <td>
-            	<div id="date1">
-            	
-            	</div>
+               <div id="date1">
+               
+               </div>
                 <div id="weather">
                     <img id="icon" src="" alt="">
                 </div>
@@ -774,9 +822,9 @@ function toggleBm(title) {
                 </div>
             </td>
             <td>
-            	<div id=date2>
-            	
-            	</div>
+               <div id=date2>
+               
+               </div>
                 <div id="forecast-day2">
                     <div id="forecast-weather">
                         <img id="day2-icon" src="" alt="">
@@ -787,9 +835,9 @@ function toggleBm(title) {
                 </div>
             </td>
             <td>
-            	<div id="date3">
-            	
-            	</div>
+               <div id="date3">
+               
+               </div>
                 <div id="forecast-day3">
                     <div id="forecast-weather">
                         <img id="day3-icon" src="" alt="">
@@ -800,9 +848,9 @@ function toggleBm(title) {
                 </div>
             </td>
             <td>
-            	<div id="date4">
-            	
-            	</div>
+               <div id="date4">
+               
+               </div>
                 <div id="forecast-day4">
                     <div id="forecast-weather">
                         <img id="day4-icon" src="" alt="">
@@ -813,9 +861,9 @@ function toggleBm(title) {
                 </div>
             </td>
             <td>
-            	<div id="date5">
-            	
-            	</div>
+               <div id="date5">
+               
+               </div>
                 <div id="forecast-day5">
                     <div id="forecast-weather">
                         <img id="day5-icon" src="" alt="">
