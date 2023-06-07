@@ -64,6 +64,8 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+
 
 <!-- 폰트어썸 cdn링크 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
@@ -302,6 +304,145 @@ function toggleBm(title) {
          });
       }); // 종료
 
+      //현재 날씨 정보 
+      // 페이지 진입 시 자동으로 제주시 중앙 좌표 날씨 조회 후 출력
+      $(document).ready(function () {
+         var defaultLat = 33.5008;
+         var defaultLon = 126.5469;
+
+         getWeatherInfo(defaultLat, defaultLon);
+         getForecastInfo(defaultLat, defaultLon);
+      });
+
+      map.addListener("click", function (e) {
+         var latlng = e.latLng;
+         console.log(latlng);
+         var apiURI = "http://api.openweathermap.org/data/2.5/weather?lat=" + latlng._lat + "&lon=" + latlng._lng + "&appid=de6ed7fe5b4d58853d7b79503d5d01fa";
+         $.ajax({
+            url: apiURI,
+            dataType: "json",
+            type: "GET",
+            async: "false",
+            success: function (resp) {
+               console.log("현재온도 : " + (resp.main.temp - 273.15).toFixed(1));
+               console.log("현재습도 : " + resp.main.humidity);
+               console.log("날씨 : " + resp.weather[0].main);
+               console.log("상세날씨설명 : " + resp.weather[0].description);
+               console.log("날씨 이미지 : " + resp.weather[0].icon);
+               console.log("바람   : " + resp.wind.speed);
+               console.log("나라   : " + resp.sys.country);
+               console.log("도시이름  : " + resp.name);
+               console.log("구름  : " + (resp.clouds.all) + "%");
+
+               $('#temp').text('현재온도 : ' + (resp.main.temp - 273.15).toFixed(1) + ' °C');
+               //$('#humidity').text('현재습도 : ' + resp.main.humidity + '%');
+               //$('#windSpeed').text('풍속 : ' + resp.wind.speed + ' m/s');
+
+               var iconClass = 'wi wi-owm-' + resp.weather[0].id;
+               $('#icon').attr('class', iconClass);
+            }
+         });
+
+         var defaultLat = latlng._lat;
+         var defaultLon = latlng._lng;
+
+         getForecastInfo(defaultLat, defaultLon);
+      });
+
+      function getWeatherInfo(lat, lon) {
+         var apiURI = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=de6ed7fe5b4d58853d7b79503d5d01fa";
+
+         $.ajax({
+            url: apiURI,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (resp) {
+               console.log("현재온도 : " + (resp.main.temp - 273.15).toFixed(1));
+               console.log("현재습도 : " + resp.main.humidity);
+               console.log("날씨 : " + resp.weather[0].main);
+               console.log("상세날씨설명 : " + resp.weather[0].description);
+               console.log("날씨 이미지 : " + resp.weather[0].icon);
+               console.log("바람 : " + resp.wind.speed);
+               console.log("나라 : " + resp.sys.country);
+               console.log("도시이름 : " + resp.name);
+               console.log("구름 : " + resp.clouds.all + "%");
+
+               $('#temp').text('현재온도 : ' + (resp.main.temp - 273.15).toFixed(1) + ' °C');
+               $('#humidity').text('현재습도 : ' + resp.main.humidity + '%');
+               $('#windSpeed').text('풍속 : ' + resp.wind.speed + ' m/s');
+
+               var iconClass = 'wi wi-owm-' + resp.weather[0].id;
+               $('#icon').attr('class', iconClass);
+            },
+            error: function () {
+               console.log('날씨불러오기 오류');
+            }
+         });
+      }
+
+      function getForecastInfo(lat, lon) {
+         var apiURI = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=de6ed7fe5b4d58853d7b79503d5d01fa";
+
+         $.ajax({
+            url: apiURI,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (resp) {
+               var forecastList = resp.list;
+
+               for (var i = 0; i < forecastList.length; i += 8) {
+                  var forecast = forecastList[i];
+
+                  var forecastTime = new Date(forecast.dt * 1000);
+                  console.log("예보 시간 : " + forecastTime);
+
+                  console.log("예상 온도 : " + (forecast.main.temp - 273.15).toFixed(1));
+                  console.log("예상 습도 : " + forecast.main.humidity);
+                  console.log("예상 날씨 : " + forecast.weather[0].main);
+                  console.log("상세날씨설명 : " + forecast.weather[0].description);
+                  console.log("날씨 이미지 : " + forecast.weather[0].icon);
+                  console.log("예상 풍속 : " + forecast.wind.speed);
+                  console.log("예상 구름 : " + forecast.clouds.all + "%");
+
+                  $('#forecast-temp-day' + ((i / 8) + 1)).text('예상 온도 : ' + (forecast.main.temp - 273.15).toFixed(1) + ' °C');
+                  //$('#forecast-humidity-day' + ((i / 8) + 1)).text('예상 습도 : ' + forecast.main.humidity + '%');
+                  //$('#forecast-windSpeed-day' + ((i / 8) + 1)).text('예상 풍속 : ' + forecast.wind.speed + ' m/s');
+
+                  var iconClass = 'wi wi-owm-' + forecast.weather[0].id;
+                  $('#day' + ((i / 8) + 1) + '-icon').attr('class', iconClass);
+               }
+            },
+            error: function () {
+               console.log('날씨불러오기 오류');
+            }
+         });
+      }
+      // 일기예보에 날짜 반영 기능.
+      $(document).ready(function () {
+    	   var currentDate = new Date();
+
+    	   var optionsCurrent = { month: 'numeric', day: 'numeric' };
+    	   var formattedCurrentDate = currentDate.toLocaleDateString('ko-KR', optionsCurrent);
+    	   var splitCurrentDate = formattedCurrentDate.split('.');
+    	   var finalCurrentDate = splitCurrentDate[0] + '월 ' + splitCurrentDate[1] + '일';
+    	   $('#date1').text(finalCurrentDate);
+
+    	   for (var i = 2; i <= 5; i++) {
+    	      var nextDate = new Date();
+    	      nextDate.setDate(currentDate.getDate() + i - 1);
+
+    	      var optionsNext = { month: 'numeric', day: 'numeric' };
+    	      var formattedNextDate = nextDate.toLocaleDateString('ko-KR', optionsNext);
+    	      var splitNextDate = formattedNextDate.split('.');
+    	      var finalNextDate = splitNextDate[0] + '월 ' + splitNextDate[1] + '일';
+
+    	      $('#date' + i).text(finalNextDate);
+    	   }
+    	});
+
+      
       // Map click event listener
       map.addListener("click", function(e) {
           var latlng = e.latLng; // 클릭한 위치의 위도, 경도 정보
@@ -319,7 +460,49 @@ function toggleBm(title) {
                   if (data && data.response && data.response.body && data.response.body.items && data.response.body.items.item.length > 0) {
                       var item = data.response.body.items.item[0]; // 첫 번째 아이템\
                      
-                      
+                   // 좌표 클릭 시 addr1과 title 합쳐서 크롤링
+                      var searchQuery = item.addr1 +' '+item.title;
+                      $.ajax({
+                    	    url: '<%= request.getContextPath() %>/model/tmap.go',
+                    	    type: 'GET',
+                    	    data: { title: searchQuery },
+                    	    dataType: 'html',
+                    	    success: function(response) {
+                    	        console.log("Response:", response);
+
+                    	        // 크롤링 결과가 추가되기 전에 기존 데이터 지우기
+                    	        $('#crawlingResult table tr').not(':first').remove();
+
+                    	        var $responseHtml = $(response);
+                    	        var $tableRows = $responseHtml.find('#crawlingResult table tr');
+
+                    	        $tableRows.each(function() {
+                    	            var $currentRow = $(this);
+                    	            var title = $currentRow.find('td:nth-child(1)').text();
+                    	            var url = $currentRow.find('td:nth-child(1) a').attr('href');
+                    	            var thumbnailUrl = $currentRow.find('td:nth-child(1) img').attr('src');
+
+                    	            console.log("url:::", url);
+                    	            console.log("Thumbnail URL:::", thumbnailUrl);
+
+                    	            // 각 행에 대한 제목을 클릭하면 해당 URL로 이동하도록 링크 추가
+                    	            var newRow = '<tr>' +
+                    	                '<td><a href="' + url + '" target="_blank">' + title + '</a></td>' +
+                    	                '</tr>';
+                        	        var $thumbnailImage = $('<img>').attr('src', thumbnailUrl).attr('alt', 'Thumbnail');
+
+                    	            $('#crawlingResult table').append(newRow);
+                    	            $('#titleHeader').text(item.title);
+                    	            // 썸네일 이미지 추가
+                    	            $('#crawlingResult table tr:last-child td:first-child').append($thumbnailImage);
+                    	        });
+                    	    },
+
+                    	    error: function(jqXHR, textStatus, errorThrown) {
+                    	        console.log("AJAX call failed.");
+                    	        console.log("Status: " + textStatus + ", Error: " + errorThrown);
+                    	    }
+                    	});
 
                    // Check if item.firstimage2 is null or empty
                    var Src = item.firstimage2 ? item.firstimage2 : defaultImgSrc;
@@ -362,13 +545,21 @@ function toggleBm(title) {
                           e.preventDefault();
                           validateAndSubmitForm();
                       });
+                   // info btn
+                      $(document).on('click', '#websiteBtn', function(e) {
+                          e.preventDefault();
+                          var searchQuery = item.addr1 + ' ' + item.title; // 관광지 제목과 주소를 검색어로 사용
+                          var googleSearchURL = "https://www.google.com/search?q=" + encodeURIComponent(searchQuery);
+                          window.open(googleSearchURL, '_blank'); // 새 탭에서 구글 검색 결과 열기
+                      });
       
                   } else {
-                      console.error("Unexpected API response", data);
+                      console.error("관광정보없음", data);
                   }
               }
           });
       });
+      
    }  // initTmap() 메서드를 종료시키고 다음 메서드로 넘어갑니다.
    
    // 4. POI 상세 정보 API
@@ -509,8 +700,8 @@ function toggleBm(title) {
           
        }); 
       
-          
    }
+   
 </script>
 </head>
 <body onload="initTmap()">
@@ -543,6 +734,101 @@ function toggleBm(title) {
 <div id="map_div"></div>
 </div>
 <br>
+<div id="crawlingResult" style="float:left">
+    <!-- 크롤링 결과 -->
+    <h1>Crawling Result</h1>
+    <table border="1" cellspacing="0" width="500">
+        <tr>
+            <th id="titleHeader">제주도 여행</th>
+        </tr>
+            <tr>
+                    <c:forEach var="crawlingData" items="${crawlingDataList}">
+                <td>
+                    <a href="${crawlingData.url}" target="_blank">
+                        <img src="${crawlingData.thumbnail}" alt="Thumbnail">
+                        <br>
+                        ${crawlingData.title}
+                    </a>
+                </td>
+                 </c:forEach>
+            </tr>
+       
+    </table>
+</div>
+
+
+
+					<!-- 날씨 관련 출력창 -->
+          <div id="weather-widget" style="float:center" height="400" width="800">
+    <table>
+        <tr>
+            <td>
+            	<div id="date1">
+            	
+            	</div>
+                <div id="weather">
+                    <img id="icon" src="" alt="">
+                </div>
+                <div id="temperature">
+                    <p id="temp"></p>
+                </div>
+            </td>
+            <td>
+            	<div id=date2>
+            	
+            	</div>
+                <div id="forecast-day2">
+                    <div id="forecast-weather">
+                        <img id="day2-icon" src="" alt="">
+                    </div>
+                    <div id="forecast-info-day2">
+                        <p id="forecast-temp-day2"></p>
+                    </div>
+                </div>
+            </td>
+            <td>
+            	<div id="date3">
+            	
+            	</div>
+                <div id="forecast-day3">
+                    <div id="forecast-weather">
+                        <img id="day3-icon" src="" alt="">
+                    </div>
+                    <div id="forecast-info-day3">
+                        <p id="forecast-temp-day3"></p>
+                    </div>
+                </div>
+            </td>
+            <td>
+            	<div id="date4">
+            	
+            	</div>
+                <div id="forecast-day4">
+                    <div id="forecast-weather">
+                        <img id="day4-icon" src="" alt="">
+                    </div>
+                    <div id="forecast-info-day4">
+                        <p id="forecast-temp-day4"></p>
+                    </div>
+                </div>
+            </td>
+            <td>
+            	<div id="date5">
+            	
+            	</div>
+                <div id="forecast-day5">
+                    <div id="forecast-weather">
+                        <img id="day5-icon" src="" alt="">
+                    </div>
+                    <div id="forecast-info-day5">
+                        <p id="forecast-temp-day5"></p>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
 <c:if test="${!empty user_id}">
 <div align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')">상세설정</a></div>
 </c:if>
