@@ -114,22 +114,6 @@ display: flex;
 </head>
 <body>
 <%@ include file="../include/navbar.jsp" %>
-   <c:set var="is_guest" value="${is_guest}" />
- <c:set var="normal_id" value="${normal_session}" />
-   <c:set var="kakao_id" value="${kakao_session}" />
-   <c:set var="user_id" value="${share_id}"/>
-   
-   <%-- ${is_guest} --%>
-   <%-- <c:if test="${!empty is_guest}">
-         <c:if test="${empty normal_id}">
-            ${kakao_id }
-         </c:if>
-         <c:if test="${!empty normal_id}">
-            ${normal_id }
-         </c:if>
-   </c:if> --%>
-   
-   
    <!--  지도가 나타나는 부분. -->
    <br>
    <div id="map_div"></div>

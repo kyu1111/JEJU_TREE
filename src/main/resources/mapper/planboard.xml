@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <mapper namespace="PlanBoardDAO">
+     <insert id="write" parameterType="PlanBoardDTO">
+         <selectKey resultType="int" keyProperty="board_no" order="BEFORE">
+             select max(board_no) from plan_board
+         </selectKey>
+         insert into plan_board values(#{board_no} + 1, #{writer}, #{plan_id}, #{user_Nickname}, #{board_Title}, #{board_Content}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0)
+     </insert>
+     <select id="cnt" resultType="int">
+         select count(board_no) from plan_board
+     </select>
+     
+    <select id="board_list" resultType="PlanBoardDTO" parameterType="PageDTO">
+	  <![CDATA[
+	    select * from (select b.*, row_number() over(order by board_no desc) as rnum from plan_board b) as subquery where rnum >= #{startNo} and rnum <= #{endNo}
+	  ]]>
+	</select>
+    <select id="getBoard_Content" resultType="PlanBoardDTO" parameterType="int">
+       select * from plan_board where board_no = #{board_no}
+    </select>
+   
+    <update id="read" parameterType="int">
+         update plan_board set board_hit = board_hit + 1 where board_no = #{no}
+     </update>
+     <select id="cont" resultType="PlanBoardDTO" parameterType="int">
+         select * from plan_board where board_no = #{no}
+     </select>
+     
+    <select id="count" resultType="int" parameterType="map">
+         select count(*) from plan_board
+         where ${field}
+         like concat('%',#{keyword},'%')
+     </select>
+	<select id="search" resultType="PlanBoardDTO" parameterType="pageDto">
+	  select * from (
+	    select b.*, row_number() over(order by board_no desc) rnum from (
+	      select *
+	      from plan_board
+	       where ${field}
+         like concat('%',#{keyword},'%')
+	    ) b
+	  ) subquery_alias
+	  <![CDATA[
+	  where rnum >= #{startNo} and rnum <= #{endNo}
+	  ]]>	  
+	</select>
+	<update id="modi" parameterType="PlanBoardDTO">
+		update plan_board set board_Title = #{board_Title}, board_content = #{board_Content}, board_update_date = CURRENT_TIMESTAMP where board_no = #{board_no}
+	</update>
+	<delete id="del" parameterType="int">
+	    delete from plan_board where board_no = #{board_no}
+	</delete>
+	<update id="sequence" parameterType="int">
+		update plan_board set board_no = board_no - 1 where board_no > #{boar_no}
+	</update>
+	<select id="countlike" parameterType="BoardLikeDTO" resultType="int">
+	    select count(*) from board_like where board_no = #{board_no} and user_id = #{user_id}
+    </select>
+    <insert id="insertLike" parameterType="BoardLikeDTO">
+	      insert into board_like (user_id, board_no, is_liked) values (#{user_id}, #{board_no}, 1)
+	</insert>
+    <delete id="deleteLike" parameterType="BoardLikeDTO">
+      delete from board_like where board_no = #{board_no} and user_id = #{user_id}
+    </delete>
+    <select id="LikeCount" parameterType="BoardLikeDTO" resultType="int">
+      select count(*) from board_like where board_no = #{board_no}
+    </select>
+    <update id="updateLikeCount" parameterType="PlanBoardDTO">
+       update plan_board set like_count = #{like_count} where board_no = #{board_no}
+   </update>
+   <select id="comment_list" resultType="PlanBoardCommentDTO" parameterType="PlanBoardCommentDTO">
+ 		select * from plan_boardcomment where board_no = #{board_no}
+ 	</select>
+ 	<insert id="write_comment"  parameterType="PlanBoardCommentDTO">
+   		 INSERT INTO `plan_boardcomment` (`rno`, `board_no`, `writer`, `content`, `regdate`, `updatedate`)
+   		 VALUES (#{rno}, #{board_no}, #{writer}, #{content}, CURRENT_DATE, #{updatedate})
+ 	</insert> 
+ 	<update id="update_comment" parameterType="PlanBoardCommentDTO">
+ 		update plan_boardcomment set content = #{content} where rno = #{rno}
+ 	</update>	
+ 	<delete id="deleteComment">
+ 		delete from plan_boardcomment where rno = #{rno}
+ 	</delete> 	
+ </mapper>
