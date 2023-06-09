@@ -4,67 +4,67 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jejutree.dao.UserPlansDAO">
-	<insert id="addplans"
-		parameterType="com.jejutree.plans_model.UserPlansDTO">
-		INSERT INTO travel_plans(user_id, title, description, start_date, end_date,
-		location, created_at, updated_at, markerLat, markerLng)
-		VALUES(#{user_id}, #{title }, #{description}, #{start_date},
-		#{end_date}, #{location},
-		CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{markerLat}, #{markerLng});
-	</insert>
+   <insert id="addplans"
+      parameterType="com.jejutree.plans_model.UserPlansDTO">
+      INSERT INTO travel_plans(user_id, title, description, start_date, end_date,
+      location, created_at, updated_at, markerLat, markerLng, image, addr)
+      VALUES(#{user_id}, #{title }, #{description}, #{start_date},
+      #{end_date}, #{location},
+      CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{markerLat}, #{markerLng}, #{image}, #{addr});
+   </insert>
 
-	<select id="myplans"
-		resultType="com.jejutree.plans_model.UserPlansDTO">
-		SELECT * FROM travel_plans WHERE user_id = #{user_id}
-	</select>
+   <select id="myplans"
+      resultType="com.jejutree.plans_model.UserPlansDTO">
+      SELECT * FROM travel_plans WHERE user_id = #{user_id}
+   </select>
 
-	<select id="getPlanDto" parameterType="String"
-		resultType="com.jejutree.plans_model.UserPlansDTO">
-		select * from travel_plans where user_id = #{user_id}
-	</select>
-	<select id="getPlanDtobyId" parameterType="int"
-		resultType="com.jejutree.plans_model.UserPlansDTO">
-		select * from travel_plans where id = #{id}
-	</select>
+   <select id="getPlanDto" parameterType="String"
+      resultType="com.jejutree.plans_model.UserPlansDTO">
+      select * from travel_plans where user_id = #{user_id}
+   </select>
+   <select id="getPlanDtobyId" parameterType="int"
+      resultType="com.jejutree.plans_model.UserPlansDTO">
+      select * from travel_plans where id = #{id}
+   </select>
 
-	<update id="getUpdateTarget" parameterType="java.util.HashMap">
-		UPDATE travel_plans
-		SET title = #{title},start_date = #{start_date},
-		end_date = #{end_date},
-		location = #{location},created_at =
-		#{createdAt},updatedAt = now(),
-		markerLat = #{markerLat},markerLng =
-		#{markerLng}
-		<!--origin id값 -->
-		WHERE id = #{id}
-	</update>
+   <update id="getUpdateTarget" parameterType="java.util.HashMap">
+      UPDATE travel_plans
+      SET title = #{title},start_date = #{start_date},
+      end_date = #{end_date},
+      location = #{location},created_at =
+      #{createdAt},updatedAt = now(),
+      markerLat = #{markerLat},markerLng =
+      #{markerLng}
+      <!--origin id값 -->
+      WHERE id = #{id}
+   </update>
 
 
-	<select id="getPlanById"
-		resultType="com.jejutree.plans_model.UserPlansDTO">
-		SELECT * FROM travel_plans WHERE id = #{id}
-	</select>
+   <select id="getPlanById"
+      resultType="com.jejutree.plans_model.UserPlansDTO">
+      SELECT * FROM travel_plans WHERE id = #{id}
+   </select>
 
-	<update id="updatePlan"
-		parameterType="com.jejutree.plans_model.UserPlansDTO">
-		UPDATE travel_plans
-		SET user_id = #{user_id}
-		WHERE id = #{id}
-	</update>
-	
-	<delete id="deleteBm" parameterType="bookmarkDto">
-		delete from bookmark where user_id = #{user_id} and location = #{location}
-	</delete>
+   <update id="updatePlan"
+      parameterType="com.jejutree.plans_model.UserPlansDTO">
+      UPDATE travel_plans
+      SET user_id = #{user_id}
+      WHERE id = #{id}
+   </update>
+   
+   <delete id="deleteBm" parameterType="bookmarkDto">
+      delete from bookmark where user_id = #{user_id} and location = #{location}
+   </delete>
 
-	<insert id="insertBm" parameterType="bookmarkDto">
-		INSERT INTO bookmark (user_id, location)
-		VALUES (#{user_id}, #{location})
-	</insert>
-	
-	<select id="bm_loc" resultType="bookmarkDto">
-		SELECT * FROM bookmark WHERE user_id = #{user_id}
-	</select>
-	
+   <insert id="insertBm" parameterType="bookmarkDto">
+      INSERT INTO bookmark (user_id, location)
+      VALUES (#{user_id}, #{location})
+   </insert>
+   
+   <select id="bm_loc" resultType="bookmarkDto">
+      SELECT * FROM bookmark WHERE user_id = #{user_id}
+   </select>
+   
     <select id="checkBm" resultType="int" parameterType="bookmarkDto">
         SELECT COUNT(*) FROM bookmark WHERE location = #{location} and user_id = #{user_id}
     </select>
@@ -74,5 +74,5 @@
       SET start_date = #{start_date}, end_date = #{end_date}
       WHERE id = #{id}
    </update>
-	
+   
 </mapper>

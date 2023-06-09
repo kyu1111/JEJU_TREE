@@ -32,7 +32,6 @@
 	
 		
 	
-   <!-- 한글 인코딩 필터 작업, 스프링 한글 필터 -->
 	<filter> 
     <filter-name>encodingFilter</filter-name> 
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 

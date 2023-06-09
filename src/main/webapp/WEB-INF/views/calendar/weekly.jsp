@@ -114,11 +114,11 @@ display: flex;
 </head>
 <body>
 <%@ include file="../include/navbar.jsp" %>
+
    <!--  지도가 나타나는 부분. -->
    <br>
    <div id="map_div"></div>
    <div align="center" class="header">
-      <h4>${normal_id}님 일정</h4>
    </div>
    
    
