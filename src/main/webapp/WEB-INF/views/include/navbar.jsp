@@ -16,7 +16,7 @@
     <nav class="navbar">
     <div class="left">
         <a href="<%=request.getContextPath()%>/MainPage.go"><img src="/model/resources/images/title.png"></a>
-        </div>
+    </div>
            <div class="right">
         <c:set var = "kakao_session" value="${Kakao_info}"/>
         <c:set var = "normal_session" value="${user_id}"/>
@@ -48,7 +48,6 @@
             <a href="login_page.go"  class="login"><font size="4">LOGIN</font></a>
         </c:if>
             </div>
-
     </nav>
 </body>
 </html>

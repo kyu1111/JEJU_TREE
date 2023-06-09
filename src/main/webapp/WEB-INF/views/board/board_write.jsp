@@ -33,10 +33,6 @@
 	                <th>글 내용</th>
 	                <td> <textarea name="board_Content" rows="7" cols = "30"></textarea> </td>
 	            </tr>
-	            <tr>
-	                <th>글 내용</th>
-	                <td> <textarea name="board_Content" rows="7" cols = "30"></textarea> </td>
-	            </tr>
 	            
 	        </table>
 	        <br>

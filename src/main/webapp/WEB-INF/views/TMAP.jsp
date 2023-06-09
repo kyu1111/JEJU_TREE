@@ -249,8 +249,9 @@ function toggleBm(title) {
                  }
 
                  $("#searchResult").html(innerHtml); //searchResult 결과값 노출
-                 map.panToBounds(positionBounds); // 확장된 bounds의 중심으로 이동시키기
-                 map.zoomOut();
+                 // map.panToBounds(positionBounds); // 확장된 bounds의 중심으로 이동시키기
+                 // map.zoomOut();
+                 map.setZoom(10);
               },
               error : function(request, status, error) {
                  console.log("code:"
@@ -261,6 +262,8 @@ function toggleBm(title) {
               }
            });
         }); // 종료.
+        
+        $('#btn_select').trigger('click');
 
       //현재 날씨 정보 
       // 페이지 진입 시 자동으로 제주시 중앙 좌표 날씨 조회 후 출력
@@ -470,12 +473,11 @@ function toggleBm(title) {
                           $(this).off('click');
                       });
                       
+                      document.getElementById('selectBtn').addEventListener('click',function(e) {
+                               console.log('The select button was clicked.');
+                            });
                       
-                      document.getElementById(selectButtonId2).addEventListener('click',function(e) {
-                         validateAndSubmitForm();
-                         console.log('The select button was clicked.');
-                         e.preventDefault();
-                     });
+
                       
                          // info btn
                       $(document).on('click', '#websiteBtn', function(e) {
@@ -549,10 +551,8 @@ function toggleBm(title) {
                            $(this).off('click');
                         });
                   
-                  document.getElementById(selectButtonId).addEventListener('click',function(e) {
-                       validateAndSubmitForm2();
-                       console.log('The select button was clicked.');
-                       e.preventDefault();
+                  document.getElementById('selectBtn').addEventListener('click',function(e) {
+                      console.log('The select button was clicked.');
                    });
                   
                   //popup 생성
@@ -665,6 +665,28 @@ function toggleBm(title) {
            } 
        }); 
    }
+   
+   function clearMarkers() {
+       for (var i = 0; i < markerArr.length; i++) {
+           markerArr[i].setMap(null);
+       }
+       markerArr = [];
+       
+       $("#searchResult").html("<li>검색결과</li>");
+       
+       $('#searchKeyword').val("");
+   }
+   
+   function MapType(type){
+       if("SATELLITE" == type){
+           map.setMapType(Tmapv2.Map.MapType.SATELLITE);
+       }else if("HYBRID" == type){
+           map.setMapType(Tmapv2.Map.MapType.HYBRID)
+       }else if("ROAD" == type){
+           map.setMapType(Tmapv2.Map.MapType.ROAD)
+       }
+   }   
+
 </script>
 </head>
 <body onload="initTmap()">
@@ -675,8 +697,19 @@ function toggleBm(title) {
 <br>
 <br>
    <div>
-      <input type="text" class="text_custom" id="searchKeyword" name="searchKeyword" value="" placeholder = "장소를 키워드로 검색하세요.">   
+         <c:choose>
+          <c:when test="${empty requestScope.searchKeyword}">
+              <input type="text" class="text_custom" id="searchKeyword" name="searchKeyword" placeholder="원하시는 장소를 검색하세요">
+          </c:when>
+          <c:otherwise>
+              <input type="text" class="text_custom" id="searchKeyword" name="searchKeyword" value="<%=request.getAttribute("searchKeyword")%>">
+          </c:otherwise>
+      </c:choose>
       <button id="btn_select">적용하기</button>
+      <button id="btn_clear">마커 초기화</button>
+      <button onclick="MapType('ROAD')">ROAD</button>
+      <button onclick="MapType('SATELLITE')">SATELLITE</button>
+      <button onclick="MapType('HYBRID')">HYBRID</button>
    </div>
    <div>
       <div style="width: 30%; float:left;">
@@ -800,4 +833,8 @@ function toggleBm(title) {
 <div align="center"><%@ include file="./include/footer.jsp" %></div>
 <br>
 </body>
+<script type="text/javascript">
+    // 초기화 버튼에 이벤트 핸들러 추가
+    $("#btn_clear").click(clearMarkers);
+</script>
 </html>

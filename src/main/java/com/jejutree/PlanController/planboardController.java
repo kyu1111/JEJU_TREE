@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class planboardController {
     private UserDAO userdao;
     
    // 한 페이지당 보여질 게시물의 수
- 	private final int rowsize = 3;
+ 	private final int rowsize = 10;
  	
  	// DB 상의 전체 게시물의 수
  	private int totalRecord = 0;
@@ -336,7 +337,6 @@ public class planboardController {
 		
 		String currnick = userdto.getUser_nickname();
 		String boardnick = dto.getUser_Nickname();
-		if(currnick.equals(boardnick)) {	
 	     if(currnick.equals(boardnick)) {
 	    	    this.dao.deleteboard(no);
 	    	    this.dao.updatSequence(no);
@@ -351,7 +351,6 @@ public class planboardController {
 				out.println("</script>");
 				
 			}
-		}
     }
     
     @RequestMapping(value = "board_like.go", produces = "application/json; charset=UTF-8")
@@ -441,4 +440,64 @@ public class planboardController {
 				
 			}
          }
+
+	 @RequestMapping(value="commentwirte.go")
+	  
+	  @ResponseBody public void Commentwrite(PlanBoardCommentDTO
+	  dto,HttpServletRequest request,HttpSession session,HttpServletResponse response) throws Exception{
+	  
+		 String user_id = null;
+		    System.out.println(dto);
+		    if (session.getAttribute("user_id") != null) {
+		        user_id = (String) session.getAttribute("user_id");
+		    } else if (session.getAttribute("Kakao_info") != null) {
+		        HashMap<String, Object> kakaoInfo = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+		        user_id = (String) kakaoInfo.get("kakao_id");
+		    }
+		    dto.setWriter(user_id); 
+			this.dao.writeComment(dto);
+     
+			 response.setContentType("application/json");
+		      response.setCharacterEncoding("UTF-8");
+		      PrintWriter out = response.getWriter();
+		      out.print("{\"result\":\"success\"}");
+		      out.flush();
+
+
+			
+	 }
+	@RequestMapping(value="comment_update.go")   
+	@ResponseBody public void comment_write(PlanBoardCommentDTO dto,HttpServletRequest request,HttpSession session,@RequestParam("rno")int rno
+			,@RequestParam("content") String content,HttpServletResponse response) throws IOException {
+			System.out.println(rno);
+			dto.setRno(rno);
+			dto.setContent(content);
+			
+			int check = this.dao.updateComment(dto);
+			System.out.println(check);
+			if(check > 0) {
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				PrintWriter out = response.getWriter();
+				out.print("{\"result\":\"success\"}");
+				out.flush();
+
+			}
+	}
+	@RequestMapping(value="comment_delete.go") 
+	public  void  comment_delete(HttpServletRequest request,@RequestParam("rno") int rno,HttpServletResponse response) throws IOException {
+	  int check =  this.dao.deleteComment(rno);
+	  response.setContentType("application/json");
+      response.setCharacterEncoding("UTF-8");
+      JSONObject jsonObject = new JSONObject();
+
+	  if(check > 0) {
+		  jsonObject.put("result", "success");
+		  
+	  }else {
+		  jsonObject.put("result", "fail");
+	  }
+	  response.getWriter().write(jsonObject.toString());
+      
+	}
 } 

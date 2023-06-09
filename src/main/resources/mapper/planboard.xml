@@ -22,9 +22,7 @@
     <select id="getBoard_Content" resultType="PlanBoardDTO" parameterType="int">
        select * from plan_board where board_no = #{board_no}
     </select>
-   <select id="comment_list" resultType="PlanBoardCommentDTO" parameterType="PlanBoardCommentDTO">
-       select * from plan_boardcomment where board_no = #{board_no}
-    </select>    
+   
     <update id="read" parameterType="int">
          update plan_board set board_hit = board_hit + 1 where board_no = #{no}
      </update>
@@ -74,4 +72,18 @@
     <update id="updateLikeCount" parameterType="PlanBoardDTO">
        update plan_board set like_count = #{like_count} where board_no = #{board_no}
    </update>
+
+   <select id="comment_list" resultType="PlanBoardCommentDTO" parameterType="PlanBoardCommentDTO">
+ 		select * from plan_boardcomment where board_no = #{board_no}
+ 	</select>
+ 	<insert id="write_comment"  parameterType="PlanBoardCommentDTO">
+   		 INSERT INTO `plan_boardcomment` (`rno`, `board_no`, `writer`, `content`, `regdate`, `updatedate`)
+   		 VALUES (#{rno}, #{board_no}, #{writer}, #{content}, CURRENT_DATE, #{updatedate})
+ 	</insert> 
+ 	<update id="update_comment" parameterType="PlanBoardCommentDTO">
+ 		update plan_boardcomment set content = #{content} where rno = #{rno}
+ 	</update>	
+ 	<delete id="deleteComment">
+ 		delete from plan_boardcomment where rno = #{rno}
+ 	</delete> 	
  </mapper>

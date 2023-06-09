@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -47,6 +46,7 @@
 							 Plan ID: ${dto.id}<br> User ID: ${dto.user_id}<br> Address: ${dto.addr}<br>
 							Title: ${dto.title}<br> Start Date: ${dto.start_date}<br>
 							End Date: ${dto.end_date}<br>
+							<button class="deleteButton" data-plan-id="${dto.id}">Delete</button>
 						</p>
 						</div>
 					</c:forEach>
@@ -105,9 +105,8 @@
 				
 			</div>
 		</div>
-        <!-- footer 영역 설정 -->
-   <%@ include file="../include/footer.jsp" %>
   </div>
+   
 <!--굥유 버튼 ajax스크립트 태그  -->   
 <script type="text/javascript">
 //공유 버튼을 누를경우 alert 메시지  
@@ -285,6 +284,32 @@ function opensharePage(a){
 			});
 		}
 	}
+   
+   $(document).ready(function(){
+       $(".deleteButton").click(function(e) {
+           e.stopPropagation(); 
+
+           var planId = $(this).data('plan-id');
+           var userId = '<%=request.getSession().getAttribute("user_id")%>';
+
+           $.ajax({
+               url : 'delete_plan.go', 
+               method : 'POST',
+               data : {
+                   'planId' : planId,
+                   'userId' : userId
+               },
+               success : function(response) {
+                   alert('삭제 성공!!');
+                   location.reload(); 
+               }
+           });
+       });
+   });
 </script>
 </body>
+<div class="mypage_footer">
+     <!-- footer 영역 설정 -->
+   <%@ include file="../include/footer.jsp" %>
+</div>
 </html>

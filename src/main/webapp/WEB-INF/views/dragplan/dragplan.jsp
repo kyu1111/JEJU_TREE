@@ -185,6 +185,28 @@ function opensharePage(a){
 			});
 		}
 	}
+   
+   $(document).ready(function(){
+       $(".deleteButton").click(function(e) {
+           e.stopPropagation(); 
+
+           var planId = $(this).data('plan-id');
+           var userId = '<%=request.getSession().getAttribute("user_id")%>';
+
+           $.ajax({
+               url : 'delete_plan.go', 
+               method : 'POST',
+               data : {
+                   'planId' : planId,
+                   'userId' : userId
+               },
+               success : function(response) {
+                   alert('삭제 성공!!');
+                   location.reload(); 
+               }
+           });
+       });
+   });
 </script>
 </head>
 <body>
@@ -222,6 +244,7 @@ function opensharePage(a){
 								</c:if>							 Plan ID: ${dto.id}<br> User ID: ${dto.user_id}<br> Address: ${dto.addr}<br>
 							Title: ${dto.title}<br> Start Date: ${dto.start_date}<br>
 							End Date: ${dto.end_date}<br>
+							<button class="deleteButton" data-plan-id="${dto.id}">Delete</button>
 						</p>
 						</div>
 					</c:forEach>

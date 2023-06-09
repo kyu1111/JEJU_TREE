@@ -57,4 +57,10 @@ public class HomeController {
 
        return "Planner";
    }
+   
+   @RequestMapping(value = "/TMAP.go", method = RequestMethod.GET)
+   public String toTmapPage(@RequestParam("searchKeyword") String searchKeyword, Model model) {
+       model.addAttribute("searchKeyword", searchKeyword);
+       return "TMAP";
+   } 
 }

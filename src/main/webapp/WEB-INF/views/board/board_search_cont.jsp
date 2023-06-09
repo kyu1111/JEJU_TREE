@@ -144,11 +144,12 @@ overflow-y: auto;
                   </c:if>
                  <div class="table_col"><button onclick="likefunction()" id="likeButton">
                                   </button></div>
+
             </div>
          <div class="table_col">조회수 : ${board_content.board_hit}</div>    
          </div>
       </div>
-      <!--댓글 영역  -->
+           <!--댓글 영역  -->
       기존 댓글 영역.
 
    <div id = "comment_area">   
@@ -179,77 +180,213 @@ overflow-y: auto;
      
      <input type="button" value="글 수정" onclick="location.href='board_modify.go?no=${board_content.board_no}&page=${Paging }'">
         <input type="button" value="글 삭제" onclick="if(confirm('정말로 게시글을 삭제하시겠습니까?')) {
-        	location.href='board_delete.go?no=${board_content.board_no}&page=${Paging }'  }else { return;} ">
-        <input type="button" value="검색목록" onclick="location.href='plan_board_search.go?page=${Paging}&field=${Field }&keyword=${Keyword }'">
+        	'location.href='board_delete.go?no=${board_content.board_no}&page=${Paging }'  }else { return;} ">
+        <input type="button" value="전체목록" onclick="location.href='PlanBoardList.go'">
       
    </div>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   
-    <script type="text/javascript">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     	
 
-    $(document).ready(function () {
-   	    var board_no = ${board_content.board_no};
-   	    var user_id = "${board_content.writer}";
+	<%--   <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/board/board_content.js"></script> --%>
+	<script type="text/javascript">
+	 $(document).ready(function() {
+		   	var board_no = ${board_content.board_no};
+		       var user_id = "${board_content.writer}";
+		       $.ajax({
+		   	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		   	      type: "post",
+		   	      url: "like_count.go",
+		   	      data: {
+		   	        no: board_no,
+		   	        user_id: user_id
+		   	      },
+		   	      datatype: "text/html",
+		   	      success: function (data) {
+		   	    	  if (data === 1 || data === -1) {
+		   			        $("#likeButton").text("좋아요").val();
+		   			    } else if (data === 0) {
+		   			        $("#likeButton").text("좋아요 취소").val();
+		   			    } 
+		   	      },
+		   	      error: function () {
+		   	        alert("데이터 통신 오류입니다.");
+		   	      }
+		   	    });
+		       
+		     function loadComments() {
+		    
+		         let commentListContainer = $('#commentListContainer');
+		         commentListContainer.empty();
+		   		
+		         $.ajax({
+		             url: 'commentList.go',
+		             type: 'GET',
+		             dataType: 'json',
+		             data: { board_no: '${board_content.board_no}' },
+		             success: function(data) {
+		                 $.each(data, function(index, comment) {
+		               	  let commentListItem = $('<li></li>');
+		                     
+		                     let commentHeader = $('<div class="comment-header"></div>');
+		                     
+		                     let writerSpan = $('<span class="writer"></span>').text(comment.writer);
+		                     console.log(comment.wirter);
+		                     let regdateSpan = $('<span></span>').text(comment.regdate);
+		                     console.log(comment.regdate);
+		                     commentHeader.append(writerSpan).append(regdateSpan);
+		                     let commentContent = $('<div class="comment-content"></div>');
+		                     let contentSpan = $('<span></span>').text(comment.content);
+		                     let editBtn = $('<button class = "editBtn"></button>').text('수정');
+		                     let deleteBtn = $('<button = class="deleteBtn"></button>').text('삭제');
+		                     editBtn.click(function() {
+		                              
+		                         let originalContent = contentSpan.text();
+		                               
+		                         contentSpan.hide();
 
-   	    $.ajax({
-   	      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-   	      type: "post",
-   	      url: "like_count.go",
-   	      data: {
-   	        no: board_no,
-   	        user_id: user_id
-   	      },
-   	      datatype: "text/html",
-   	      success: function (data) {
-   	    	  if (data === 1 || data === -1) {
-				        $("#likeButton").text("좋아요").val();
-				    } else if (data === 0) {
-				        $("#likeButton").text("좋아요 취소").val();
-				    } 
-   	      },
-   	      error: function () {
-   	        alert("데이터 통신 오류입니다.");
-   	      }
-   	    });
-   	  });
+		                         let contentInput = $('<input>').attr('type', 'text').val(originalContent);
+		                             contentSpan.after(contentInput);
 
-       function likefunction() {
-       	var board_no = ${board_content.board_no };
-       	var user_id = "${board_content.writer}";
-       	console.log(${board_content.board_no });
-       	console.log("${board_content.writer}");
-       	$.ajax({
-       		 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-       		  type: "post",
-       		  url: "board_like.go",
-   			data: { no : board_no,
-   				   user_id : user_id
-   			},
-   			datatype: "text/html",
-   			success: function(data) {
-   				console.log(data); 
-   				console.log(data); 
-  				 if (data === 1) {
-				        alert("좋아요 누름");
-				        $("#likeButton").text("좋아요 취소").val();
-				    } else if (data === 0) {
-				        alert("좋아요 취소");
-				        $("#likeButton").text("좋아요").val();
-				    } else {
-				        alert("본인 글");
-				    }
-  				  
-   				  console.log($("#likeButton").val());
-   				  
-   			},
+		                         editBtn.text('수정 완료').off('click').on('click', function() {
+		                             let newContent = contentInput.val();
+		                             if (newContent) {
+		                                 $.ajax({
+		                                     url: 'comment_update.go',
+		                                     type: 'POST',
+		                                     dataType: 'json',
+		                                     data: { rno: comment.rno, content: newContent },
+		                                     success: function(response) {
+		                                         if (response.result === "success") {
+		                                       	  console.log('그라모 성공했다.');
+		                                             contentSpan.text(newContent).show();
+		                                             contentInput.remove();
+		                                             editBtn.text('수정').off('click').on('click', updateComment);
+		                                             loadComments();
+		                                         } else {
+		                                             alert('댓글 수정에 실패했습니다.');
+		                                       }
+		                                     }
+		                                 });
+		                               }
+		                           });
+		                       });
+		                          function updateComment() {
+		                              let newContent = $('#commentContent').val();
+		                              let commentId = $('#commentId').val();
+		                               
+		                              if (newContent) {
+		                                  $.ajax({
+		                                      url: 'comment_update.go',
+		                                      type: 'POST',
+		                                      dataType: 'json',
+		                                      data: { rno: comment.rno, content: newContent },
+		                                      success: function(response) {
+		                                   	  
+		                                          if (response.result === "success") {
+		                                       	   console.log('그라모 성공했네.');
+		                                              loadComments();
+		                                              $('#formTitle').text('댓글 작성');
+		                                              $('#commentContent').val('');
+		                                              $('#commentId').val('');
+		                                              $('#submitComment').text('댓글 작성');
+		                                              $('#submitComment').off('click').on('click', submitComment);
+		                                          } else {
+		                                              alert('댓글 수정에 실패했습니다.');
+		                                          }
+		                                      }
+		                                  });
+		                              }
+		                          }
+		                           deleteBtn.click(function() {
+		                               if (confirm('댓글을 정말 삭제하시겠습니까?')) {
+		                                   $.ajax({
+		                                       url: 'comment_delete.go',
+		                                       type: 'POST',
+		                                       dataType: 'json',
+		                                       data: { rno: comment.rno },
+		                                       success: function(response) {
+		                                           if (response.result === "success") {
+		                                               loadComments();
+		                                           } else {
+		                                               alert('댓글 삭제에 실패했습니다.');
+		                                           }
+		                                       }
+		                                  });
+		                               }
+		                           });
+		                           commentContent.append(contentSpan).append(editBtn).append(deleteBtn);
+		                           
+		                           commentListItem.append(commentHeader).append(commentContent);
+		                           
+		                           if (index < data.length - 1) {
+		                               let commentDivider = $('<div class="comment-divider"></div>');
+		                               commentListItem.append(commentDivider);
+		                           }
+		                           commentListContainer.append(commentListItem);
+		                       });
+		                   }
+		               });
+		           }
+		     
+		     
+		     
+		           loadComments();
+		           
+		           function submitComment() {
+		               let content = $('#commentContent').val();
+		               $.ajax({
+		                   url: 'commentwirte.go',
+		                   type: 'POST',
+		                   dataType: 'json',
+		                   data: { board_no: '${board_content.board_no}', content: content },
+		                   success: function(response) {
+		                       if (response.result === "success") {
+		                           loadComments();
+		                           $('#commentContent').val('');
+		                       } else {
+		                         alert('댓글 작성에 실패했습니다.');
+		                     }
+		                   }
+		               });
+		           }
+		           $('#submitComment').click(submitComment);
+		       });
+		   function likefunction() {
+		   	var board_no = ${board_content.board_no };
+		   	var user_id = "${board_content.writer}";
+		   	console.log(${board_content.board_no });
+		   	console.log("${board_content.writer}");
+		   	$.ajax({
+		   		 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		   		  type: "post",
+		   		  url: "board_like.go",
+		   		data: { no : board_no,
+		   			   user_id : user_id
+		   		},
+		   		datatype: "text/html",
+		   		success: function(data) {
+		   			console.log(data); 
+		   			console.log(data); 
+		   			 if (data === 1) {
+		   		        alert("좋아요 누름");
+		   		        $("#likeButton").text("좋아요 취소").val();
+		   		    } else if (data === 0) {
+		   		        alert("좋아요 취소");
+		   		        $("#likeButton").text("좋아요").val();
+		   		    } else {
+		   		        alert("본인 글");
+		   		    }
+		   			  
+		   			  console.log($("#likeButton").val());
+		   			  
+		   		},
 
-   			error: function() {
-                   alert("데이터 통신 오류입니다.");
-               }
-   		
-   	});
-       }
-     </script>
-     
+		   		error: function() {
+		               alert("데이터 통신 오류입니다.");
+		           }
+		   });
+		   }
+
+	</script>
 </body>
 </html>
