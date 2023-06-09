@@ -61,7 +61,7 @@
           
       }
          
-    .round-button {
+    .prev_bt, .next_bt {
        display: inline-block;
        padding: 8px 15px; /* 필요에 따라 조정하세요 */
        background-color: rgba(0, 0, 0, 0.3); /* 필요에 따라 조정하세요 */
@@ -250,6 +250,11 @@
         cursor: pointer;
            
    }
+   
+   .to-top:hover {
+   		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   }
+
          
      * {
         user-select: none;

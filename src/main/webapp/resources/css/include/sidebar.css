@@ -142,6 +142,10 @@
 	margin: 10px;
 }
 
+.blist_table {
+	border-collapse: collapse;
+}
+
 .blist_table th {
 	border: none;
 	color: #6a6a6a;
@@ -150,10 +154,22 @@
 }
 
 .blist_table td {
-	border: none;
+	border: 1px solid #6a6a6a;
 	color: #6a6a6a;
 	font-size: 14px;
 	font-weight: 300;
+}
+
+.blist_table input {
+	border: none;
+	background-color: white;
+	font-size: 20px;
+	color: #6a6a6a;
+	cursor: pointer;
+}
+
+.td_x {
+	text-align: center;
 }
 
 #sidebar2_page {

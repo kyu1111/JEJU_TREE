@@ -23,5 +23,7 @@ public class UserPlansDTO {
    private Timestamp updatedAt;
    private double markerLat;
    private double markerLng;
+   private String image;
+   private String addr;
 
 }

@@ -80,6 +80,7 @@ public class userController {
 		 // 절대경로 가져오기
 	    Properties prop = new Properties();
 	    FileInputStream fis = new FileInputStream(request.getRealPath("WEB-INF\\classes\\config\\fileupload.properties"));
+	    System.out.println();
 	    prop.load(new InputStreamReader(fis, "UTF-8"));
 	    fis.close();
 	    
@@ -96,7 +97,6 @@ public class userController {
 		         String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
 		         String saveFolder2 = prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\"+year+month+day;
 		         String saveFileName = "";
-		         
 			        File path1 = new File(saveFolder);
 			        File path2 = new File(saveFolder2);
 
@@ -106,9 +106,6 @@ public class userController {
 			        if (!path2.exists()) {
 			        	path2.mkdirs();
 			        }
-			        
-
-
 			        if (!originalFileName.equals(dto.getUser_image())) {
 			            saveFileName = System.currentTimeMillis() + "_" + originalFileName;
 			            	
@@ -139,12 +136,11 @@ public class userController {
 				session.setAttribute("user_id", dto.getUser_id());
 				out.println("<script>");
 				out.println("alert('회원가입이 완료 되었습니다.')");
-				out.println("window.close()");
 				out.println("location.href='MainPage.go'");
 				out.println("</script>");
 			} else {
 				out.println("<script>");
-				out.println("alert('가입 실패')");
+				out.println("alert('가입이 실패하였습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -153,23 +149,27 @@ public class userController {
 			check = this.dao.insertKakaoUser(dto);
 			if (check > 0) {
 
-				dao.updateKakao(dto.getUser_email());
+				int update1 = dao.updateKakao(dto.getUser_email());
+				int update2 = dao.updateisKakao(dto.getUser_email());
 				// 세션 띄워주기전 기존 카카오 세션 만료 시키기.
 				// 새로 로그인한 세션 띄워주기
-				out.println("<script>");
-				out.println("alert('카카오연동계정 회원가입이 완료 되었습니다.')");
-				out.println("window.close()");
-				out.println("window.opener.location.href='MainPage.go'");
-				out.println("</script>");
+				if(update1 > 0 && update2 > 0){
+					out.println("<script>");
+					out.println("alert('카카오 연동 계정 회원가입이 완료 되었습니다.')");
+					out.println("location.href='MainPage.go'");
+					out.println("</script>");
+				}
+				
 
 			} else {
 				out.println("<script>");
-				out.println("alert('가입 실패')");
+				out.println("alert('가입이 실패하였습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
 			// 공유 화면을 통해 유입된 회원의 회원가입(임시로 미리가입,최초 가입 둘다 해당)
 		} else if (request.getServletPath().equals("/invitedKakao_join_ok.go")) {
+			System.out.println(user_share_id);
 			// 공유 정보 먼저 넣어 주기.
 			Plan_participantsDTO kakaoParticipantdto = new Plan_participantsDTO();
 			// 회원 user_id(본인) 아이디 입력
@@ -186,40 +186,47 @@ public class userController {
 				// 공유자 id 정보 먼저 등록
 				int share_check = this.dao.insertParticipant(kakaoParticipantdto);
 				// 새로 로그인한 세션 띄워주기
-				session.setAttribute("user_id", dto.getUser_id());
 				out.println("<script>");
 				out.println("alert('회원가입이 완료되었습니다.');");
-				out.println("window.close();");
 				out.println("if (confirm('공유된 일정을 다시 확인하시겠습니까?')) {");
-				out.println("window.opener.location.href='plan_list.go?id=" + user_share_id + "';");
+				out.println("location.href='plan_list.go?id=" + user_share_id + "'");
 				out.println("} else {");
 				out.println("  alert('메인 페이지로 이동합니다.');");
-				out.println("window.opener.location.href='MainPage.go';");
+				out.println("location.href='MainPage.go'");
 				out.println("}");
 				out.println("</script>");
 			}
 
-		} else if (request.getServletPath().equals("invitedUser_join_ok.go")) {
+		} else if (request.getServletPath().equals("/invitedUser_join_ok.go")) {
 			// 여기에 invited 아이디 파라미터로 받아서 넣어야 할듯.
 			Plan_participantsDTO userParticipantdto = new Plan_participantsDTO();
 			// 회원 user_id(본인) 아이디 입력
+			System.out.println(userParticipantdto);
 			userParticipantdto.setUser_id(dto.getUser_id());
 			// share_id(계획을 초대한 사람의 아이디)
 			userParticipantdto.setUser_share_id(user_share_id);
-
+			
 			// 공유자의 정보가 적절히 등록 되면 회원가입 진행.
 			check = this.emailService.insertUser(dto);
-
+			
 			if (check > 0) {
 				int share_check = this.dao.insertParticipant(userParticipantdto);
-				out.println("<script>");
-				out.println("alert('회원가입이 완료 되었습니다.')");
-				out.println("window.close()");
-				out.println("window.opener.location.href='plan_list.go?id=" + user_share_id);
-				out.println("</script>");
+				
+				if(share_check > 0) {
+					out.println("<script>");
+					out.println("alert('회원가입이 완료 되었습니다.')");
+					out.println("location.href='plan_list.go?id=" + user_share_id + "'");
+					out.println("</script>");
+				}else {
+					out.println("<script>");
+					out.println("alert('공유정보를 불러오지 못했습니다.')");
+					out.println("history.back()");
+					out.println("</script>");
+				}
+				
 			} else {
 				out.println("<script>");
-				out.println("alert('가입 실패')");
+				out.println("alert('가입이 실패하였습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -273,14 +280,14 @@ public class userController {
 			int check = dao.emailAuthFail(user_id);
 			if (user_dto == null) {
 				out.println("<script>");
-				out.println("alert('회원정보 없음~~~')");
+				out.println("alert('회원정보가 없습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
 			if (user_dto == null && check == 1) {
 				System.out.println("로그인 실패");
 				out.println("<script>");
-				out.println("alert('로그인 실패~~~')");
+				out.println("alert('로그인 실패')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -293,18 +300,17 @@ public class userController {
 					// 세션 띄워주기
 					session.setAttribute("user_id", user_dto.getUser_id());
 					out.println("<script>");
-					out.println("alert('로그인 성공')");
 					out.println("location.href='MainPage.go'");
 					out.println("</script>");
 				} else {
 					out.println("<script>");
-					out.println("alert('이메일 인증 필요~~~')");
+					out.println("alert('이메일 인증이 필요합니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 				}
 			} else if (!user_dto.getUser_pwd().equals(user_pwd) && check == 1 && user_dto != null) {
 				out.println("<script>");
-				out.println("alert('회원정보 틀림~~~')");
+				out.println("alert('회원정보가 일치하지 않습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -313,7 +319,6 @@ public class userController {
 				// 기존 세션 있으면 날려 주기.
 				session.setAttribute("user_id", user_dto.getUser_id());
 				out.println("<script>");
-				out.println("alert('로그인 성공')");
 				out.println("location.href='MainPage.go'");
 				out.println("</script>");
 			}
@@ -331,14 +336,14 @@ public class userController {
 			int check = dao.emailAuthFail(user_id);
 			if (user_dto == null) {
 				out.println("<script>");
-				out.println("alert('회원정보 없음~~~')");
+				out.println("alert('회원정보가 없습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
 			if (user_dto == null && check == 1) {
 				System.out.println("로그인 실패");
 				out.println("<script>");
-				out.println("alert('로그인 실패~~~')");
+				out.println("alert('로그인 실패')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -377,13 +382,13 @@ public class userController {
 					out.println("</script>");
 				} else {
 					out.println("<script>");
-					out.println("alert('이메일 인증 필요~~~')");
+					out.println("alert('이메일 인증이 필요합니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 				}
 			} else if (!user_dto.getUser_pwd().equals(user_pwd) && check == 1 && user_dto != null) {
 				out.println("<script>");
-				out.println("alert('회원정보 틀림~~~')");
+				out.println("alert('회원정보가 일치하지 않습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -426,6 +431,7 @@ public class userController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		Temporary_kakao_userDTO dto = dao.kakao_userInfo(user_email);
+		System.out.println(dto);
 		// 해당 이메일과 일치하는 임시등록 유저 조회
 		if (dto != null) {
 			// 해당 유저의 정회원 가입여부 확인(임시회원 테이블에 user_join이 1일시 정규 회원으로 전환된 회원)
@@ -495,7 +501,7 @@ public class userController {
 			} else {
 
 				out.println("<script>");
-				out.println("alert('탈퇴 실패~~~')");
+				out.println("alert('탈퇴가 완료되지 않았습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -512,7 +518,7 @@ public class userController {
 				out.println("</script>");
 			} else {
 				out.println("<script>");
-				out.println("alert('탈퇴 실패~~~')");
+				out.println("alert('탈퇴가 완료되지 않았습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -562,7 +568,7 @@ public class userController {
 					System.out.println(double_check);
 				} else {
 					out.println("<script>");
-					out.println("alert('탈퇴 실패~~~')");
+					out.println("alert('탈퇴가 완료되지 않았습니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 				}
@@ -575,7 +581,7 @@ public class userController {
 			// 카카오 요청 실패 한 경우.
 		} else {
 			out.println("<script>");
-			out.println("alert('요청 실패~~~')");
+			out.println("alert('요청 실패')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
@@ -670,10 +676,8 @@ public class userController {
     	UserDTO dto = this.dao.getuser(curr_id);
     	
     	if(dto == null) {
-    		System.out.println("사용가능");
     		return "ok";
     	} else {
-    		System.out.println("중복");
     		return "db";
     	}
     	
@@ -689,10 +693,8 @@ public class userController {
     	UserDTO dto = this.dao.nickCheck(curr_nick);
     	
     	if(dto == null) {
-    		System.out.println("사용가능");
     		return "ok";
     	} else {
-    		System.out.println("중복");
     		return "db";
     	}
     	
@@ -704,10 +706,8 @@ public class userController {
     public String emailCheck(@RequestParam("email") String user_email) {
     	UserDTO dto = this.dao.getUserByEmail(user_email);
     	if(dto == null) {
-    		System.out.println("사용가능");
     		return "ok";
     	} else {
-    		System.out.println("중복");
     		return "db";
     	}
     }

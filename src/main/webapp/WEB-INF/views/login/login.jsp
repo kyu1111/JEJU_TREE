@@ -7,11 +7,11 @@ response.setDateHeader("Expires", 0); // Proxies
 if (request.getProtocol().equals("HTTP/1.1"))
    response.setHeader("Cache-Control", "no-cache");
 %>
-<html class="login_html">
+<html>
 <head>
-	<title>JEJU TREE</title>
+	<title>login</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/user/login_main.css">	
-<%-- <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/login_main.js"></script> --%>
+ <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/user/login_main.js"></script>
 </head>
 <body>
 	<%@ include file="../include/navbar.jsp" %>
@@ -37,7 +37,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 							</c:if>
 							<br>
 						<div id="login_main_btn">
-							<input type="submit" id="login_btn" value="LOGIN">
+							<input type="submit" id="login_btn" value="로그인">
 						</div>
 					</form>
 					<div class="login_other">

@@ -1,110 +1,85 @@
-@charset "UTF-8";
-
 body {
-	height: auto;
+  height: 1080px;
+   display: flex;
+  flex-direction: column;
 }
 
 .title {
-	font-size: 30px;
-	position: relative;
-	top: -15px;
+  font-size: 30px;
+  position: relative;
+  top: 0px;
 }
 
-.mypage_container{
-     display: flex;
-     justify-content: center;
-     align-items: center;
+/* 유저 프로필 header */
+
+#mypage_profile {
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  margin-top: 5%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px; /* 적절한 높이 값으로 조정해주세요 */
 }
 
-
-
-#mypage_wrap{
-	
-	width: 100%;
-    padding-top: 30%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	height: calc(100vh - 80px); /* 상단 여백 조정 */
+#mypage_profile .profile_img {
+  height: 150px;
+  width: 150px;
 }
 
-.mypage_box1{
-	text-align: center;
-	background-color: gray;
-	margin-top: 10%;
-	border: 1px;
-	position: absolute;
-	width: 500px;
-	height: 800px;
-	border-radius: 5px;
-	margin-right: 700px;
-	margin-bottom: 100px;
+#mypage_profile p {
+  padding-top: 0;
+  margin-top: 0;
 }
 
-/* .mypage_box1 .myplan_box {
-	display: flex;
-	flex-dirction: row;
-	justify-content: space-around;
-	align-items: center;
-	align-content: center;
-	text-align: center;
-	background-color: white;
-	padding: 10px;
-	margin: 10px;
-	border-radius: 10px;
-	width: 75px;
-	height: 75px;
-}
- */
-.mypage_box1 .myplan_box a{
-	display: flex;
-	flex-dirction: row;
-	justify-content: space-around;
-	align-items: center;
-	align-content: center;
-	text-align: center;
-	background-color: white;
-	padding: 10px;
-	margin: 10px;
-	margin-left: 90px;
-	border-radius: 10px;
-	width: 300px;
-	height: 100px;
+.draggable {
+   cursor: move;
 }
 
-
-.plan_img {
-	width: 75px;
-	height: 75px;
+.container {
+   position: relative;
+    top: 150px; /* 원하는 만큼의 픽셀 값으로 조정 */
+   display: flex;
+   justify-content: space-between;
 }
 
-.mypage_box2{
-	text-align: center;
-	background-color: gray;
-	margin-top: 10%;
-	bottom: 50;
-	border: 1px;
-	position: absolute;
-	width: 500px;
-	height: 800px;
-	border-radius: 5px;
-	margin-left: 700px;
-	margin-bottom: 100px;
+#your-plans, #others-plans {
+   min-height: 50px;
+   border: 1px solid #aaa;
+   border-radius: 2%;
+   margin-bottom: 150px;
+   padding: 10px;
+   width: 45%; /* Adjust this value to change the width of the boxes */
+    align-items: center;
+}
+.plan_box {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  max-height: 700px; /* 적절한 높이 값으로 조정해주세요 */
+  padding-bottom: 10px; /* 스크롤바가 겹치지 않도록 하기 위한 여백 */
 }
 
-.mypage_box2 #loggo {
-	margin: auto;
-    display: block;
-	items-align: center;
-	text-align: center;
-	margin-top: 60%;
-	bottom: 50;
-	margin-left: 250px;
+.plan_box p {
+  display: flex;
+  align-items: center;
 }
 
-.mypage_buttons {
-	items-align: center;
-	text-align: center;
-	margin-top: 55%;;
-	bottom: 50;
+.plan_box img {
+  order: -1;
+  margin-right: 10px;
+}
+
+.plan_box .details {
+  display: none;
+}
+.plan_box .plan {
+  flex-basis: calc(33.33% - 10px);
+  margin: 5px;
+  transition: box-shadow 0.3s ease;
+}
+
+.plan-shadow:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }

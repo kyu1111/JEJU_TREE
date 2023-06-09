@@ -9,7 +9,6 @@
     <!-- Add jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-	 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
 	 
     <title>JEJU TREE</title>
     <script type="text/javascript">
@@ -26,7 +25,7 @@
             }
             slides[slideIndex - 1].style.display = 'block';
             updateDots();
-            setTimeout(slideGifs, 4000); // 이미지 변경 시간 (3000ms = 3초)
+            setTimeout(slideGifs, 3500); // 이미지 변경 시간 (3000ms = 3초)
         }
 
         function updateDots() {
@@ -62,6 +61,7 @@
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
         
     </script>
     
@@ -85,23 +85,27 @@
             <div class="button-container">
                 <button class="btn-day" onclick="location.href='tmap.go'">일정 만들기</button>
                 <button class="btn-guide" onclick="location.href='guidePage.go'">이용 가이드</button>
-                <!-- <button class="btn" onclick="location.href='drag_plan_list.go'">DragFunction</button> -->
+              <!--  <button class="btn-drag" onclick="location.href='drag_plan_list.go'">DragFunction</button> -->
             </div>
         </div>
         		
         <div class="slider">
         		
             <div class="arrows">
-                <span class="prev" onclick="moveToSlide(-1)">&#10094;</span>
-                <span class="next" onclick="moveToSlide(1)">&#10095;</span>
+                <span class="prev_bt" onclick="moveToSlide(-1)">&#10094;</span>
+                <span class="next_bt" onclick="moveToSlide(1)">&#10095;</span>
             </div>
             	
             <div class="slides">
             
-                <img class="slide" src="<%=request.getContextPath()%>/resources/images/spring.gif" alt="GIF 1">
-                <img class="slide" src="<%=request.getContextPath()%>/resources/images/summer.gif" alt="GIF 2">
-                <img class="slide" src="<%=request.getContextPath()%>/resources/images/fall.gif" alt="GIF 3">
-                <img class="slide" src="<%=request.getContextPath()%>/resources/images/winter.gif" alt="GIF 4">
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_spring.gif" alt="GIF 1">
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_summer.gif" alt="GIF 2">
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_autumn.gif" alt="GIF 3">
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_winter.gif" alt="GIF 4">                
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_spring2.gif" alt="GIF 5">
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_summer2.gif" alt="GIF 6">
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_autumn2.gif" alt="GIF 7">
+                <img class="slide" src="<%=request.getContextPath()%>/resources/images/jeju_winter2.gif" alt="GIF 8">
                 <!-- 추가로 슬라이드 이미지를 넣고 싶다면 위의 양식을 그대로 따라하되 새로운 .gif을 지정해주면 됩니다. -->
                 
             </div>
@@ -112,6 +116,10 @@
                 <span class="dot" onclick="currentSlide(2)"></span>
                 <span class="dot" onclick="currentSlide(3)"></span>
                 <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+                <span class="dot" onclick="currentSlide(6)"></span>
+                <span class="dot" onclick="currentSlide(7)"></span>
+                <span class="dot" onclick="currentSlide(8)"></span>
                 
             </div>
             
@@ -237,6 +245,7 @@
     <br>
     
     <span class="to-top" onclick="scrollToTop()">&#9650;</span>
+
 	</div>
 	</div>
 	</body>

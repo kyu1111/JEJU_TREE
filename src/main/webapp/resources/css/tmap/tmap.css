@@ -1,0 +1,247 @@
+@charset "UTF-8";
+
+#container{
+  
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    position: relative;
+    z-index: 1; /* container2 보다 앞에 표시되도록 설정 */
+    margin-bottom: 100px;
+
+}
+
+#container > jsp {
+    margin-left: auto; /* 오른쪽으로 이동 */
+}
+
+#sidebar {
+
+    width: 25%; /* adjust this value to change the width of the sidebar */
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+    z-index: 1; /* add this line to ensure the sidebar appears above the map */
+
+}
+
+#map_div {
+
+    margin-top: 70px;
+    margin-right: auto;
+    margin-left:auto;
+    display: block;
+
+}
+
+#container2{
+   
+   display: block;
+   justify-content: center;
+   align-items: center;
+   height: 50%;
+   width: 100%;
+   position: absolute; /* 추가: container2를 절대적인 위치로 설정 */
+   bottom: 0; /* 추가: container 하단에 고정 */
+
+}
+
+.heartAddX {
+	padding-top: 5px;
+}
+
+.fa-heart:before  {
+	padding-left: 10px;
+	font-size: 15px;
+	color: #ffbee1;
+	width: 40px;
+}
+
+#selectBtn1 {
+	border: none;
+	background-color: #99dce6;
+	color: white;
+	border-radius: 5px;
+	margin-left: 130px;
+	cursor: pointer;
+}
+
+.close-btn {
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: 550;
+	padding-left: 15px;
+	font-size: 18px;
+}
+
+.div_addr1, .div_img {
+	padding-left: 10px;
+}
+
+.div_addr1 {
+	padding-bottom: 10px;
+	padding-right: 10px;
+}
+
+.div_title {
+	font-weight: 550;
+}
+
+.start, .end {
+	padding-left: 10px;
+}
+
+.search_title {
+	margin-top: 70px;
+}
+
+.searchResult {
+	padding-left: 20;
+}
+
+.search_input {
+	width: 70%;
+	height: 21px;
+	border: none;
+	border-bottom: 1px solid #6a6a6a;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	border-radius: 0 !important;
+	outline: none;
+}
+
+.search_bt {
+	font-size: 14px;
+    width: 50px; /* 버튼 너비 지정 */
+    height: 25px; /* 버튼 높이 지정 */
+    margin: 8px 0; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+.search_bt:hover {
+	background-color: #8bc9d2;
+}
+
+.search_list {
+	font-size: 14px;
+	color: #6a6a6a;
+}
+
+.rst_mCustomScrollbar li {
+	font-size: 14px;
+	color: #6a6a6a;
+}
+
+.rst_mCustomScrollbar img {
+  display: none;
+}
+
+.rst_mCustomScrollbar span {
+	font-size: 14px;
+	color: #6a6a6a;
+	margin-right: 10px;
+}
+
+.rst_mCustomScrollbar button {
+	font-size: 14px;
+    width: 70px; /* 버튼 너비 지정 */
+    height: 24px; /* 버튼 높이 지정 */
+    margin: 8px 0; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+.rst_mCustomScrollbar button:hover {
+	background-color: #8bc9d2;
+}
+
+.tmap_footer {
+	padding-top: 50px;
+}
+
+.text_b {
+	color: #6a6a6a;
+}
+
+.planList_btn {
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.planList_btn:hover {
+	color: #8bc9d2;
+}
+
+.no_logind_planList_btn_div {
+	padding-right: 100px;
+}
+
+#weather-widget td {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.weather_table {
+	padding-left: 270px;
+}
+
+.planList_btn_div {
+	padding: 16px;
+}
+
+#weather-widget p {
+	text-align: center;
+	margin-top: 0px;
+	font-size: 12px;
+}
+
+#date1, #date2, #date3, #date4, #date5 {
+	text-align: center;
+	font-size: 12px;
+}
+
+#crawlingResult {
+	width: 100%;
+	margin-top: 50px;
+}
+
+.crawling_title_b {
+	color: #6a6a6a;
+	padding-left: 20px; 
+}
+
+.crawling_table td {
+	vertical-align : top;
+	padding: 40px;
+}
+
+.crawling_title_img {
+	vertical-align : top;
+}
+
+.crawling_table td a {
+	text-decoration: none;
+	font-size: 12px;
+	color: #6a6a6a;
+	display: block;
+	width: 200px;
+}
+
+.tmap_footer {
+	padding-top: 100px;
+}

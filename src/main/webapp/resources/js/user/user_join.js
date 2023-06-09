@@ -1,8 +1,8 @@
 
 $.validator.addMethod("engAndNum", function(value, element) {
-	var pattern = /^[A-Za-z0-9]*$/;
+  var pattern = /^[A-Za-z0-9@._-]*$/;
 
-	return pattern.test(value);
+  return pattern.test(value);
 });
 
 $.validator.addMethod("specialChars", function(value, element) {
@@ -13,13 +13,7 @@ $.validator.addMethod("specialChars", function(value, element) {
 	return pattern.test(value);
 });
 
-$.validator.addMethod("capitalLetters", function(value, element) {
-	// Define the pattern to match capital letters
-	var pattern = /[A-Z]/;
 
-	// Test the value against the pattern and return true or false
-	return pattern.test(value);
-});
 
 $.validator.addMethod("emailCheck", function(value, elements) {
 	var pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
@@ -39,10 +33,9 @@ $.validator.addMethod("phoneCheck", function(value, elements) {
 $.validator.addMethod("id_check", function(value, element, param) {
    var validater = this;
    // 아이디 중복 여부 확인
-	$(".id").keyup(function() {
+	$("#user_id").keyup(function() {
 	    
 	    let user_id = $(this).val(); // 입력된 아이디 값 가져오기
-	    console.log(user_id);
 	    let messageElement = $(".id_check"); // 메세지를 표시할 요소 선택
 	    
 		$.ajax({
@@ -69,16 +62,13 @@ $.validator.addMethod("id_check", function(value, element, param) {
             }
 		});
 	});
-	
-	
    return isValid;
 });
-
 // nick_check 메서드를 정의
 $.validator.addMethod("nick_check", function(value, element, param) {
    var validater = this;
    // 아이디 중복 여부 확인
-	$(".nickname").keyup(function() {
+	$("#user_nickname").change(function() {
 	    
 	    let user_nickname = $(this).val(); // 입력된 아이디 값 가져오기
 	    console.log(user_nickname);
@@ -97,7 +87,6 @@ $.validator.addMethod("nick_check", function(value, element, param) {
 			
 				console.log(data);
 				if (data === "db") {
-					console.log("중복");
 					isValid = false;
 				} else {
 					console.log("사용가능.");
@@ -110,8 +99,6 @@ $.validator.addMethod("nick_check", function(value, element, param) {
             }
 		});
 	});
-	
-	
    return isValid;
 });
 
@@ -119,10 +106,9 @@ $.validator.addMethod("nick_check", function(value, element, param) {
 $.validator.addMethod("email_check", function(value, element, param) {
    var validater = this;
    // 아이디 중복 여부 확인
-	$(".user_email").keyup(function() {
+	$("#user_email").keyup(function() {
 	    
 	    let user_email = $(this).val(); // 입력된 아이디 값 가져오기
-	    console.log(user_email);
 	    let messageElement = $(".email_check"); // 메세지를 표시할 요소 선택
 	    
 		$.ajax({
@@ -138,10 +124,8 @@ $.validator.addMethod("email_check", function(value, element, param) {
 			
 				console.log(data);
 				if (data === "db") {
-					console.log("중복");
 					isValid = false;
 				} else {
-					console.log("사용가능.");
 					isValid = true;
 				}
 			},
@@ -167,11 +151,13 @@ $("#joinForm").validate({
 			required: true,
 			minlength: 6,
 			maxlength: 12,
-			specialChars: true,
-			capitalLetters: true
+			specialChars: true
 			
 		},
-
+		user_repwd:{
+			required: true,
+			equalTo: user_pwd
+		},
 		user_id: {
 			required: true,
 			minlength: 4,
@@ -191,9 +177,11 @@ $("#joinForm").validate({
 		user_nickname: {
 		   required : true,
 		   nick_check : true
+		},
+		chk_agree:{
+			required : true
 		}
-
-
+		
 	},
 
 	messages: {
@@ -201,10 +189,12 @@ $("#joinForm").validate({
 			required: "비밀번호 입력은 필수 입니다.",
 			minlength: "최소 6글자 이상 입력해주세요.",
 			maxlength: "12글자를 넘지 말아주세요.",
-			capitalLetters: "대문자 하나 입력해주세요",
 			specialChars: "특수문자 입력해주세요."
 		},
-
+		user_repwd:{
+			required: "비밀번호 중복 체크를 진행하세요.",
+			equalTo: "비밀번호를 확인하세요."
+		},
 		user_id: {
 			required: "아이디는 필수 입니다.",
 			minlength: "최소 4글자 이상 입력해주세요",
@@ -222,10 +212,12 @@ $("#joinForm").validate({
 			phoneCheck : "전화번호 형식에 맞게 입력하세요."
 		},
 		user_nickname: {
-		required: "닉네임 필수 입니다.",
+			required: "닉네임 필수 입니다.",
 		    nick_check : "닉네임이 중복되었습니다."
+		},
+		chk_agree : {
+			required : "약관에 동의 하셔야 합니다."
 		}
-
 
 	},
 	
@@ -235,7 +227,7 @@ $("#joinForm").validate({
 
 	success: function(label) {
 		// This function is called when a field passes validation
-		label.text("사용가능!").addClass("okayValid");
+		label.text("check").addClass("okayValid");
 	},
 	onkeyup: function(element) {
 		// Trigger validation on keyup event
