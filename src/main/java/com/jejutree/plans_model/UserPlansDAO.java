@@ -33,5 +33,7 @@ public interface UserPlansDAO {
 	boolean checkBookmark(BookmarkDTO bdto);
 	
 	int updatePlan2(UserPlansDTO dto); // New method for updating a plan
+	
+	int deletePlan(int planId);
 
 }

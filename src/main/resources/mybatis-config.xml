@@ -4,28 +4,50 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<typeAliases>
-		<!--search model pacakage -->
-		<typeAlias type="com.jejutree.search_model.SearchDAO"
-			alias="searchDao" />
-		<typeAlias type="com.jejutree.search_model.SearchDTO"
-			alias="searchDto" />
-		<!--user model pacakage -->
-		<typeAlias type="com.jejutree.user_model.UserDAO"
-			alias="userDao" />
-		<typeAlias type="com.jejutree.user_model.UserDTO"
-			alias="userDto" />
-		<typeAlias
-			type="com.jejutree.user_model.Temporary_kakao_userDTO"
-			alias="TemporaryDto" />
-		<!-- com.jejutree.plans_model package -->
-		<typeAlias type="com.jejutree.plans_model.UserPlansDTO"
-			alias="userplansDto" /> <!-- 플랜DTO -->
-		<typeAlias type="com.jejutree.plans_model.UserPlansDAO"
-			alias="userplansDao" /> <!-- 플랜DAO -->
-		<typeAlias type="com.jejutree.plans_model.Plan_participantsDTO"
-		 alias="participantsDto"/><!--동행자DTO  -->
-		 <!-- bookmarkDTO -->
-		 <typeAlias type="com.jejutree.plans_model.BookmarkDTO" alias="bookmarkDto" />
-	</typeAliases>
+   <typeAliases>
+      <!--search model pacakage -->
+      <typeAlias type="com.jejutree.search_model.SearchDAO"
+         alias="searchDao" />
+      <typeAlias type="com.jejutree.search_model.SearchDTO"
+         alias="searchDto" />
+      <!--user model pacakage -->
+      <typeAlias type="com.jejutree.user_model.UserDAO"
+         alias="userDao" />
+      <typeAlias type="com.jejutree.user_model.UserDTO"
+         alias="userDto" />
+      <typeAlias
+         type="com.jejutree.user_model.Temporary_kakao_userDTO"
+         alias="TemporaryDto" />
+      <!-- com.jejutree.plans_model package -->
+      <typeAlias type="com.jejutree.plans_model.UserPlansDTO"
+         alias="userplansDto" /> <!-- 플랜DTO -->
+      <typeAlias type="com.jejutree.plans_model.UserPlansDAO"
+         alias="userplansDao" /> <!-- 플랜DAO -->
+      <typeAlias type="com.jejutree.plans_model.Plan_participantsDTO"
+       alias="participantsDto"/><!--동행자DTO  -->
+       <!--동행자board DAo,DTO, -->
+        <typeAlias type="com.jejutree.plans_model.PlanBoardDTO"
+       alias="PlanBoardDTO"/>
+        <typeAlias type="com.jejutree.plans_model.PlanBoardCommentDTO"
+       alias="PlanBoardCommentDTO"/>
+        <typeAlias type="com.jejutree.plans_model.PlanBoardDAO"
+       alias="PlanBoardDAO"/>    
+       <typeAlias type="com.jejutree.plans_model.PageDTO"
+       alias="PageDTO"/> 
+       <typeAlias type="com.jejutree.plans_model.BoardLikeDTO"
+       alias="BoardLikeDTO"/>
+       <!-- bookmarkDTO -->
+       <typeAlias type="com.jejutree.plans_model.BookmarkDTO" alias="bookmarkDto" />
+        <!--동행자board DAo,DTO, -->
+       <typeAlias type="com.jejutree.plans_model.PlanBoardDTO"
+       alias="PlanBoardDTO"/>
+        <typeAlias type="com.jejutree.plans_model.PlanBoardCommentDTO"
+       alias="PlanBoardCommentDTO"/>
+        <typeAlias type="com.jejutree.plans_model.PlanBoardDAO"
+       alias="PlanBoardDAO"/>    
+       <typeAlias type="com.jejutree.plans_model.PageDTO"
+       alias="PageDTO"/> 
+       <typeAlias type="com.jejutree.plans_model.BoardLikeDTO"
+       alias="BoardLikeDTO"/>
+   </typeAliases>
 </configuration>

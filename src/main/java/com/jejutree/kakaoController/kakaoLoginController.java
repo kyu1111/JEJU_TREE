@@ -185,7 +185,6 @@ public class kakaoLoginController {
 		}
 		return null;
 	}
-
 	@RequestMapping("kakaoAlert.go")
 	public String gokakaoalertPage(HttpServletRequest request, @RequestParam("user_email") String user_email,
 			@RequestParam("share_id") String share_id) {

@@ -148,7 +148,13 @@ select:focus {
    
    <div class="weekly_navbar">
 
+   <br>
+   <p id="result"></p>
+   <c:set var="user" value="${List }"/>
+   
+   
    <div class="select">
+   
       <select id="selectLevel">
          <option value="0" selected="selected">교통최적+추천</option>
          <option value="1" >교통최적+무료우선</option>
@@ -156,12 +162,14 @@ select:focus {
          <option value="3" >교통최적+초보</option>
       </select>
       <button id="btn_select">적용</button>
+      
    </div>
    
    <br>
    <p id="result"></p>
    <c:set var="user" value="${List }"/>
    
+   <button onClick="runTraffic()">교통 정보 on/off</button>
    <div class="date">
       <button class="button is-rounded prev" id="prevBtn">
          <i class="fa-solid fa-angle-left"></i>
@@ -174,6 +182,7 @@ select:focus {
    
    
    <div class="save">
+        
       <button id="saveAsPDF">PDF 저장</button>
       <button id="savePlan">일정저장</button>
       <span class="navbar--range"></span>
@@ -185,6 +194,8 @@ select:focus {
    <script type="text/javascript">
    
    var map;
+   var isTraffic = false; //지도위에 교통 정보 표시 여부
+   var tData;
 
     //시작 좌표.
     var firstPlanLat = ${List[0].markerLat};
@@ -227,11 +238,15 @@ select:focus {
           center: new Tmapv2.LatLng(33.3617, 126.5292),
           width : "100%",
           height : "400px",
-          zoom : 10,
+          zoom : 12,
           zoomControl : true,
           scrollwheel : true
           
        });
+       
+       tData = new Tmapv2.extension.TData();
+       
+       
        
        // 2. 시작, 도착 심볼찍기
        // 시작
@@ -390,8 +405,38 @@ select:focus {
                 }
              });
        });
-    } // initTmap() 메서드를 종료시킵니다.
+    }; // initTmap() 메서드를 종료시킵니다.
+    
+   //교통정보 실행
+   function runTraffic(){
+      if(!isTraffic){
+         isTraffic = true;
+         geoTrafficOn();
+      }
+      else{
+         isTraffic = false;
+         geoTrafficOff();
+      }
+   }
+   
+   //교통정보 켜기
+   function geoTrafficOn(){
+      var params = {
+         "trafficOnOff" : true
+      };
 
+      tData.autoTraffic(map, params); 
+   }
+   
+   //교통정보 끄기
+   function geoTrafficOff(){
+        var params = {
+         "trafficOnOff" : false
+      };
+      tData.autoTraffic(map, params); 
+   }
+   
+       
     
 function addComma(num) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;

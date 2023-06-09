@@ -66,8 +66,6 @@ public class MypageController {
 			} 
 		}
 		
-		
-		
 		model.addAttribute("UserInfo", dto);
 		return "mypage/mypage";
 	}

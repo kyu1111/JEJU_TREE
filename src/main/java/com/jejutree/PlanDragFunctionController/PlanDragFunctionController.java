@@ -39,7 +39,6 @@ public class PlanDragFunctionController {
 	@RequestMapping("drag_plan_list.go")
 	public String cont(Model model) {
 		String user_id = (String) session.getAttribute("user_id");
-		UserPlansDTO dto = new UserPlansDTO();
 		List<UserPlansDTO> list = this.dao.getPlanList(user_id);
 		if (!list.isEmpty()) {
 			UserPlansDTO startPlan = list.get(0);
@@ -48,46 +47,47 @@ public class PlanDragFunctionController {
 			model.addAttribute("endPlan", endPlan);
 		}
 		model.addAttribute("List", list);
+		
 		return "dragplan/dragplan";
 	}
 
 	@RequestMapping("get_others_plans.go")
-	   public String getOthersPlans(@RequestParam("otherUserId") String otherUserId, Model model) {
-	      // Use the provided otherUserId to get the plans of the other user
-	      List<UserPlansDTO> otherUserList = this.dao.getPlanList(otherUserId);
-	      // Add the other user's plans to the model
-	      model.addAttribute("otherUserList", otherUserList);
-	      String user_id = (String) session.getAttribute("user_id");
-	      List<UserPlansDTO> list = this.dao.getPlanList(user_id);
-	      if (!list.isEmpty()) {
-	         UserPlansDTO startPlan = list.get(0);
-	         UserPlansDTO endPlan = list.get(list.size() - 1);
-	         model.addAttribute("startPlan", startPlan);
-	         model.addAttribute("endPlan", endPlan);
-	      }
-	      model.addAttribute("List", list);
-	      
+	public String getOthersPlans(@RequestParam("otherUserId") String otherUserId, Model model) {
+		// Use the provided otherUserId to get the plans of the other user
+		List<UserPlansDTO> otherUserList = this.dao.getPlanList(otherUserId);
+		// Add the other user's plans to the model
+		model.addAttribute("otherUserList", otherUserList);
+		String user_id = (String) session.getAttribute("user_id");
+		List<UserPlansDTO> list = this.dao.getPlanList(user_id);
+		if (!list.isEmpty()) {
+			UserPlansDTO startPlan = list.get(0);
+			UserPlansDTO endPlan = list.get(list.size() - 1);
+			model.addAttribute("startPlan", startPlan);
+			model.addAttribute("endPlan", endPlan);
+		}
+		model.addAttribute("List", list);
+		
 
-	      String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	        String userId = (String) session.getAttribute("user_id");
-	        UserDTO dto = new UserDTO();
-	      if (KakaoInfo != null || userId != null) {
-	         if(user_id != null) {
-	            dto.setUser_id(userId);
-	            dto = this.userdao.getuser(userId);
-	            
-	         } else if(KakaoInfo != null) {
-	            dto.setUser_id(KakaoInfo);
-	            dto = this.userdao.getuser(KakaoInfo);
-	         } 
-	      }
-	      System.out.println(userId);
-	      System.out.println(dto.getUser_id());
-	      System.out.println(dto.getUser_nickname());
-	      model.addAttribute("User", dto);
-	      
-	      return "dragplan/dragplan";
-	   }
+		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
+	     String userId = (String) session.getAttribute("user_id");
+	     UserDTO dto = new UserDTO();
+		if (KakaoInfo != null || userId != null) {
+			if(user_id != null) {
+				dto.setUser_id(userId);
+				dto = this.userdao.getuser(userId);
+				
+			} else if(KakaoInfo != null) {
+				dto.setUser_id(KakaoInfo);
+				dto = this.userdao.getuser(KakaoInfo);
+			} 
+		}
+		System.out.println(userId);
+		System.out.println(dto.getUser_id());
+		System.out.println(dto.getUser_nickname());
+		model.addAttribute("User", dto);
+		
+		return "dragplan/dragplan";
+	}
 	
 	@RequestMapping(value="drag_update.go", method=RequestMethod.POST)
 	@ResponseBody
@@ -127,7 +127,23 @@ public class PlanDragFunctionController {
 		return new ResponseEntity<String>("Plan returned successfully.", HttpStatus.OK);
 	}
 
-	
+	   @RequestMapping(value = "delete_plan.go", method = RequestMethod.POST)
+	   @ResponseBody
+	   public ResponseEntity<Void> deletePlan(@RequestParam("planId") int planId, @RequestParam("userId") String userId) {
+	       // userId validation, if necessary
+	       if (session.getAttribute("user_id") != null && !userId.equals(session.getAttribute("user_id"))) {
+	           return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+	       }
+
+
+	       int rowsDeleted = dao.deletePlan(planId);
+
+	       if (rowsDeleted > 0) {
+	           return new ResponseEntity<Void>(HttpStatus.OK);
+	       } else {
+	           return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	       }
+	   }
 	
 	
 }

@@ -90,5 +90,10 @@ public class UserPlansImpl implements UserPlansDAO {
 	   public int updatePlan2(UserPlansDTO dto) {
 	      return this.sqlSession.update("updatePlan2", dto);
 	   }
+
+	@Override
+	public int deletePlan(int planId) {
+		return this.sqlSession.delete("deletePlan", planId);
+	}
 	
 }
