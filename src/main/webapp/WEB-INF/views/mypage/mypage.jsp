@@ -20,7 +20,7 @@
     <div id="mypage_profile">
         <img src="<%=request.getContextPath() %>${user.user_image }" alt="profile" class="profile_img" />
         <input type="hidden" name="user_image" value="${user.user_image }"><p>${user.user_nickname }</p>
-         <button onclick="openModifyPage()">프로필 수정</button>
+         <button class="change_profile_btn" onclick="openModifyPage()">프로필 수정</button>
    </div>
    
    <div class="container">

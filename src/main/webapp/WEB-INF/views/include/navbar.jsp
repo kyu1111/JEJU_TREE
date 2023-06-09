@@ -21,9 +21,9 @@
         <c:set var = "kakao_session" value="${Kakao_info}"/>
         <c:set var = "normal_session" value="${user_id}"/>
            <c:if test="${!empty user_id}">
+           <a href="PlanBoardList.go" class="nav_mypage"><font size="4">COMMUNITY</font></a>&nbsp;&nbsp;&nbsp;
            <a href="mypage.go" class="nav_mypage"><font size="4">MYPAGE</font></a>&nbsp;&nbsp;&nbsp;
               <a href="normal_logout.go"  class="logout"><font size="4">LOGOUT</font></a>
-
            </c:if>
            <c:if test="${!empty kakao_session}">
            <c:set var="kakaoInfo" value="${sessionScope.Kakao_info}" />
@@ -36,6 +36,7 @@
            2.두번쨰 로그아웃은 둘중하나는 세션이 있는 상태 이지만 세션이 유저아이디가 아닌경우 이기 떄문에 카카오 로그아웃 경로로 제공 -->
               <%-- ${kakao_nickname}님 안녕하세요
               ${user_join} --%>
+              <a href="PlanBoardList.go" class="nav_mypage"><font size="4">COMMUNITY</font></a>&nbsp;&nbsp;&nbsp;
               <a href="mypage.go" class="nav_mypage"><font size="4">MYPAGE</font></a>&nbsp;&nbsp;&nbsp;
               <a href="logout.go"  class="logout"><font size="4">LOGOUT</font></a>
               <!--카카오 계정과 함께 로그아웃-->

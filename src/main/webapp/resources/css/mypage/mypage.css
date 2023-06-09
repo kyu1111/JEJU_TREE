@@ -28,6 +28,24 @@ body {
   width: 150px;
 }
 
+#mypage_profile .change_profile_btn {
+   font-size: 13px;
+   width: 88px;
+   height: 33px;
+   margin: 8px auto;
+   cursor: pointer;
+   border: none;
+   color: white;
+   background-color: #99dce6;
+   transition: background-color 0.3s;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   text-align: center;
+   cursor: pointer;
+   padding: 3px 9px; /* 필요에 따라 조정하세요 */
+}
+
 #mypage_profile p {
   padding-top: 0;
   margin-top: 0;
@@ -39,19 +57,21 @@ body {
 
 .container {
 	position: relative;
-    top: 150px; /* 원하는 만큼의 픽셀 값으로 조정 */
+    top: 100px; /* 원하는 만큼의 픽셀 값으로 조정 */
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 #your-plans, #others-plans {
 	min-height: 50px;
 	border: 1px solid #aaa;
 	border-radius: 2%;
-	margin-bottom: 150px;
+	margin-bottom: 200px;
 	padding: 10px;
-	width: 45%; /* Adjust this value to change the width of the boxes */
+	width: 35%; /* Adjust this value to change the width of the boxes */
     align-items: center;
+ margin: 0 10px; /* Adjust the margin value as needed */
+  flex-basis: 40%; /* Adjust the flex-basis value as needed */    
 }
 .plan_box {
   display: flex;
@@ -78,6 +98,7 @@ body {
   flex-basis: calc(33.33% - 10px);
   margin: 5px;
   transition: box-shadow 0.3s ease;
+  flex-direction: column;
 }
 
 .plan-shadow:hover {

@@ -27,5 +27,16 @@
 		 alias="participantsDto"/><!--동행자DTO  -->
 		 <!-- bookmarkDTO -->
 		 <typeAlias type="com.jejutree.plans_model.BookmarkDTO" alias="bookmarkDto" />
+		  <!--동행자board DAo,DTO, -->
+       <typeAlias type="com.jejutree.plans_model.PlanBoardDTO"
+       alias="PlanBoardDTO"/>
+        <typeAlias type="com.jejutree.plans_model.PlanBoardCommentDTO"
+       alias="PlanBoardCommentDTO"/>
+        <typeAlias type="com.jejutree.plans_model.PlanBoardDAO"
+       alias="PlanBoardDAO"/>    
+		 <typeAlias type="com.jejutree.plans_model.PageDTO"
+       alias="PageDTO"/> 
+       <typeAlias type="com.jejutree.plans_model.BoardLikeDTO"
+       alias="BoardLikeDTO"/>
 	</typeAliases>
 </configuration>
