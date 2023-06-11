@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+body {
+	display: flex;
+	justify-content: center;
+	overflow-y: scroll;
+}
+
+.navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999; /* 필요한 경우 네비게이션 바의 적절한 z-index 값을 지정해 주세요 */
+}
+
+#write_title {
+	font-size: 25px;
+	font-weight: 550;
+	letter-spacing: 6px;
+	text-align: center;
+	margin-top: 100px;
+	margin-bottom: 20px;
+}
+
+.title-account {
+	font-size: 12px;
+	letter-spacing: -0.9px;
+	color: #6a6a6a;
+	padding-bottom: 50px;
+	padding-right: 5px;
+	text-align: center;
+}
+
+#container {
+	position: absolute;
+	top: 16%;
+	width: 1000px;
+	height: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999; /* 필요한 경우 네비게이션 바의 적절한 z-index 값을 지정해 주세요 */
+}
+
+#wirte_form_content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+	border: 0.3px solid #F0F0F0;
+}
+
+#wirte_form_content:hover {
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+#write_form {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+
+#write_form_table {
+	width: 100%;
+	height: 100%;
+}
+
+#write_form_table tr {
+	height: 6%;
+}
+
+#write_form_table td {
+	padding: auto;
+	border-bottom: 0.3px solid #F0F0F0;
+}
+
+#write_form_table th {
+	background-color: #F5F5F5;
+	color: #4D4D4D;
+	font-size: 20px;
+}
+
+#write_form_table input {
+	border: none;
+	width: 80%;
+	height: 80%;
+	outline: none;
+}
+
+#write_form_table tr:last-child {
+	height: 60%;
+}
+
+#write_form_table tr:last-child td {
+	padding: auto;
+}
+
+#write_form_table tr:last-child textarea {
+	width: 80%;
+	height: 90%;
+	border: none;
+	resize: none;
+	outline: none;
+}
+
+#button_area {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 20%;
+}
+
+#button_area input {
+	border: none;
+	background: none;
+	font-size: 20px;
+}
+
+#button_area input:hover {
+	color: #EBEBEB;
+	cursor: pointer;
+}

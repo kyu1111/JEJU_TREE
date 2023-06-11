@@ -6,160 +6,79 @@
 <head>
 <meta charset="UTF-8">
 <title>동행자 게시판</title>
-<style type="text/css">
-  html, body {
-     height: 100%;
-   }
-   #container {
-     position: relative;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     width: 800px;
-     height: 100%;
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-   }
-
-   
-
-   #board_table {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-     border: 1px solid black;
-   }
-
-   #table_row {
-     display: flex;
-     flex-direction: row;
-     width: 100%;
-     border-bottom: 1px solid black;
-   }
-
-   .board_board_col {
-     padding: 10px;
-   }
-
-   textarea {
-     width: 100%;
-     height: 200px;
-   }
-/* 댓글 컨텐츠 영역 */
-/* 댓글 컨텐츠 영역 */
-board_comment_content_area{
-overflow-y: auto;
-}
-#board_comment_content_area {
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  max-height: 400px; /* 원하는 높이로 조정해주세요 */
-  
-}
-
-/* 댓글 입력 테이블 */
-#board_comment_table {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 10px;
-}
-
-/* 댓글 입력 텍스트 영역 */
-#board_comment_table textarea {
-  width: 100%;
-  height: 20px;
-  resize: none;
-  padding: 5px;
-}
-
-/* 댓글 등록 버튼 */
-.comment_wirte_btn {
-  margin-left: 10px;
-  padding: 5px 10px;
-  text-decoration: none;
-}
-
-/* 댓글 목록 영역 */
-.comment_list_Area {
-  font-size:10px;
-  margin-top: 20px;
-  border-top: 1px solid #ccc;
-  max-height: 200px; /* 원하는 높이로 조정해주세요 */
-  overflow-y: auto;
-  display: flex;
-  flex-direction: row;
-}
-#comment_content{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-#comment_none {
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/board/board_content.css">
 </head>
 <body>
-	<%@ include file="../include/navbar.jsp" %>
-	<div id="container">
-		      <div id="board_content">
+   <div id="container">
+   	   <%@ include file="../include/navbar.jsp" %>	
+      <div id="board_content">
+      <div id = "write_title">POST DETAILS AND COMMENTS</div>
          <c:set var="board_content" value="${board_content}" />
          <div id="board_table">
-            <div id="table_row">
-               <div class="board_board_col">${board_content.board_Title}</div>
-               <div class="board_board_col">${board_content.writer}</div>
-               <div class="board_board_col">${board_content.user_Nickname}</div>
+         	<div id="table_row">
+               <div class="board_board_col">post no.${board_content.board_no}</div>
+               <div class="board_modify_col">
+                    <a href="board_modify.go?no=${board_content.board_no}&page=${Paging }"><i class="fas fa-edit"></i></a> 
+					<a href="javascript:void(0);" onclick="if(confirm('정말로 게시글을 삭제하시겠습니까?')) {
+					  location.href='board_delete.go?no=${board_content.board_no}&page=${Paging }';
+					} else {
+					  return;
+					}"><i class="far fa-trash-alt"></i></a>
+				</div>
             </div>
             <div id="table_row">
-               <div class="board_board_col">
-                  ${board_content.board_no}
-               </div>
+               <div class="board_board_col"><span id ="col_span">title : </span>${board_content.board_Title}</div>
             </div>
             <div id="table_row">
-               <div class="board_board_col">작성자 일정 스케줄 확인하기</div>
-               <div class="board_board_col">
-                  <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">일정보기</a>
-                  <a class="planList_btn" onclick = "">동행신청</a>
-               </div>
+               <div class="board_board_col"><span id ="col_span">writer : </span>${board_content.writer}</div>
             </div>
-            <div id="table_row">
-               <div class="board_board_col">
-                  <textarea style="width: 700px"  rows="25" cols="6" readonly="readonly">${board_content.board_Content}</textarea>
-               </div>
-            </div>
-            <div id="table_row">
-               <c:if test="${board_content.board_Update_Date eq board_content.board_RegDate}">
+             <div id="table_row">
+                <span id ="col_span">reg :</span>&nbsp;
+             	<c:if test="${board_content.board_Update_Date eq board_content.board_RegDate}">
                       <div class="table_col">${board_content.board_RegDate.substring(0, 10) }</div>
                   </c:if>
                   <c:if test="${board_content.board_Update_Date ne board_content.board_RegDate}">
                        <div class="table_col">${board_content.board_Update_Date.substring(0, 10) }</div>
                   </c:if>
-              <div class="table_col">조회수 : ${board_content.board_hit}</div>
-              <div class="table_col"><button onclick="likefunction()" id="likeButton">
-                                  </button></div>
             </div>
+            <div id="table_row">
+               <div class="board_board_col">
+               <span id ="col_span">plan : </span>
+               <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">${board_content.writer} 님의 일정보기</a></div>
+            </div>
+            <div id="table_row" class = "textarea_row">
+               <div class="board_board_col">
+                  <textarea rows="25" cols="6" readonly="readonly">${board_content.board_Content}</textarea>
+               </div>
+            </div>
+            <div id = "table_row">
+            	<div class="table_col"><span id ="col_span">조회수  : </span>${board_content.board_hit}</div>
+            	<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </div>
+            <div id = "table_row">
+                <div class="table_col"><button onclick="likefunction()" id="likeButton"></button></div>
+            </div>
+			<div id = "table_row">
+				<div class="table_col">
+					<a href="PlanBoardList.go"><i class="fas fa-th-list"></i></a>
+				</div>
+			</div>
          </div>
-      </div>
-		
-		<!--댓글 영역  -->
-	  <div id="commentForm" class="my-4">
-	      <h3 id="formTitle">댓글 작성</h3>
-	      <textarea id="commentContent" class="form-control" rows="2" cols="10"></textarea>
-	      <input type="hidden" id="commentId" value="">
-	      <button id="submitComment" class="btn btn-success mt-2">댓글 작성</button>
-	   </div>
-	   <div id="commentList">
-	      <h3>댓글 목록</h3>
-	      <ul id="commentListContainer" class="list-unstyled">
-	      </ul>
-	   </div>
-	   </div>
+         <div id = "comment_area">
+       <div id = "commentform_Title">댓글달기</div>
+	       <div id="commentForm">
+		      <textarea id="commentContent" rows="2" cols="5"></textarea>
+		      <input type="hidden" id="commentId" value="">
+		      <button id="submitComment"><i class="fa-solid fa-pen"></i></button>
+		   </div>
+		   <div id="commentList">
+		      <div id = "commentList_Title">댓글목록</div>
+		      <ul id="commentListContainer">
+		      </ul>
+		  </div>
+	  </div>
+    </div>
+  </div>
 	<%--   <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/board/board_content.js"></script> --%>
 	<script type="text/javascript">
 	 $(document).ready(function() {
@@ -176,9 +95,9 @@ overflow-y: auto;
 		   	      datatype: "text/html",
 		   	      success: function (data) {
 		   	    	  if (data === 1 || data === -1) {
-		   			        $("#likeButton").text("좋아요").val();
+		   			        $("#likeButton").html('<i class="fas fa-thumbs-up" aria-hidden="true"></i>').val();
 		   			    } else if (data === 0) {
-		   			        $("#likeButton").text("좋아요 취소").val();
+		   			        $("#likeButton").text('<i class="fas fa-thumbs-down"></i>').val();
 		   			    } 
 		   	      },
 		   	      error: function () {
@@ -204,13 +123,14 @@ overflow-y: auto;
 		                     
 		                     let writerSpan = $('<span class="writer"></span>').text(comment.writer);
 		                     console.log(comment.wirter);
-		                     let regdateSpan = $('<span></span>').text(comment.regdate);
+		                     let regdateSpan = $('<span class="regdate"></span>').text(comment.regdate);
 		                     console.log(comment.regdate);
 		                     commentHeader.append(writerSpan).append(regdateSpan);
 		                     let commentContent = $('<div class="comment-content"></div>');
 		                     let contentSpan = $('<span></span>').text(comment.content);
+		                     let btnwrap = $('<div class="btnwrap"></div>');
 		                     let editBtn = $('<button class = "editBtn"></button>').text('수정');
-		                     let deleteBtn = $('<button = class="deleteBtn"></button>').text('삭제');
+		                     let deleteBtn = $('<button = class="deleteBtn"></button></div>').text('삭제');
 		                     editBtn.click(function() {
 		                              
 		                         let originalContent = contentSpan.text();
@@ -287,7 +207,8 @@ overflow-y: auto;
 		                                  });
 		                               }
 		                           });
-		                           commentContent.append(contentSpan).append(editBtn).append(deleteBtn);
+		                           btnwrap.append(editBtn).append(deleteBtn);
+		                           commentContent.append(contentSpan).append(btnwrap);
 		                           
 		                           commentListItem.append(commentHeader).append(commentContent);
 		                           
@@ -300,9 +221,6 @@ overflow-y: auto;
 		                   }
 		               });
 		           }
-		     
-		     
-		     
 		           loadComments();
 		           
 		           function submitComment() {
@@ -327,8 +245,6 @@ overflow-y: auto;
 		   function likefunction() {
 		   	var board_no = ${board_content.board_no };
 		   	var user_id = "${board_content.writer}";
-		   	console.log(${board_content.board_no });
-		   	console.log("${board_content.writer}");
 		   	$.ajax({
 		   		 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		   		  type: "post",
@@ -342,10 +258,10 @@ overflow-y: auto;
 		   			console.log(data); 
 		   			 if (data === 1) {
 		   		        alert("좋아요 누름");
-		   		        $("#likeButton").text("좋아요 취소").val();
+		   		        $("#likeButton").html('<i class="fas fa-thumbs-down"></i>').val();
 		   		    } else if (data === 0) {
 		   		        alert("좋아요 취소");
-		   		        $("#likeButton").text("좋아요").val();
+		   		        $("#likeButton").html('<i class="fas fa-thumbs-up" aria-hidden="true"></i>').val();
 		   		    } else {
 		   		        alert("본인 글");
 		   		    }
@@ -359,7 +275,7 @@ overflow-y: auto;
 		           }
 		   });
 		   }
-
+		  
 	</script>
 </body>
 </html>

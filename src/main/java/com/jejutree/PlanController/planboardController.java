@@ -44,7 +44,7 @@ public class planboardController {
     private UserDAO userdao;
     
    // 한 페이지당 보여질 게시물의 수
- 	private final int rowsize = 3;
+ 	private final int rowsize = 10;
  	
  	// DB 상의 전체 게시물의 수
  	private int totalRecord = 0;
@@ -158,7 +158,7 @@ public class planboardController {
                 hm.put("rno", commentList.get(i).getRno());
                 hm.put("content", commentList.get(i).getContent());
                 hm.put("writer", commentList.get(i).getWriter());
-                
+                hm.put("regdate", commentList.get(i).getRegdate());
                 hmlist.add(hm);
             }
           
@@ -255,6 +255,7 @@ public class planboardController {
     	String KakaoInfo = (String) session.getAttribute("KakaoInfo");
 	     String userId = (String) session.getAttribute("user_id");
 	     UserDTO userdto = new UserDTO();
+	   
 		if (KakaoInfo != null || userId != null) {
 			if(userId != null) {
 				userdto.setUser_id(userId);
@@ -265,7 +266,6 @@ public class planboardController {
 				userdto = this.userdao.getuser(KakaoInfo);
 			} 
 		}
-		
 		String currnick = userdto.getUser_nickname();
 		String boardnick = dto.getUser_Nickname();
 		System.out.println(userId);
