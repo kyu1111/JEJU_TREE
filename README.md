@@ -19,7 +19,7 @@ Usecase
 
 기술 스택
 java, spring, javascript, jquery, ajax, tomcat, mysql, 
-api, html5/css, library(toast_calendar)
+api, html5/css, library(toast_calendar), Adobe Photoshop
 
 
 기능 소개
@@ -27,6 +27,7 @@ api, html5/css, library(toast_calendar)
 2. 일정 저장 페이지 - 사용자가 키워드 검색 및 지도를 통해 일정 추가 기능, 일정을 검색할 때마다 장소에 맞는 추천 여행지를 크롤링, 실시간 날씨 보이게 하는 기능
 3. 일정관리 페이지 - 캘린더에서 드래그&드롭  방식으로 일정을 수정할 수 있음, 마커 사이에 폴리곤 띄워서 새로운 여행지 추천도 가능
 4. 마이페이지 - 일정 드래그 및 상대방과 일정공유, 본인 일정 삭제하 게시판
+5. 사이드 페이지 - 지도에서 찜 누른 목록 보여주기 및 해제 기능이 있는 페이지
  
  
 시연(데모 링크 or 배포링크)
