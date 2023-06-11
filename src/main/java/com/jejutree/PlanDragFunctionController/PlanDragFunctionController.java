@@ -52,8 +52,13 @@ public class PlanDragFunctionController {
 	}
 
 	@RequestMapping("get_others_plans.go")
-	public String getOthersPlans(@RequestParam("otherUserId") String otherUserId, Model model) {
+	public String getOthersPlans(@RequestParam("otherUserId") String otherUserId, Model model,@RequestParam(value="is_guest",required = false)String is_guest) {
 		// Use the provided otherUserId to get the plans of the other user
+		//게시판을 통해서 동행 신청과 동시에 드래그 플랜을 요청하는 경우
+		if(is_guest != null) {
+			model.addAttribute("is_guest",is_guest);
+			model.addAttribute("otherUserId",otherUserId);
+		}
 		List<UserPlansDTO> otherUserList = this.dao.getPlanList(otherUserId);
 		// Add the other user's plans to the model
 		model.addAttribute("otherUserList", otherUserList);

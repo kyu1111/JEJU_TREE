@@ -13,7 +13,6 @@
 <body>
    <!-- 상단바 설정하기  -->
    <%@ include file="../include/navbar.jsp" %>
-   
    <c:set var="user" value="${UserInfo}" />
    <div>
     <div id="mypage_profile">
@@ -29,7 +28,7 @@
    <div class="container">
 			<div id="your-plans" ondrop="drop(event)" ondragover="allowDrop(event)">
 				<h4>나의 일정</h4>
-				               <!--공유버튼 -->
+				  <!--공유버튼 -->
                	  <c:if test="${!empty kakao_id }">
 		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
 		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${kakao_id}')">
@@ -69,7 +68,6 @@
 				</c:if>
 				</div>
 			</div>
-
 			<div id="others-plans" ondrop="drop(event)" ondragover="allowDrop(event)">
 				<h4>상대방 일정</h4>
 
@@ -175,7 +173,7 @@ function opensharePage(a){
                  let ask_result = confirm('일정정보를 공유하시겠습니까?');
                   if(ask_result){
                      window.open(a, "친구에게 일정공유", 
-                          "titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0"
+                          "titlebar=0,height=300,width=600,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0"
                           , "");
                   }
                   //해당 아이디로 저장된 일정리스트가 없는 경우.   
@@ -215,9 +213,7 @@ function opensharePage(a){
                      let ask_result = confirm('회원님은 sns연동 임시 회원입니다. 추가정보를 입력하여 sns연동 회원가입을 하시겠습니까?');
                      if(ask_result){
                         var url = "kakaoUser_join.go?user_email=" + kid;
-                        window.open(url,"카카오톡 연동 회원 가입", 
-                            "titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0"
-                            , "");
+                        location.href = url;
                      }
                   }else{
                      alert('로그인이 필요한 기능입니다.');

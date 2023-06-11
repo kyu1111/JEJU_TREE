@@ -238,7 +238,7 @@ select:focus {
           center: new Tmapv2.LatLng(33.3617, 126.5292),
           width : "100%",
           height : "400px",
-          zoom : 12,
+          zoom : 10,
           zoomControl : true,
           scrollwheel : true
           

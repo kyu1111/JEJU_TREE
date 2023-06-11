@@ -4,6 +4,8 @@ body {
 	display: flex;
 	justify-content: center;
 	overflow-y: scroll;
+	font-size: 14px;
+	color: #6a6a6a;
 }
 
 .navbar {
@@ -39,27 +41,23 @@ body {
 }
 
 #board_table {
-	color: #BABABA;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	text-align: left;
 	height: 100%;
-	font-size: 15px;
 	border: 0.3px solid #F0F0F0; /* 테두리 스타일 추가 */
 	transition: border-color 0.3s ease; /* 테두리 색상 변화에 애니메이션 적용 */
 	padding-bottom: 0;
 }
 
 #board_table a {
-	color: #BABABA;
+	color :  #6a6a6a;
 	cursor: pointer;
 	text-decoration: none;
-	font-size: 18px;
 	font-weight: bold;
 	margin-left: 5px;
 }
-
 #board_table a:hover {
 	color: #EBEBEB;
 }
@@ -70,20 +68,20 @@ body {
 
 #table_row:nth-child(1) {
 	color: white;
-	font-size: 20px;
 	font-weight: bold;
 	height: 20%;
 	justify-content: center;
 	align-items: center;
 	margin-top: 0;
-	background-color: #F5F5F5;
+	background-color: #6a6a6a;
 }
-
+#table_row:nth-child(1) a{
+	color:white;
+}
 #table_row:nth-last-child(1) {
 	height: 20%;
 	align-items: center;
 	justify-content: center;
-	font-size: 20px;
 }
 
 #table_row {
@@ -97,7 +95,6 @@ body {
 }
 
 #col_span {
-	font-size: 15px;
 	font-weight: bold;
 	margin-right: 10px;
 	color: #4D4D4D;
@@ -122,7 +119,7 @@ body {
 	outline: none;
 	border: 1px solid #F0F0F0;
 	resize: none;
-	color: #BABABA;
+	color :  #6a6a6a;
 	box-sizing: border-box;
 }
 /* 댓글 컨텐츠 영역 */
@@ -131,13 +128,11 @@ body {
 	height: 20%;
 	display: flex;
 	flex-direction: column;
-	font-size: 10px;
 	margin-top: 30px;
 }
 
 #commentform_Title, #commentList_Title {
 	margin-bottom: 10px;
-	font-size: 13px;
 	font-weight: bold;
 }
 
@@ -181,7 +176,6 @@ body {
 
 .comment-header {
 	font-weight: bold;
-	font-size: 13px;
 }
 
 .comment-header span {
@@ -202,33 +196,28 @@ body {
 	border: none;
 	resize: none;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-	font-size: 11px;
 }
 /*버튼 css  */
 #likeButton {
 	border: none;
-	font-size: 15px;
 	background-color: white;
 }
 
 #submitComment {
 	border: none;
 	background-color: white;
-	font-size: 15px;
 	margin-left: 10px;
 }
 
 .editBtn {
 	border: none;
 	background-color: white;
-	font-size: 10px;
 	border: 0.3px solid #F0F0F0;
 }
 
 .deleteBtn {
 	border: none;
 	background-color: white;
-	font-size: 10px;
 	border: 0.3px solid #F0F0F0;
 }
 

@@ -3,10 +3,12 @@ html, body {
 	height: 100%;
 	display: flex;
 	justify-content: center;
+	font-size: 14px;
+	color: #6a6a6a;
 }
 #container {
 	position: absolute;
-	top: -17%;
+	top: -24%;
 	width: 1200px;
 	height: 100%;
 	display: flex;
@@ -43,7 +45,6 @@ html, body {
 	width: 100%;
 	text-align: left;
 	height: 100%;
-	font-size: 15px;
 	border: 0.3px solid #F0F0F0;
 }
 
@@ -58,14 +59,13 @@ html, body {
 	width: 100%;
 	justify-content: space-around;
 	align-items: center;
-	color: #D9DBD2;
+	color: #6a6a6a;;
 }
 
 #table_row:nth-child(1) {
-	height: 20%;
-	font-size: 16px;
+	height: 10%;
 	text-align: left;
-	background-color: #F0F0F0;
+	background-color: #6a6a6a;;
 }
 
 #table_head {
@@ -91,7 +91,7 @@ html, body {
 }
 
 .table_col a {
-	color: #363636;
+	color: #6a6a6a;;
 	text-decoration: none;
 	cursor: pointer;
 	font-weight: bold;
@@ -150,7 +150,7 @@ html, body {
 #search_form input[type="submit"] {
 	width: 10%;
 	cursor: pointer;
-	color: #BABABA;
+	color: #6a6a6a;;
 	height: 70%;
 	background: none;
 	box-shadow: none;
@@ -167,7 +167,7 @@ html, body {
 }
 
 #paging_area a {
-	color: #D9DBD2;
+	color: #6a6a6a;;
 	cursor: pointer;
 	text-decoration: none;
 	background: none;
@@ -185,11 +185,10 @@ html, body {
 
 #board_mainlist {
 	background: none;
-	font-size: 15px;
 	width: 10%; /* 버튼 너비 지정 */
 	cursor: pointer;
 	border: none;
-	color: #BABABA;
+	color: #6a6a6a;;
 }
 
 #board_mainlist:hover {

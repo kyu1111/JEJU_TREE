@@ -4,6 +4,8 @@ body {
 	display: flex;
 	justify-content: center;
 	overflow-y: scroll;
+	font-size: 14px;
+	color: #6a6a6a;
 }
 
 .navbar {
@@ -82,9 +84,8 @@ body {
 }
 
 #write_form_table th {
-	background-color: #F5F5F5;
-	color: #4D4D4D;
-	font-size: 20px;
+	background-color: #6a6a6a;
+	color: white;
 }
 
 #write_form_table input {
@@ -121,7 +122,6 @@ body {
 #button_area input {
 	border: none;
 	background: none;
-	font-size: 20px;
 }
 
 #button_area input:hover {

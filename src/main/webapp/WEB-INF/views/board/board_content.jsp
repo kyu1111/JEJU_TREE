@@ -31,11 +31,6 @@
             </div>
             <div id="table_row">
                <div class="board_board_col"><span id ="col_span">writer : </span>${board_content.writer}</div>
-               <div class="board_board_col">작성자 일정 스케줄 확인하기</div>
-               <div class="board_board_col">
-                  <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">일정보기</a>
-                  <a class="planList_btn" onclick = "">동행신청</a>
-               </div>
             </div>
              <div id="table_row">
                 <span id ="col_span">reg :</span>&nbsp;
@@ -49,7 +44,8 @@
             <div id="table_row">
                <div class="board_board_col">
                <span id ="col_span">plan : </span>
-               <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">${board_content.writer} 님의 일정보기</a></div>
+               <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">${board_content.writer} 님의 시간표 보기</a></div>
+               <a class="planList_btn" href="get_others_plans.go?otherUserId=${board_content.writer}&is_guest=1">${board_content.writer}일정 보기</a></div>
             </div>
             <div id="table_row" class = "textarea_row">
                <div class="board_board_col">

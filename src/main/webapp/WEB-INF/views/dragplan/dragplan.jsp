@@ -246,11 +246,14 @@ function opensharePage(a){
 				</c:if>
 				</div>
 			</div>
-
 			<div id="others-plans" ondrop="drop(event)"
 				ondragover="allowDrop(event)">
-				<h4>상대방 일정</h4>
-
+				<c:if test="${!empty is_guest}">
+					<h4>${otherUserId} 님의 일정</h4>
+				</c:if>	
+				<c:if test="${empty is_guest}">
+					<h4>상대방 일정</h4>
+				</c:if>	
 				<form method="POST" action="get_others_plans.go">
 					<input type="text" name="otherUserId"
 						placeholder="Enter user's id..." required> <input
