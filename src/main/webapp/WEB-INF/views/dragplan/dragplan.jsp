@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -135,12 +135,12 @@ function opensharePage(a){
 <script type="text/javascript">
    function allowDrop(ev) {
    
-	   ev.preventDefault();
+      ev.preventDefault();
    
    }
 
    function drag(ev) {
-	   
+      
       ev.dataTransfer.setData("text", ev.target.id);
       
    }
@@ -172,37 +172,53 @@ function opensharePage(a){
       else if (ev.target.id === "your-plans") {
          var userId = '<%=request.getSession().getAttribute("user_id")%>';
 
-			$.ajax({
-				url : 'drag_update_back.go', // The URL of your server-side script for this direction
-				method : 'POST',
-				data : {
-					'planId' : planId,
-					'userId' : userId
-				},
-				success : function(response) {
-					alert('공유 성공!!');
-				}
-			});
-		}
-	}
+         $.ajax({
+            url : 'drag_update_back.go', // The URL of your server-side script for this direction
+            method : 'POST',
+            data : {
+               'planId' : planId,
+               'userId' : userId
+            },
+            success : function(response) {
+               alert('공유 성공!!');
+            }
+         });
+      }
+   }
 </script>
 </head>
 <body>
-	<!-- 상단바 설정하기  -->
+ <!-- 상단바 설정하기  -->
    <%@ include file="../include/navbar.jsp" %>
-
+   
    <c:set var="user" value="${User}" />
    <div>
     <div id="mypage_profile">
         <img src="<%=request.getContextPath() %>${user.user_image }" alt="profile" class="profile_img" />
         <input type="hidden" name="user_image" value="${user.user_image }"><p>${user.user_nickname }</p>
-         <button onclick="openModifyPage()">프로필 수정</button>
+         <button class="change_profile_btn" onclick="openModifyPage()">프로필 수정</button>
    </div>
-   
+    <br>
+    <br>
+    <br>
+    <br>
    <div class="container">
 			<div id="your-plans" ondrop="drop(event)"
 				ondragover="allowDrop(event)">
 				<h4>나의 일정</h4>
+				               <!--공유버튼 -->
+               	  <c:if test="${!empty kakao_id }">
+		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
+		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${kakao_id}')">
+		          	일정공유
+		          </a>
+		          </c:if>
+		          <c:if test="${!empty user_id }">
+		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
+		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${user_id}')">
+		          	일정공유
+		          </a>
+		          </c:if>
 				<c:set var="plan" value="${List }" />
 				<div class="plan_box">
 				<c:if test="${!empty plan }">
@@ -215,13 +231,15 @@ function opensharePage(a){
 								${dto.markerLng}<br>
 							</span>
 							<c:if test="${!empty dto.image }">
-								    <img src="${dto.image }" alt="location_img" /><br>
+								    <img src="${dto.image }" alt="location_img" class="location_img"/><br>
 								</c:if>
 								<c:if test="${empty dto.image }">
-								    <img src="<%=request.getContextPath() %>/resources/images/title.png" alt="location_img" /><br>
-								</c:if>							 Plan ID: ${dto.id}<br> User ID: ${dto.user_id}<br> Address: ${dto.addr}<br>
-							Title: ${dto.title}<br> Start Date: ${dto.start_date}<br>
-							End Date: ${dto.end_date}<br>
+								    <img src="<%=request.getContextPath() %>/resources/images/title.png" alt="location_img" class="default_location_img" /><br>
+								</c:if>
+							 <span class="hidden" style="color: #FFF">Plan ID: ${dto.id} User ID: ${dto.user_id}</span>
+							 위치: ${dto.addr}<br>장소명: ${dto.title}<br>
+							${dto.start_date}&nbsp;&nbsp;&nbsp; ${dto.end_date}
+							<button class="deleteButton" data-plan-id="${dto.id}">일정삭제</button>
 						</p>
 						</div>
 					</c:forEach>
@@ -236,7 +254,7 @@ function opensharePage(a){
 				<form method="POST" action="get_others_plans.go">
 					<input type="text" name="otherUserId"
 						placeholder="Enter user's id..." required> <input
-						type="submit" value="Search">
+						type="submit" class="search_share" value="Search">
 				</form>
 				<div class="plan_box">
 				<c:if test="${!empty otherUserList }">
@@ -264,23 +282,16 @@ function opensharePage(a){
 					</c:forEach>
 				</c:if>
 				</div>
-				               <!--공유버튼 -->
-               	  <c:if test="${!empty kakao_id }">
-		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${kakao_id}')">
-		          	일정공유
-		          </a>
-		          </c:if>
-		          <c:if test="${!empty user_id }">
-		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${user_id}')">
-		          	일정공유
-		          </a>
-		          </c:if>
-	<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${user_id}">상세설정</a></div>
 				
 			</div>
 		</div>
+  </div>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
         <!-- footer 영역 설정 -->
    <%@ include file="../include/footer.jsp" %>
   </div>

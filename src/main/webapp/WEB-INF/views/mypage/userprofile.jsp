@@ -19,59 +19,53 @@
     <div class="userProfile">
     <form method="post" id="frm1" enctype="multipart/form-data" >
     
-    <table>
-        <tr>
-        <td>
-            <label>사용자 프로필</label>
-             <img id="previewImg"  src="<%=request.getContextPath() %>${user.user_image }" alt="profile" >
-             <input type="file" name="upload" id="upload" value="${user.user_image }" onchange="previewProfileImage(event)">
-             <input type="hidden" name="user_image" value="${user.user_image }">
-         </td>
-        </tr>
-        <tr>
-          <td>
-             <label id="user_nickname" for="user_nickname">사용자 닉네임</label>
-           <input name="user_nickname" class="user_nickname" value="${user.user_nickname }"  >
+    <div>
+    	<h3>${user.user_id }님 프로필 수정</h3>
+    </div>
+    
+    <div id="user_container" align = "center">
+        <div class="userprofile_div">
+        
+        <div class="img_div">
+             <img id="previewImg"  src="<%=request.getContextPath() %>${user.user_image }" alt="profile" width="200px" height="200px" style="justify-content: center;">
+        </div>
+        
+        <div class="file-div">
+        	<input class="file-input" type="file" name="upload" id="upload" value="${user.user_image }" onchange="previewProfileImage(event)">
+        	<input type="hidden" name="user_image" value="${user.user_image }">
+        </div>
+        
+
+        <div>
+           	<input name="user_nickname" class="user_nickname" value="${user.user_nickname }"  >
             <p id="name_check" class="name_check"></p>
-            </td>
-        </tr>
-        <tr>
-        <td>
-            <label for="user_id">사용자 아이디</label>
-             <input value="${user.user_id }" class="user_id" name="user_id" >
-            <p id="id_check" class="id_check"></p>
-            </td>
-        </tr>
-        <tr>
-         <td> 
-            <label id="user_phone" for="user_phone">사용자 전화번호</label>
-           <input value="${user.user_phone }" name="user_phone" ></td>
-        </tr>
-        <tr>
-        <td> 
-            <label id="user_pwd" for="user_pwd">사용자 현재 비밀번호</label>
-            <input type="password" name="user_pwd"  placeholder="현재 비밀번호"></td>
-        </tr>
-        <tr>
-         <td>
-           <label id="db_pwd" for="db_pwd">사용자 변경 비밀번호</label>
+		</div>
+		
+		<div class="user_now_pw_div" align="center"> 
+            <input class="now_pw" type="password" name="user_pwd"  placeholder="현재 비밀번호"></td>
+        </div> 
+        
+		<div class="user_pw_div" align="center">
             <input type="password" name="db_pwd" class="db_pwd" id="db_pwd" placeholder="변경 비밀번호"  autocomplete="off">
-            </td>
-        </tr>
-        <tr> 
-        <td>
-            <label id="db_pwdCheck" for="db_pwdCheck">사용자 변경 비밀번호 확인</label>
-             <input type="password" name="db_pwdCheck" class="db_pwdCheck" placeholder="변경 비밀번호 확인"  autocomplete="off">
-             <span id="dp_pwdspan"></span>
-        </td>
-        </tr>
-        <tr>
-         <td>
-            <label id="user_email" for="user_email">사용자 이메일</label>
+		</div>
+		
+		<div class="user_pw_div" align="center">
+            <input type="password" name="db_pwdCheck" class="db_pwdCheck" placeholder="변경 비밀번호 확인"  autocomplete="off">
+            <span id="dp_pwdspan"></span>
+		</div>
+
+        <div class="phone_div" align="center">
+           <input class="user_phone" value="${user.user_phone }" name="user_phone" ></td>
+        </div>
+      
+        <div class="user_email_div" align="center">
            <input type="text" value="${user.user_email }" class="user_email" name="user_email" >
-            <p id="email_check" class="email_check"></p>
+           <p id="email_check" class="email_check"></p>
+        </div>
+        
+    	</div>
+    
 			
-	</table>
 	<input type="hidden" value="${user.user_iskakao }" name="user_iskakao"  >
 	<input type="hidden" value="${user.user_like_keyword }" name="user_like_keyword"  >
 	<input type="hidden" value="${user.mailKey }" name="mailKey"  >
@@ -79,22 +73,24 @@
 	<input type="hidden" value="${user.is_admin }" name="is_admin"  >
 	<input type="hidden" value="${user.id }" name="id" class="id" >
 	
-	 <input type="submit" value="회원수정" id="update" onclick='btn_click("update");'>
-	<button type="reset" value="다시작성">다시작성</button>
-      <c:if test="${empty Kakao_info}">
-    <input type="submit" value="회원탈퇴" onclick='btn_click("delete");'>
+	<div class="edit_input">
+	 <input class="edit_input" type="submit" value="회원수정" id="update" onclick='btn_click("update");'><br>
+    </div>
+    
+    </div>
+    
+    <c:if test="${empty Kakao_info}">
+    <input class="out_input" type="submit" value="회원탈퇴" onclick='btn_click("delete");'>
     </c:if>
      <!--카카오 계정으로 로그인 했으나 user_join이 1인 경우.(정회원 연동 외어있는 상태)  -->
     <c:if test="${!empty Kakao_info}">
-    	<input type="button" value="카카오계정 연동 계정 탈퇴및 연결 해제" onclick="if(confirm('정말로 회원탈퇴 하시겠습니까?(연동 회원가입정보도 소멸됩니다.)')) {
+    	<input class="out_input" type="button" value="카카오계정 연동 계정 탈퇴및 연결 해제" onclick="if(confirm('정말로 회원탈퇴 하시겠습니까?(연동 회원가입정보도 소멸됩니다.)')) {
                                                location.href='deletekakaoUser.go?user_email=${kakao_id}&access_Token=${kakao_token}'
                                                    } else{return;}" >
      </c:if> 
     
      </form>
 	</div>
-	  <!-- footer 설정하기  -->
-    <%@ include file="../include/footer.jsp" %> 
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -130,7 +126,7 @@
         if(str=="update"){                                 
             frm1.action="updateUser.go";      
         } else{      
-        	if(confirm('정말로 회원탈퇴 하시겠습니까?')) {
+        	if(confirm('정말 탈퇴 하시겠습니까?')) {
         		 frm1.action="deleteUser.go";
             } else{return;}     
         }
@@ -150,7 +146,9 @@
     }
 </script>
 
-
-    
 </body>
+<!-- footer 설정하기  -->
+<div class="edit_footer">
+	<%@ include file="../include/footer.jsp" %> 
+</div>
 </html>

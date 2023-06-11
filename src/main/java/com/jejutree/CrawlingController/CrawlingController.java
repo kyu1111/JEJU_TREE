@@ -37,7 +37,7 @@ public class CrawlingController {
             
             System.out.println("searchQuery:::"+ title);
             int count = 0; // 가져온 데이터의 개수를 카운트하기 위한 변수
-
+            
             
             for (int i = 0; i < blogPosts.size(); i++) {
                 Element post = blogPosts.get(i);
@@ -68,7 +68,8 @@ public class CrawlingController {
                     //System.out.println("postUrl:::" + postUrl);
                     //System.out.println("thumbnailUrl:::" + thumbnailUrl);
 
-                    if (count < 5) {
+                   System.out.println("count:::"+count);
+                    if (count < 10) {
                         crawlingDataList.add(crawlingData);
                         count++;
                         System.out.println("Title :::::" + crawlingData.getTitle());
@@ -80,7 +81,7 @@ public class CrawlingController {
             }
 
 
-           // System.out.println("CrawlingController crawlingDataList :::" + crawlingDataList);
+            System.out.println("CrawlingController crawlingDataList :::" + crawlingDataList);
 
         } catch (IOException e) {
             e.printStackTrace();

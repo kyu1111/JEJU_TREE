@@ -31,6 +31,11 @@
             </div>
             <div id="table_row">
                <div class="board_board_col"><span id ="col_span">writer : </span>${board_content.writer}</div>
+               <div class="board_board_col">작성자 일정 스케줄 확인하기</div>
+               <div class="board_board_col">
+                  <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">일정보기</a>
+                  <a class="planList_btn" onclick = "">동행신청</a>
+               </div>
             </div>
              <div id="table_row">
                 <span id ="col_span">reg :</span>&nbsp;
@@ -79,8 +84,7 @@
 	  </div>
     </div>
   </div>
-	<%--   <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/board/board_content.js"></script> --%>
-	<script type="text/javascript">
+<script type="text/javascript">
 	 $(document).ready(function() {
 		   	var board_no = ${board_content.board_no};
 		       var user_id = "${board_content.writer}";
@@ -275,7 +279,6 @@
 		           }
 		   });
 		   }
-		  
 	</script>
 </body>
 </html>

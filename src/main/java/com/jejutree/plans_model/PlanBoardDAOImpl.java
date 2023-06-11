@@ -28,6 +28,11 @@ public class PlanBoardDAOImpl implements PlanBoardDAO {
 	   return this.sqlSession.insert("write", dto);
    }
 
+   @Override
+   public PlanBoardDTO getboardContent(int board_no) {
+      return this.sqlSession.selectOne("getBoard_Content",board_no);
+   }
+
 	@Override
 	public int searchBoardCount(Map<String, String> map) {
 		return this.sqlSession.selectOne("count", map);
@@ -43,10 +48,8 @@ public class PlanBoardDAOImpl implements PlanBoardDAO {
 		this.sqlSession.update("read", no);
 		
 	}
-	@Override
-	   public PlanBoardDTO getboardContent(int board_no) {
-	      return this.sqlSession.selectOne("getBoard_Content",board_no);
-	   }
+
+	
 	@Override
 	public PlanBoardDTO boardCont(int no) {
 		return this.sqlSession.selectOne("cont", no);
@@ -94,6 +97,7 @@ public class PlanBoardDAOImpl implements PlanBoardDAO {
 		this.sqlSession.update("updateLikeCount", dto);
 		
 	}
+
    @Override
 	public List<PlanBoardCommentDTO> getCommentList(PlanBoardCommentDTO dto) {
 		return this.sqlSession.selectList("comment_list",dto);

@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlanBoardCommentDTO {
-	 private int rno;
+    private int rno;
      private int board_no;
+     private int comment_ParentNumber;
      private String writer;
      private String content;
      private String regdate;

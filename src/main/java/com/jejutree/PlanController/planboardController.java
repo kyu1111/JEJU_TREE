@@ -337,7 +337,6 @@ public class planboardController {
 		
 		String currnick = userdto.getUser_nickname();
 		String boardnick = dto.getUser_Nickname();
-		if(currnick.equals(boardnick)) {	
 	     if(currnick.equals(boardnick)) {
 	    	    this.dao.deleteboard(no);
 	    	    this.dao.updatSequence(no);
@@ -352,7 +351,6 @@ public class planboardController {
 				out.println("</script>");
 				
 			}
-		}
     }
     
     @RequestMapping(value = "board_like.go", produces = "application/json; charset=UTF-8")
@@ -442,6 +440,7 @@ public class planboardController {
 				
 			}
          }
+
 	 @RequestMapping(value="commentwirte.go")
 	  
 	  @ResponseBody public void Commentwrite(PlanBoardCommentDTO

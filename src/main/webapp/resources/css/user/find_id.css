@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+.find_id_container {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 360px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 100%;
+}
+
+.search_id {
+	font-size: 36px;
+	font-weight: 550;
+}
+
+.title-account {
+	font-size: 12px;
+	letter-spacing: -0.9px;
+	color: #6a6a6a;
+	padding-bottom: 50px;
+	padding-right: 6px;
+}
+
+.find_id_phone {
+	width: 70%;
+	height: 30px;
+	border: none;
+	border-bottom: 1px solid #6a6a6a;
+	margin-bottom: 40px;
+	border-radius: 0 !important;
+	outline: none;
+}
+
+.find_id_phone:focus {
+    border: none;
+    border-bottom: 1px solid #99dce6;
+}
+
+.find_id_email {
+	width: 70%;
+	height: 30px;
+	border: none;
+	border-bottom: 1px solid #6a6a6a;
+	margin-bottom: 20px;
+	border-radius: 0 !important;
+	outline: none;
+}
+
+.find_id_email:focus {
+    border: none;
+    border-bottom: 1px solid #99dce6;
+}
+
+.find_id_submit_bt {
+    font-size: 18px;
+    width: 70%; /* 버튼 너비 지정 */
+    height: 45px; /* 버튼 높이 지정 */
+    margin: 40px 0px 20px 0px; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    display: flex; /* 추가 */
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+.find_id_submit_bt:hover {
+    background-color: #8bc9d2;
+}
+
+.find_id_text {
+	text-align: left;
+}
+
+.find_id_span {
+	font-size: 11px;
+	padding: 5px 50px 5px 50px;
+	letter-spacing: -0.9px;
+	color: #6a6a6a;
+}

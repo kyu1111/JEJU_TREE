@@ -88,27 +88,24 @@
 	z-index: 1;
 	top: 0;
 	right: 0;
-	background-color: #white;
-	border:1px solid black;
+	background-color: white;
+	border:1px solid #6a6a6a;
 	overflow-x: hidden;
 	transition: 0.3s;/*펼침속도*/
 	padding-top: 60px;
 }
 .sidebar2_header{
-	background-color: black;
+	background-color: #6a6a6a;
 }
 .sidebar2 a {
-	padding: 8px 8px 8px 32px;
+	padding: 10px 6px 4px 32px;
 	text-decoration: none;
 	font-size: 20px;
-	color: #818181;
+	color: white;
 	display: block;
 	transition: 0.3s;
-}
-
-/*메뉴열기 hover 시*/
-.sidebar2 a:hover {
-	color: #f1f1f1;
+	text-align: right;
+	cursor: pointer;
 }
 
 
@@ -117,13 +114,12 @@
 	top: 50px;
 	right: 0px;
 	font-size: 36px;
-	margin-left: 50px;
 }
 
 .openbtn2 {
 	font-size: 15px;
 	cursor: pointer;
-	background-color: #111;
+	background-color: #99dce6;
 	color: white;
 	padding: 10px 15px;
 	border: none;
@@ -132,7 +128,7 @@
 }
 
 .openbtn2:hover {
-	background-color: #444;
+	background-color: #8bc9d2;
 }
 
 #sidebar2_page {
@@ -142,3 +138,44 @@
 	padding: 16px;
 }
 
+.blist-container {
+	margin: 10px;
+}
+
+.blist_table {
+	border-collapse: collapse;
+}
+
+.blist_table th {
+	border: none;
+	color: #6a6a6a;
+	font-size: 14px;
+	font-weight: 300;
+}
+
+.blist_table td {
+	border: 1px solid #6a6a6a;
+	color: #6a6a6a;
+	font-size: 14px;
+	font-weight: 300;
+}
+
+.blist_table input {
+	border: none;
+	background-color: white;
+	font-size: 20px;
+	color: #6a6a6a;
+	cursor: pointer;
+}
+
+.td_x {
+	text-align: center;
+}
+
+#sidebar2_page {
+	margin-right: 0px;
+}
+
+.sidebar2.no-border {
+    border: none;
+}

@@ -127,7 +127,23 @@ public class PlanDragFunctionController {
 		return new ResponseEntity<String>("Plan returned successfully.", HttpStatus.OK);
 	}
 
-	
+	   @RequestMapping(value = "delete_plan.go", method = RequestMethod.POST)
+	   @ResponseBody
+	   public ResponseEntity<Void> deletePlan(@RequestParam("planId") int planId, @RequestParam("userId") String userId) {
+	       // userId validation, if necessary
+	       if (session.getAttribute("user_id") != null && !userId.equals(session.getAttribute("user_id"))) {
+	           return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+	       }
+
+
+	       int rowsDeleted = dao.deletePlan(planId);
+
+	       if (rowsDeleted > 0) {
+	           return new ResponseEntity<Void>(HttpStatus.OK);
+	       } else {
+	           return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	       }
+	   }
 	
 	
 }

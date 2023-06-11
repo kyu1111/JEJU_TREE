@@ -51,7 +51,9 @@
       SET user_id = #{user_id}
       WHERE id = #{id}
    </update>
-   
+    <delete id="deletePlan">
+      DELETE FROM travel_plans WHERE id = #{id}
+   </delete>
    <delete id="deleteBm" parameterType="bookmarkDto">
       delete from bookmark where user_id = #{user_id} and location = #{location}
    </delete>
@@ -74,5 +76,5 @@
       SET start_date = #{start_date}, end_date = #{end_date}
       WHERE id = #{id}
    </update>
-   
+  
 </mapper>

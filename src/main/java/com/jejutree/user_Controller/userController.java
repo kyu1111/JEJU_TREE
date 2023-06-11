@@ -140,7 +140,7 @@ public class userController {
 				out.println("</script>");
 			} else {
 				out.println("<script>");
-				out.println("alert('가입 실패')");
+				out.println("alert('가입이 실패하였습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -155,7 +155,7 @@ public class userController {
 				// 새로 로그인한 세션 띄워주기
 				if(update1 > 0 && update2 > 0){
 					out.println("<script>");
-					out.println("alert('카카오연동계정 회원가입이 완료 되었습니다.')");
+					out.println("alert('카카오 연동 계정 회원가입이 완료 되었습니다.')");
 					out.println("location.href='MainPage.go'");
 					out.println("</script>");
 				}
@@ -163,7 +163,7 @@ public class userController {
 
 			} else {
 				out.println("<script>");
-				out.println("alert('가입 실패')");
+				out.println("alert('가입이 실패하였습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -226,7 +226,7 @@ public class userController {
 				
 			} else {
 				out.println("<script>");
-				out.println("alert('가입 실패')");
+				out.println("alert('가입이 실패하였습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -280,14 +280,14 @@ public class userController {
 			int check = dao.emailAuthFail(user_id);
 			if (user_dto == null) {
 				out.println("<script>");
-				out.println("alert('회원정보 없음~~~')");
+				out.println("alert('회원정보가 없습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
 			if (user_dto == null && check == 1) {
 				System.out.println("로그인 실패");
 				out.println("<script>");
-				out.println("alert('로그인 실패~~~')");
+				out.println("alert('로그인 실패')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -300,18 +300,17 @@ public class userController {
 					// 세션 띄워주기
 					session.setAttribute("user_id", user_dto.getUser_id());
 					out.println("<script>");
-					out.println("alert('로그인 성공')");
 					out.println("location.href='MainPage.go'");
 					out.println("</script>");
 				} else {
 					out.println("<script>");
-					out.println("alert('이메일 인증 필요~~~')");
+					out.println("alert('이메일 인증이 필요합니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 				}
 			} else if (!user_dto.getUser_pwd().equals(user_pwd) && check == 1 && user_dto != null) {
 				out.println("<script>");
-				out.println("alert('회원정보 틀림~~~')");
+				out.println("alert('회원정보가 일치하지 않습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -320,7 +319,6 @@ public class userController {
 				// 기존 세션 있으면 날려 주기.
 				session.setAttribute("user_id", user_dto.getUser_id());
 				out.println("<script>");
-				out.println("alert('로그인 성공')");
 				out.println("location.href='MainPage.go'");
 				out.println("</script>");
 			}
@@ -338,14 +336,14 @@ public class userController {
 			int check = dao.emailAuthFail(user_id);
 			if (user_dto == null) {
 				out.println("<script>");
-				out.println("alert('회원정보 없음~~~')");
+				out.println("alert('회원정보가 없습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
 			if (user_dto == null && check == 1) {
 				System.out.println("로그인 실패");
 				out.println("<script>");
-				out.println("alert('로그인 실패~~~')");
+				out.println("alert('로그인 실패')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -384,13 +382,13 @@ public class userController {
 					out.println("</script>");
 				} else {
 					out.println("<script>");
-					out.println("alert('이메일 인증 필요~~~')");
+					out.println("alert('이메일 인증이 필요합니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 				}
 			} else if (!user_dto.getUser_pwd().equals(user_pwd) && check == 1 && user_dto != null) {
 				out.println("<script>");
-				out.println("alert('회원정보 틀림~~~')");
+				out.println("alert('회원정보가 일치하지 않습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 
@@ -503,7 +501,7 @@ public class userController {
 			} else {
 
 				out.println("<script>");
-				out.println("alert('탈퇴 실패~~~')");
+				out.println("alert('탈퇴가 완료되지 않았습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -520,7 +518,7 @@ public class userController {
 				out.println("</script>");
 			} else {
 				out.println("<script>");
-				out.println("alert('탈퇴 실패~~~')");
+				out.println("alert('탈퇴가 완료되지 않았습니다.')");
 				out.println("history.back()");
 				out.println("</script>");
 			}
@@ -570,7 +568,7 @@ public class userController {
 					System.out.println(double_check);
 				} else {
 					out.println("<script>");
-					out.println("alert('탈퇴 실패~~~')");
+					out.println("alert('탈퇴가 완료되지 않았습니다.')");
 					out.println("history.back()");
 					out.println("</script>");
 				}
@@ -583,7 +581,7 @@ public class userController {
 			// 카카오 요청 실패 한 경우.
 		} else {
 			out.println("<script>");
-			out.println("alert('요청 실패~~~')");
+			out.println("alert('요청 실패')");
 			out.println("history.back()");
 			out.println("</script>");
 		}

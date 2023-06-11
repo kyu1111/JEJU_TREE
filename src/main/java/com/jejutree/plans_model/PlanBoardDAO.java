@@ -10,18 +10,21 @@ public interface PlanBoardDAO {
 	
    List<PlanBoardDTO> getboarList(PageDTO dto);
    
-   PlanBoardDTO  getboardContent (int board_no);
-  
-   PlanBoardDTO boardCont(int no);
    
    int insertBoard(PlanBoardDTO dto);
    
+PlanBoardDTO boardCont(int no);
+   PlanBoardDTO  getboardContent (int board_no);
+   
+   List<PlanBoardCommentDTO> getCommentList(PlanBoardCommentDTO dto);
+ 
+
    int searchBoardCount(Map<String, String> map);
    
    List<PlanBoardDTO> searchBoardList(PageDTO dto);
    
    void readCount(int no);
-	
+
    int updatePlanBoard(PlanBoardDTO dto);
    
    void deleteboard(int no);
@@ -38,7 +41,6 @@ public interface PlanBoardDAO {
    
    void updateLikeCount(PlanBoardDTO dto);
 
-   List<PlanBoardCommentDTO> getCommentList(PlanBoardCommentDTO dto);
 		
 	void writeComment(PlanBoardCommentDTO dto);
 	

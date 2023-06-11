@@ -1,9 +1,18 @@
 @charset "UTF-8";
+html,
+body{
+width:100%;
+margin: 0;
+overflow-x:hidden;
+}
 
     .container{
           display: flex;
           justify-content: center;
           align-items: center;
+          width:100%;
+         margin: 0 auto;
+         max-width: 100%;
      }
      
       .container_wrap {
@@ -41,16 +50,25 @@
          height: 540px; /* 슬라이드의 크기 조정 */
          object-fit: cover;
      }
+.intro-text {
+  width: 50%;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
-     .intro-text {
-     
-         width: 50%;
-         padding-right: 20px;
-         
-     }
+
+@media (max-width: 768px) {
+  /* 화면의 최대 가로 크기가 768px 이하인 경우 적용 */
+  .intro-text {
+    width: 100%;
+    padding-right: 0;
+  }
+}
    
       .arrows {
-      
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
@@ -61,7 +79,7 @@
           
       }
          
-    .round-button {
+    .prev_bt, .next_bt {
        display: inline-block;
        padding: 8px 15px; /* 필요에 따라 조정하세요 */
        background-color: rgba(0, 0, 0, 0.3); /* 필요에 따라 조정하세요 */
@@ -138,7 +156,6 @@
       }
          
       .btn-guide {
-      
           font-size: 18px;
           width: 310px; /* 버튼 너비 지정 */
           height: 45px; /* 버튼 높이 지정 */
@@ -250,10 +267,14 @@
         cursor: pointer;
            
    }
+   
+   .to-top:hover {
+   		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   }
+
          
      * {
         user-select: none;
     }
 
 	
-

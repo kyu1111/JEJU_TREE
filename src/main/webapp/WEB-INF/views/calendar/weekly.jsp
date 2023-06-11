@@ -26,8 +26,9 @@
 
 <style type="text/css">
 #map_div {
-   height: 400px; /* adjust as needed */
-   width: 100%; /* adjust as needed */
+	margin-top: 30px;
+	height: 400px; /* adjust as needed */
+	width: 100%; /* adjust as needed */
 }
 
 :root {
@@ -35,6 +36,7 @@
   --button-bg-color: #ffffff;
   --button-hover-bg-color: #ffffff;
 }
+
 button {
   /* 생략 */
   background: var(--button-bg-color);
@@ -46,38 +48,43 @@ button:hover {
    cursor:pointer;
    font-weight: bold;
 }
+
 select {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
 }
+
 select:focus {
     outline: none;
     border: none;
   }
+  
 #selectLevel {
- height: 30px;
-    padding: 5px 30px 5px 5px;
+	width: 160px;
+ 	height: 30px;
+    padding: 5px 20px 0px 5px;
     background: url('<%=request.getContextPath()%>/resources/images/arrow.png') calc(100% - 10px) center no-repeat;
     background-size: 14px;
     border: none;
     border-bottom: 1px solid #6a6a6a;
 }
-.navbar {
-height: 15px;
-width: 100%;
-display: flex;
-  justify-content: space-between;
-}
 
+.weekly_navbar {
+	height: 15px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
 
 .select, .save {
   width: 20%;
 }
 
 .date {
-  flex-grow: 1;
-  text-align: center;
+	margin-top: 8px;
+	flex-grow: 1;
+	text-align: center;
 }
 
 .today {
@@ -89,6 +96,7 @@ display: flex;
   justify-content: inherit;
   align-items: center;
   width: 200px;
+  margin-top: 20px;
 }
 
 .save-buttons {
@@ -99,9 +107,25 @@ display: flex;
 .save-buttons button {
   margin-left: 20px;
 }
+
 #result {
-  font-size: 12px;
+	width: 300px;
+	font-size: 12px;
+	text-align: left;
 }
+
+#nextBtn {
+	margin-right: 400px;
+}
+
+#saveAsPDF {
+	margin-left: 65px;
+}
+
+#container {
+	margin-top: 25px;
+}
+
 </style>
 
 <!-- 폰트어썸 cdn링크 -->
@@ -114,7 +138,7 @@ display: flex;
 </head>
 <body>
 <%@ include file="../include/navbar.jsp" %>
-
+   
    <!--  지도가 나타나는 부분. -->
    <br>
    <div id="map_div"></div>
@@ -122,13 +146,15 @@ display: flex;
    </div>
    
    
-   <div class="navbar">
-   
+   <div class="weekly_navbar">
+
    <br>
    <p id="result"></p>
    <c:set var="user" value="${List }"/>
    
+   
    <div class="select">
+   
       <select id="selectLevel">
          <option value="0" selected="selected">교통최적+추천</option>
          <option value="1" >교통최적+무료우선</option>
@@ -136,7 +162,14 @@ display: flex;
          <option value="3" >교통최적+초보</option>
       </select>
       <button id="btn_select">적용</button>
+      
    </div>
+   
+   <br>
+   <p id="result"></p>
+   <c:set var="user" value="${List }"/>
+   
+   <button onClick="runTraffic()">교통 정보 on/off</button>
    <div class="date">
       <button class="button is-rounded prev" id="prevBtn">
          <i class="fa-solid fa-angle-left"></i>
@@ -146,7 +179,10 @@ display: flex;
          <i class="fa-solid fa-angle-right"></i>
       </button>
    </div>
+   
+   
    <div class="save">
+        
       <button id="saveAsPDF">PDF 저장</button>
       <button id="savePlan">일정저장</button>
       <span class="navbar--range"></span>
@@ -158,6 +194,8 @@ display: flex;
    <script type="text/javascript">
    
    var map;
+   var isTraffic = false; //지도위에 교통 정보 표시 여부
+   var tData;
 
     //시작 좌표.
     var firstPlanLat = ${List[0].markerLat};
@@ -200,11 +238,15 @@ display: flex;
           center: new Tmapv2.LatLng(33.3617, 126.5292),
           width : "100%",
           height : "400px",
-          zoom : 10,
+          zoom : 12,
           zoomControl : true,
           scrollwheel : true
           
        });
+       
+       tData = new Tmapv2.extension.TData();
+       
+       
        
        // 2. 시작, 도착 심볼찍기
        // 시작
@@ -363,8 +405,38 @@ display: flex;
                 }
              });
        });
-    } // initTmap() 메서드를 종료시킵니다.
+    }; // initTmap() 메서드를 종료시킵니다.
+    
+   //교통정보 실행
+   function runTraffic(){
+      if(!isTraffic){
+         isTraffic = true;
+         geoTrafficOn();
+      }
+      else{
+         isTraffic = false;
+         geoTrafficOff();
+      }
+   }
+   
+   //교통정보 켜기
+   function geoTrafficOn(){
+      var params = {
+         "trafficOnOff" : true
+      };
 
+      tData.autoTraffic(map, params); 
+   }
+   
+   //교통정보 끄기
+   function geoTrafficOff(){
+        var params = {
+         "trafficOnOff" : false
+      };
+      tData.autoTraffic(map, params); 
+   }
+   
+       
     
 function addComma(num) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;

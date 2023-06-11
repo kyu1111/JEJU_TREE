@@ -72,6 +72,7 @@
     <update id="updateLikeCount" parameterType="PlanBoardDTO">
        update plan_board set like_count = #{like_count} where board_no = #{board_no}
    </update>
+
    <select id="comment_list" resultType="PlanBoardCommentDTO" parameterType="PlanBoardCommentDTO">
  		select * from plan_boardcomment where board_no = #{board_no}
  	</select>

@@ -37,7 +37,7 @@ if (request.getProtocol().equals("HTTP/1.1"))
 							</c:if>
 							<br>
 						<div id="login_main_btn">
-							<input type="submit" id="login_btn" value="LOGIN">
+							<input type="submit" id="login_btn" value="로그인">
 						</div>
 					</form>
 					<div class="login_other">
