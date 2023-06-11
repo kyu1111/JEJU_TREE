@@ -7,17 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mainpage/mainpage.css"> 
     <!-- Add jQuery library -->
-<<<<<<< HEAD
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
 	 
     <title>JEJU TREE</title>
-=======
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-    <title>GIF 슬라이드</title>
-   
->>>>>>> 36bf302a308ab63fa65e144cac396cb933db2f73
     <script type="text/javascript">
         let slideIndex = 0;
 
@@ -81,17 +74,13 @@
 
 <!-- 상단바 설정하기  -->
 <%@ include file="./include/navbar.jsp" %>
-<<<<<<< HEAD
-	 <div class = "container">
-	 <div class="main_content">
-=======
+
     <div class = "container">
     
     <div class="main_content">
->>>>>>> 36bf302a308ab63fa65e144cac396cb933db2f73
      <div class="container_wrap">  
         <div class="intro-text" align="center">
-            <p style="font-size:26px; text-align: left; padding-left: 21%">
+            <p style="font-size:26px; text-align: left;">
                  <b style="font-size:28px;">JEJU TREE</b> 에서 손쉽게 <br>
                   여행 일정을 계획하세요.
             </p>
@@ -149,17 +138,17 @@
            <img src="<%=request.getContextPath()%>/resources/images/카페 엘리펀트힙-470.jpg" alt="Image 1">
            <div class="hidden-content">
                <span class="sp-cont"><span class="sp-title">카페 엘리펀트힙</span><br>
-                  제주공항 근처 에그인더헬이 맛있는 <br>
-                  핫플레이스 브런치카페 <br><br>
-                #제주공항 #브런치 #카페 #맛집</span>
+		                  제주공항 근처 에그인더헬이 맛있는 <br>
+		                  핫플레이스 브런치카페 <br><br>
+               #제주공항 #브런치 #카페 #맛집</span>
            </div>
          </a> 
          <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=카페 그계절">
            <img src="<%=request.getContextPath()%>/resources/images/카페 그계절-470.jpg" alt="Image 2">
            <div class="hidden-content">
               <span class="sp-cont"><span class="sp-title">카페 그계절</span><br>
-                  제주 구좌읍 초록이들 가득한 <br>
-                  플렌테리어 카페 <br><br>
+		                  제주 구좌읍 초록이들 가득한 <br>
+		                  플렌테리어 카페 <br><br>
                 #반려동물가능 #카페 #포토존 #싱그러움</span>
            </div>
          </a> 
@@ -167,8 +156,8 @@
                 <img src="<%=request.getContextPath()%>/resources/images/카페 까르네-470.jpg" alt="Image 3">
                 <div class="hidden-content">
                    <span class="sp-cont"><span class="sp-title">카페 까르네</span><br>
-                     제철 과일을 이용한 디저트와  <br>
-                     음료를 즐길 수 있는 구좌읍 상도리 카페<br><br>
+			                     제철 과일을 이용한 디저트와  <br>
+			                     음료를 즐길 수 있는 구좌읍 상도리 카페<br><br>
                      #야외석 #카페 #디저트 #반려동물</span>
             </div>
             
@@ -186,18 +175,18 @@
            <img src="<%=request.getContextPath()%>/resources/images/오설록티뮤지엄-470.jpg" alt="Image 1">
            <div class="hidden-content">
               <span class="sp-cont"><span class="sp-title">오설록티뮤지엄</span><br>
-                     제주 녹차 문화의 중심<br>
-                     차 박물관과 카페테리아 <br><br>
-                     #녹차 #여름포토스팟 #디저트 #카페</span>
+		                     제주 녹차 문화의 중심<br>
+		                     차 박물관과 카페테리아 <br><br>
+                 #녹차 #여름포토스팟 #디저트 #카페</span>
             </div>
          </a> 
          <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=용머리해안">
            <img src="<%=request.getContextPath()%>/resources/images/용머리해안-470.jpg" alt="Image 2">
            <div class="hidden-content">
                  <span class="sp-cont"><span class="sp-title">용머리해안</span><br>
-                    한국의 그랜드 캐니언<br>
-                    멋진 지질트레일 덕분에 핫플레이스<br><br>
-                     #서귀포 #해변 #유네스코 #시간확인필수</span>
+			                    한국의 그랜드 캐니언<br>
+			                    멋진 지질트레일 덕분에 핫플레이스<br><br>
+                    #서귀포 #해변 #유네스코 #시간확인필수</span>
             </div>
          </a> 
             <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=해안도로">
@@ -223,8 +212,8 @@
            <img src="<%=request.getContextPath()%>/resources/images/김녕바닷길-470.jpg" alt="Image 1">
            <div class="hidden-content">
               <span class="sp-cont"><span class="sp-title">김녕바닷길</span><br>
-                    제주 동쪽 여행 중 바닷가 필수 코스<br>
-                    제주 바다 감성을 물씬 느낄 수 있는 명소<br><br>
+			                    제주 동쪽 여행 중 바닷가 필수 코스<br>
+			                    제주 바다 감성을 물씬 느낄 수 있는 명소<br><br>
                      #제주감성 #예쁜바다 #인생샷 #스노쿨링</span>
             </div>
          </a> 
@@ -232,8 +221,8 @@
            <img src="<%=request.getContextPath()%>/resources/images/노루손이 오름-470.jpg" alt="Image 2">
            <div class="hidden-content" >
               <span class="sp-cont"><span class="sp-title">노루손이 오름</span><br>
-                    등린이도 도전할 수 있는 등산코스<br>
-                    뷰가 예뻐서 사진 찍기에 좋은 오름<br><br>
+			                    등린이도 도전할 수 있는 등산코스<br>
+			                    뷰가 예뻐서 사진 찍기에 좋은 오름<br><br>
                      #자연 #트레킹 #뷰맛집 #반려동물가능</span>
             </div>
          </a> 
@@ -241,8 +230,8 @@
             <img src="<%=request.getContextPath()%>/resources/images/안돌오름-470.jpg" alt="Image 3">
             <div class="hidden-content">
                <span class="sp-cont"><span class="sp-title">안돌오름</span><br>
-                     숲길 사진으로 유명한 안돌오름 비밀의 숲<br>
-                     스냅 촬영의 성지이자 요즘 핫한 명소<br><br>
+			                     숲길 사진으로 유명한 안돌오름 비밀의 숲<br>
+			                     스냅 촬영의 성지이자 요즘 핫한 명소<br><br>
                     #사진필수 #커플 #초원 #숲길</span>
             </div>
             
@@ -250,7 +239,6 @@
             </div>
             </div>
     </div>
-    
     <br>
     <br>
     <br>

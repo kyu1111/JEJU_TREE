@@ -196,14 +196,11 @@ function initTmap() {
                  var pointCng = new Tmapv2.Point(
                        noorLon, noorLat);
                  // EPSG3857좌표계를 WGS84GEO좌표계로 변환
-                 var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
-                       pointCng);
+                 var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
                  var lat = projectionCng._lat;
                  var lon = projectionCng._lng;
                  // 좌표 설정
-                 var markerPosition = new Tmapv2.LatLng(
-                       lat, lon);
-
+                 var markerPosition = new Tmapv2.LatLng(lat, lon);
                  // Marker 설정
                  marker = new Tmapv2.Marker(
                     {
@@ -537,12 +534,11 @@ function initTmap() {
 
 var popupCount = 0;
 
-//4. POI 상세 정보 API
+// 4. POI 상세 정보 API
 function poiDetail(poiId) {
    console.log(poiId);
    var headers = {}; 
    headers["appKey"]="857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ";
-
    $.ajax({
       method : "GET", // 요청 방식
       headers : headers,
@@ -556,72 +552,60 @@ function poiDetail(poiId) {
          var detailInfo = response.poiDetailInfo;
          var name = detailInfo.name;
          var address = detailInfo.address;
-
          var noorLat = Number(detailInfo.frontLat);
          var noorLon = Number(detailInfo.frontLon);
-
          var pointCng = new Tmapv2.Point(noorLon, noorLat);
          var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
                pointCng);
-
          var lat = projectionCng._lat;
          var lon = projectionCng._lng;
-
          var labelPosition = new Tmapv2.LatLng(lat, lon);
-         
          popupCount++;
-         
          var popupId = 'popup' + popupCount;
          var selectButtonId = 'selectBtn' + popupCount;
          var closeButtonId = 'closeBtn' + popupCount;
-         
          // 상세보기 클릭 시 지도에 표출할 popup창
          var content = "<form id='" + popupId + "' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post' style='background-color: white; font-size: 14px;' >"
-                        + "<input type='hidden' name='title' value='" + name + "'>"
-                        + "<input type='hidden' name='addr' value='" + address + "'>"
-                        + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>"
-                            + "<button id='" + selectButtonId + "' type='submit'>일정 추가</button><a id='" + closeButtonId + "' class='close-btn'>×</a></div>"
-                        + "<input type='hidden' name='location' value='비자림'>"
-                        + "<input type='hidden' name='markerLat' value='" + lat + "'>" // latitude input field
-                        + "<input type='hidden' name='markerLng' value='" + lon + "'>" // longitude input field 
-                        + "<div style='padding:10px; width:250px;'>"
-                        + name
-                        + "<div>"
-                        + address
-                        + "</div>"
-                        // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
-                        + "<p class='start'>입장 : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
-                        + "<p class='end'>퇴장 : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
-                        + "</form>";
-
-                  var labelInfo = new Tmapv2.Label({
-                     position : labelPosition,
-                     content : content,
-                     map : map
-                  });
-
-                  $(document).on('click', '#' + closeButtonId,
-                        function() {
-                           labelInfo.setMap(null); // Removes the label (popup) from the map
-                           $(this).off('click');
-                        });
-
-                  document.getElementById('selectBtn').addEventListener('click',function(e) {
-                      console.log('The select button was clicked.');
-                   });
-
-                  //popup 생성
-
-                  // popup들을 담을 배열에 팝업 저장
-                  labelArr.push(labelInfo);
-               },
-               error : function(request, status, error) {
-                  console.log("code:" + request.status + "\n"
-                        + "message:" + request.responseText + "\n"
-                        + "error:" + error);
-               }
-            });
-   } // 종료.
+                     + "<input type='hidden' name='title' value='" + name + "'>"
+                     + "<input type='hidden' name='addr' value='" + address + "'>"
+                     + "<input type='hidden' name='location' value='비자림'>"
+                     + "<input type='hidden' name='markerLat' value='" + lat + "'>" // latitude input field
+                     + "<input type='hidden' name='markerLng' value='" + lon + "'>" // longitude input field 
+                     + "<div style='padding:10px; width:250px;'>" + name + "&nbsp;&nbsp;<button id='" + selectButtonId + "' type='submit'>Select</button>&nbsp;&nbsp;<button id='" + closeButtonId + "' class='close-btn'>Close</button>"
+                     + "<div>"
+                     + address
+                     + "</div>"
+                     // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
+                     + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+                     + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+                     + "</form>";
+               var labelInfo = new Tmapv2.Label({
+                  position : labelPosition,
+                  content : content,
+                  map : map
+               });
+               
+               $(document).on('click', '#' + closeButtonId,
+                     function() {
+                        labelInfo.setMap(null); // Removes the label (popup) from the map
+                        $(this).off('click');
+                     });
+               
+               document.getElementById('selectBtn').addEventListener('click',function(e) {
+                   console.log('The select button was clicked.');
+                });
+               
+               //popup 생성
+               // popup들을 담을 배열에 팝업 저장
+               labelArr.push(labelInfo);
+            },
+            error : function(request, status, error) {
+               console.log("code:" + request.status + "\n"
+                     + "message:" + request.responseText + "\n"
+                     + "error:" + error);
+            }
+         });
+} // 종료.
 
    $(document).ready(function() {
       $('.location').click(function() {
@@ -764,97 +748,97 @@ function poiDetail(poiId) {
 
     <div id="map_div" class="map_wrap" style="float:left">
         <!-- 맵 생성 실행 -->
-	</div>
+   </div>
     
     <!-- 사이드바 설정하기 -->
-	<div id = "container">
-	<%@ include file="./include/sidebar2.jsp" %>
-	<c:if test="${!empty user_id}">
-	<div class="planList_btn_div" align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')"><b class="text_b">일정 관리</b></a></div>
-	</c:if>
-	
-	<c:if test="${!empty kakao_id}">
-	<div class="planList_btn_div"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}')"><b class="text_b">일정 관리</b></a></div>
-	</c:if>
-	
-	<c:if test="${empty user_id and empty kakao_id}">
-	<div class="no_logind_planList_btn_div"></div>
-	</c:if>
-	
-	
+   <div id = "container">
+   <%@ include file="./include/sidebar2.jsp" %>
+   <c:if test="${!empty user_id}">
+   <div class="planList_btn_div" align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')"><b class="text_b">일정 관리</b></a></div>
+   </c:if>
+   
+   <c:if test="${!empty kakao_id}">
+   <div class="planList_btn_div"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}')"><b class="text_b">일정 관리</b></a></div>
+   </c:if>
+   
+   <c:if test="${empty user_id and empty kakao_id}">
+   <div class="no_logind_planList_btn_div"></div>
+   </c:if>
+   
+   
 
         <!-- 날씨 관련 출력창 -->
         <div id="weather-widget" style="float:center" height="400" width="800">
-		    <table class="weather_table">
-		        <tr>
-		            <td>
-		               <div id="date1">
-		               
-		               </div>
-		                <div id="weather">
-		                    <img id="icon" src="" alt="">
-		                </div>
-		                <div id="temperature">
-		                    <p id="temp"></p>
-		                </div>
-		            </td>
-		            <td>
-		               <div id=date2>
-		               
-		               </div>
-		                <div id="forecast-day2">
-		                    <div id="forecast-weather">
-		                        <img id="day2-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day2">
-		                        <p id="forecast-temp-day2"></p>
-		                    </div>
-		                </div>
-		            </td>
-		            <td>
-		               <div id="date3">
-		               
-		               </div>
-		                <div id="forecast-day3">
-		                    <div id="forecast-weather">
-		                        <img id="day3-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day3">
-		                        <p id="forecast-temp-day3"></p>
-		                    </div>
-		                </div>
-		            </td>
-		            <td>
-		               <div id="date4">
-		               
-		               </div>
-		                <div id="forecast-day4">
-		                    <div id="forecast-weather">
-		                        <img id="day4-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day4">
-		                        <p id="forecast-temp-day4"></p>
-		                    </div>
-		                </div>
-		            </td>
-		            <td>
-		               <div id="date5">
-		               
-		               </div>
-		                <div id="forecast-day5">
-		                    <div id="forecast-weather">
-		                        <img id="day5-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day5">
-		                        <p id="forecast-temp-day5"></p>
-		                    </div>
-		                </div>
-		            </td>
-		        </tr>
-		    </table>
-		</div>
-	</div>	<!-- container div end -->	
-	
+          <table class="weather_table">
+              <tr>
+                  <td>
+                     <div id="date1">
+                     
+                     </div>
+                      <div id="weather">
+                          <img id="icon" src="" alt="">
+                      </div>
+                      <div id="temperature">
+                          <p id="temp"></p>
+                      </div>
+                  </td>
+                  <td>
+                     <div id=date2>
+                     
+                     </div>
+                      <div id="forecast-day2">
+                          <div id="forecast-weather">
+                              <img id="day2-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day2">
+                              <p id="forecast-temp-day2"></p>
+                          </div>
+                      </div>
+                  </td>
+                  <td>
+                     <div id="date3">
+                     
+                     </div>
+                      <div id="forecast-day3">
+                          <div id="forecast-weather">
+                              <img id="day3-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day3">
+                              <p id="forecast-temp-day3"></p>
+                          </div>
+                      </div>
+                  </td>
+                  <td>
+                     <div id="date4">
+                     
+                     </div>
+                      <div id="forecast-day4">
+                          <div id="forecast-weather">
+                              <img id="day4-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day4">
+                              <p id="forecast-temp-day4"></p>
+                          </div>
+                      </div>
+                  </td>
+                  <td>
+                     <div id="date5">
+                     
+                     </div>
+                      <div id="forecast-day5">
+                          <div id="forecast-weather">
+                              <img id="day5-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day5">
+                              <p id="forecast-temp-day5"></p>
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+          </table>
+      </div>
+   </div>   <!-- container div end -->   
+   
 
 <div id="crawlingResult" align="center">
     <!-- 크롤링 결과 -->
@@ -875,7 +859,6 @@ function poiDetail(poiId) {
                 </a>
             </td>
             <c:if test="${loop.index % 5 == 4 or loop.last}">
-                </tr>
             </c:if>
         </c:forEach>
     </table>
@@ -891,7 +874,7 @@ function poiDetail(poiId) {
 </body>
 
 <div class="tmap_footer">
-	<%@ include file="./include/footer.jsp" %>
+   <%@ include file="./include/footer.jsp" %>
 </div>
 
 </html>

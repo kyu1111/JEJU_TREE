@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 #container{
-  
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -10,7 +9,6 @@
     position: relative;
     z-index: 1; /* container2 보다 앞에 표시되도록 설정 */
     margin-bottom: 100px;
-
 }
 
 #container > jsp {
@@ -28,16 +26,13 @@
 }
 
 #map_div {
-
     margin-top: 70px;
     margin-right: auto;
     margin-left:auto;
     display: block;
-
 }
 
 #container2{
-   
    display: block;
    justify-content: center;
    align-items: center;
@@ -45,7 +40,6 @@
    width: 100%;
    position: absolute; /* 추가: container2를 절대적인 위치로 설정 */
    bottom: 0; /* 추가: container 하단에 고정 */
-
 }
 
 .heartAddX {
