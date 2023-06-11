@@ -132,7 +132,7 @@
     <!-- 인스타 핫플 영역 -->
     <div class="container-insta-hot">
         <div class="insta-hot">
-            <h2 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h2>
+            <h3 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h2>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
             <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=엘리펀트힙">
            <img src="<%=request.getContextPath()%>/resources/images/카페 엘리펀트힙-470.jpg" alt="Image 1">
@@ -169,7 +169,7 @@
     <!-- 스테디 인기 영역 -->
     <div class="container-steady-hot">
         <div class="steady-hot">
-            <h2 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h2>
+            <h3 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h2>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
                  <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=오설록티뮤지엄">
            <img src="<%=request.getContextPath()%>/resources/images/오설록티뮤지엄-470.jpg" alt="Image 1">
@@ -206,7 +206,7 @@
     <!-- 사진 핫플 영역 -->
     <div class="container-photo-hot">
         <div class="photo-hot">
-            <h2 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h2>
+            <h3 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h2>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
                  <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=김녕바다">
            <img src="<%=request.getContextPath()%>/resources/images/김녕바닷길-470.jpg" alt="Image 1">
