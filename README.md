@@ -14,6 +14,9 @@
 
 요구사항 정의서
 ERD
+<img width="543" alt="jeju_tree_erd" src="https://github.com/harim-000/JEJU_TREE/assets/81612425/2a300a51-0de5-4f47-bacd-0b4121b00af6">
+
+
 Usecase
 
 
