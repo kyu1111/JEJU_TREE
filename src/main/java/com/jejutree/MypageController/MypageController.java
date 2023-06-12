@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -41,7 +42,30 @@ public class MypageController {
 	
 	@RequestMapping("mypage.go")
 	public String mypage(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("user_id");
+		
+		String userId = "";
+		String user_id = "";
+		String kakao_id = "";
+		
+		user_id = (String) session.getAttribute("user_id");
+		
+		HashMap<String, Object> hashMap = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+		
+		if(hashMap != null) {
+			kakao_id = (String) hashMap.get("kakao_id");
+		}
+		
+		if (user_id == null && kakao_id == null) {
+		    // user_id와 kakao_id가 모두 null인 경우
+		    userId = ""; // 빈 문자열로 초기화
+		} else if (user_id != null) {
+		    // user_id가 존재하는 경우
+			userId = user_id;
+		} else {
+		    // kakao_id가 존재하는 경우
+		    userId = kakao_id;
+		}
+		
 		List<UserPlansDTO> list = this.plansdao.getPlanList(userId);
 		if (!list.isEmpty()) {
 			UserPlansDTO startPlan = list.get(0);
@@ -52,20 +76,15 @@ public class MypageController {
 		model.addAttribute("List", list);
 		
 		
-		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	     String user_id = (String) session.getAttribute("user_id");
 	     UserDTO dto = new UserDTO();
-		if (KakaoInfo != null || user_id != null) {
-			if(user_id != null) {
-				dto.setUser_id(user_id);
+	     if( user_id != null) {
+	    	 	dto.setUser_id(user_id);
 				dto = this.dao.getuser(user_id);
-				
-			} else if(KakaoInfo != null) {
-				dto.setUser_id(KakaoInfo);
-				dto = this.dao.getuser(KakaoInfo);
-			} 
-		}
-		
+		  }else if(kakao_id != null){
+		    	dto.setUser_id(kakao_id);
+				dto = this.dao.getuser(kakao_id);
+		    }
+	     
 		model.addAttribute("UserInfo", dto);
 		return "mypage/mypage";
 	}
@@ -85,9 +104,6 @@ public class MypageController {
 				dto = this.dao.getuser(KakaoInfo);
 			} 
 		}
-		
-		
-		
 		model.addAttribute("UserInfo", dto);
 		
 		return "mypage/userprofile";

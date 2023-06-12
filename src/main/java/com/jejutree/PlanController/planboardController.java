@@ -80,8 +80,6 @@ public class planboardController {
 
 	@RequestMapping("board_write.go")
 	public String write(Model model) {
-		
-
 		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
 	     String userId = (String) session.getAttribute("user_id");
 	     UserDTO dto = new UserDTO();
