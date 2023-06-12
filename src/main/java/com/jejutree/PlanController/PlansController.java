@@ -80,13 +80,13 @@ public class PlansController {
     }   
     
     @RequestMapping("plan_list.go")
-    public String cont(@RequestParam("id") String user_id, Model model,@RequestParam(value="is_guest",required = false)String is_guest
+    public String cont(HttpSession session,@RequestParam("id") String user_id, Model model,@RequestParam(value="is_guest",required = false)String is_guest
     		) {
     	  
     		
 	  // plan_list.go 페이지가 사용자가 본인의 열어 본 것인지, 공유된 페이지 인지 구별하는 keyword. is_guest
 	  if(is_guest != null) {
-	  
+	  session.invalidate();
 	  model.addAttribute("is_guest",is_guest);
 	  model.addAttribute("share_id",user_id);
 	  }

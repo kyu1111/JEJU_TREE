@@ -5,17 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/user/kakaoalert.css">
 </head>
 <body>
 	<c:set var="share_id" value="${param.share_id}" />
-	${share_id}
 	<c:set var="user_email" value="${param.user_email}" />
-	${user_email }
 	<div id="container">
-		<div id="content">
-			<h1>카카오 인증이 완료 되었습니다.</h1>
-			<h3>일정 공유 기능은 sns연동 회원가입이 필요 합니다.</h3>
-				<a id="kakaoJoinbtn" onclick="openKakaojoinPage();">sns 연동 회원가입</a>
+		<div class="kakao_id_title">
+			<div class="share_id">카카오 인증 완료</div>
+			<div class="title-account">제주 여행의 시작 JEJU TREE</div>
+		</div>
+		<div class="kakao_id_cont">
+            <div class="kakao_id_text">
+            	<span class="kakao_id_span">
+            		일정 정보를 공유하기 위해
+            	</span>
+            	<br>
+            	<span class="kakao_id_span">
+            	     sns연동 회원가입이 필요합니다.
+            	</span>
+            </div>
+            <a id="kakaoJoinbtn" onclick="openKakaojoinPage();">sns 연동 회원가입</a>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -25,7 +35,9 @@
 			console.log(share_id);
 			let ask_result = confirm('추가정보를 입력하여 가입하겠습니까?');
 			if (ask_result) {
-				location.href = "kakaoUser_join.go?user_email=" + user_email + "&share_id=" + share_id;
+				 window.open("kakaoUser_join.go?user_email=" + user_email + "&share_id=" + share_id, "_blank");
+			     window.close(); // 기존 창 닫기
+			     window.open("kakaoUser_join.go?user_email=" + user_email + "&share_id=" + share_id, "_self"); // 새로운 창 열기
 			}
 		}
 	</script>

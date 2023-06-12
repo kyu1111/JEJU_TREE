@@ -11,11 +11,34 @@
 </head>
 <body>
 <c:set var = "normal_session" value="${user_id}"/>
-<div class="content E-Solution" id="content" align="center">
-	<a onclick="sendLink();" value="공유하기">
-  <img style="width: -webkit-fill-available;" src="<%=request.getContextPath()%>/resources/images/kakao_logo/btn_sns_kakao.png">
-</a>
-</div>
+	<div class="find_id_container" align="center">
+		<div class="find_id_title">
+			<div class="search_id">아이디 찾기</div>
+			<div class="title-account">제주 여행의 시작 JEJU TREE</div>
+		</div>
+	
+		<div class="find_id_cont">
+			<form method="post" action="<%=request.getContextPath()%>/id_search.go">
+			    <div>
+		            <div class="find_id_text">
+		            	<div class="content E-Solution" id="content" align="center">
+					<a onclick="sendLink();" value="공유하기">
+  					<img style="width: -webkit-fill-available;" src="<%=request.getContextPath()%>/resources/images/kakao_logo/btn_sns_kakao.png">
+					</a>
+					</div>
+		            </div>
+		            <div class="find_id_text">
+		            	<span class="find_id_span">
+		            		* 메일이 도착하기까지 몇 분 정도 소요될 수 있습니다.
+		            	</span>
+		            	<span class="find_id_span">
+		            		* 스팸 메일함으로 발송될 수 있으니 체크바랍니다.
+		            	</span>
+		            </div>
+			    </div>
+			</form>
+		</div>
+	</div>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script language="javascript">
 let parameter_id = '${user_id}';

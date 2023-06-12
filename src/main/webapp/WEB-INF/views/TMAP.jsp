@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>simpleMap</title>
 <!-- Add jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src = "https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/sidebar.css">
@@ -133,6 +134,11 @@ var infoWindow;
 var marker;
 var markerArr = [], labelArr = [];
 var popupCount2 = 0;
+var isDrawing = false;
+var fixedMarkers = [];
+var userMarkers = [];
+var infoWindow = null;  // 전역 변수로 선언
+
 // map 생성
 function initTmap() {
       // map 생성 
@@ -144,6 +150,123 @@ function initTmap() {
          // zoomControl : true,
        // scrollwheel : true
       });
+      
+      fixedMarkers[0] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.361666, 126.529166), // 한라산 국립공원
+         map : map,
+         visible : false
+      });
+
+      fixedMarkers[0].addListener( "click", function() {
+               var content = "<form id='infoWindowForm'>"
+                   + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+                   + "<div style='font-size: 12px; line-height: 15px;'>"
+                   + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>티맵 모빌리티"
+                   + "</div>"
+                   + "</div>"
+                   + "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+                   + "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"
+                   + "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"
+                   + "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울 중구 삼일대로 343 (우)04538</span>"
+                   + "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(지번) 저동1가 114</span>"
+                   + "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"
+                 //+ "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+                 //+ "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+                   + "<input type='submit' style='position: absolute; top: 0; right: 0;' value='Close' />"
+                   + "</div>"
+                   + "</div>"
+                   + "</form>";
+
+                     var infoWindow = new Tmapv2.InfoWindow({
+                        position : new Tmapv2.LatLng(33.361666, 126.529166),
+                        content : content,
+                        map : map
+                     });
+                     
+                  });
+
+      fixedMarkers[1] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.458875, 126.942933), // 성산일출봉
+         map : map,
+         visible : false
+      });
+
+      fixedMarkers[1].addListener( "click", function() {
+         var content = "<form id='infoWindowForm'>"
+             + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+             + "<div style='font-size: 12px; line-height: 15px;'>"
+             + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>티맵 모빌리티"
+             + "</div>"
+             + "</div>"
+             + "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+             + "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"
+             + "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"
+             + "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울 중구 삼일대로 343 (우)04538</span>"
+             + "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(지번) 저동1가 114</span>"
+             + "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"
+             //+ "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+             //+ "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+             + "<input type='submit' style='position: absolute; top: 0; right: 0;' value='Close' />"
+             + "</div>"
+             + "</div>"
+             + "</form>";
+
+                  var infoWindow = new Tmapv2.InfoWindow({
+                     position : new Tmapv2.LatLng(33.458875, 126.942933),
+                     content : content,
+                     map : map
+                  });
+                  
+               });
+
+      fixedMarkers[2] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+         map : map,
+         visible : false
+      });
+
+      fixedMarkers[2].addListener( "click", function() {
+         var content = "<form id='infoWindowForm'>"
+             + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+             + "<div style='font-size: 12px; line-height: 15px;'>"
+             + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>티맵 모빌리티"
+             + "</div>"
+             + "</div>"
+             + "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+             + "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"
+             + "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"
+             + "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울 중구 삼일대로 343 (우)04538</span>"
+             + "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(지번) 저동1가 114</span>"
+             + "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"
+             //+ "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+             //+ "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+             + "<input type='submit' style='position: absolute; top: 0; right: 0;' value='Close' />"
+             + "</div>"
+             + "</div>"
+             + "</form>";
+
+                  var infoWindow = new Tmapv2.InfoWindow({
+                     position : new Tmapv2.LatLng(33.455483, 126.768394),
+                     content : content,
+                     map : map
+                  });
+                  
+               });
+
+      map.addListener("click", function(e) {
+               if (isDrawing) {
+                  var position = new Tmapv2.LatLng(e.latLng.lat(),
+                        e.latLng.lng());
+                  var marker = new Tmapv2.Marker({
+                     position : position,
+                     map : map
+                  });
+                  userMarkers.push(marker);
+                  if (userMarkers.length == 4) {
+                     drawPolygon();
+                  }
+               }
+            });
    // 2. POI 통합 검색 API 요청
   $("#btn_select").click(
      function() {
@@ -708,7 +831,76 @@ function poiDetail(poiId) {
        }else if("ROAD" == type){
            map.setMapType(Tmapv2.Map.MapType.ROAD)
        }
-   }   
+   }
+   
+   // form의 제출 이벤트에 대응하는 함수.
+   function closeInfoWindow(event) {
+     event.preventDefault();
+     if (infoWindow !== null) {
+       infoWindow.setMap(null);  // InfoWindow를 제거.
+       infoWindow = null;
+     }
+   }
+   
+   // form의 제출 이벤트에 대응하는 함수를 전역으로 등록.
+   window.addEventListener('load', function() {
+     document.getElementById('infoWindowForm').addEventListener('submit', closeInfoWindow);
+   });
+   
+   function drawPolygon() {
+      var path = userMarkers.map(function(marker) {
+         return marker.getPosition();
+      });
+      path.push(userMarkers[0].getPosition());
+      var polygon = new Tmapv2.Polygon({
+         path : path,
+         strokeColor : "#000000",
+         strokeOpacity : 0.5,
+         strokeWeight : 2,
+         fillColor : "#000000",
+         fillOpacity : 0.35,
+         map : map
+      });
+      isDrawing = false;
+   }
+
+   function startDrawing() {
+      isDrawing = true;
+      userMarkers.forEach(function(marker) {
+         marker.setMap(null);
+      });
+      userMarkers = [];
+
+      // Hide all fixed markers.
+      //fixedMarkers.forEach(function(marker) {
+      //marker.setVisible(false);
+      //});
+   }
+
+   function hideMarkers() {
+      // Hide all fixed markers.
+      fixedMarkers.forEach(function(marker) {
+         marker.setVisible(false);
+      });
+   }
+
+   function stopDrawing() {
+      var path = userMarkers.map(function(marker) {
+         return [ marker.getPosition().lng(), marker.getPosition().lat() ];
+      });
+      path.push(path[0]); // Add the first point to the end to close the polygon.
+      var polygon = turf.polygon([ path ]);
+      fixedMarkers.forEach(function(marker) {
+         var point = turf.point([ marker.getPosition().lng(),
+               marker.getPosition().lat() ]);
+         if (turf.booleanPointInPolygon(point, polygon)) {
+            marker.setVisible(true);
+         }
+      });
+      console.log(userMarkers.map(function(marker) {
+         return marker.getPosition();
+      }));
+   }
 
 
 </script>
@@ -735,6 +927,9 @@ function poiDetail(poiId) {
             <button id="btn_clear">마커 초기화</button>
               <button onclick="MapType('ROAD')">ROAD</button>
           </div>
+            <button onclick="startDrawing()">Start Drawing</button>
+            <button onclick="stopDrawing()">Stop Drawing</button>
+            <button onclick="hideMarkers()">Hide Markers</button>
          <div class="rst_wrap">
             <div class="rst_mCustomScrollbar" style="height: 346.5px; overflow: auto;">
                <ul id="searchResult" name="searchResult" style="padding-left: 20px;">

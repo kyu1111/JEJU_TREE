@@ -1,0 +1,65 @@
+@charset "UTF-8";
+#container {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+.kakao_id_title{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+}
+.share_id {
+	font-size: 36px;
+	font-weight: 550;
+}
+.title-account {
+	margin-top : 10px;
+	font-size: 12px;
+	letter-spacing: -0.9px;
+	color: #6a6a6a;
+	padding-bottom: 50px;
+	padding-right: 6px;
+}
+#kakaoJoinbtn {
+    font-size: 18px;
+    width: 70%; /* 버튼 너비 지정 */
+    height: 45px; /* 버튼 높이 지정 */
+    margin: 40px 0px 20px 0px; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    display: flex; /* 추가 */
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+#kakaoJoinbtn:hover {
+    background-color: #8bc9d2;
+}
+
+.kakao_id_text {
+	text-align: center;
+}
+.kakao_id_cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.kakao_id_span {
+	font-size: 11px;
+	padding: 5px 50px 5px 50px;
+	letter-spacing: -0.9px;
+	color: #6a6a6a;
+}

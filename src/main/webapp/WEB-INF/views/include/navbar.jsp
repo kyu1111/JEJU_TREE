@@ -17,7 +17,7 @@
     <div class="left">
         <a href="<%=request.getContextPath()%>/MainPage.go"><img src="/model/resources/images/title.png"></a>
     </div>
-           <div class="right">
+        <div class="right">
         <c:set var = "kakao_session" value="${Kakao_info}"/>
         <c:set var = "normal_session" value="${user_id}"/>
            <c:if test="${!empty user_id}">

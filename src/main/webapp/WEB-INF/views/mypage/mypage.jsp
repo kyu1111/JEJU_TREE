@@ -26,20 +26,18 @@
    <br>
    <br>
    <div class="container">
+   
 			<div id="your-plans" ondrop="drop(event)" ondragover="allowDrop(event)">
 				<h4>나의 일정</h4>
 				  <!--공유버튼 -->
                	  <c:if test="${!empty kakao_id }">
-		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${kakao_id}')">
-		          	일정공유
-		          </a>
+		          <button id = "sharePlan" onclick="opensharePage()">일정공유</button>
+		          <a onclick="sendLink();" value="공유하기">카카오톡 공유</a>
 		          </c:if>
 		          <c:if test="${!empty user_id }">
 		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <a id = "sharePlan" onclick="opensharePage('<%=request.getContextPath()%>/share.go?user_id=${user_id}')">
-		          	일정공유
-		          </a>
+		          <button id = "sharePlan" onclick="opensharePage()">일정공유</button>
+		          <a onclick="sendLink();" value="공유하기">카카오톡 공유</a>
 		          </c:if>
 				<c:set var="plan" value="${List }" />
 				<div class="plan_box">
@@ -112,7 +110,7 @@
 //공유 버튼을 누를경우 alert 메시지  
 //세션이 있는데 카카오 세션일 경우 카카오 회원가입 창으로 으로 전송
 //일반 유저의 세션인 경우 공유하기 페이지 윈도우 창으로 띄워주기
-function opensharePage(a){
+function opensharePage(){
        let uid = '${user_id}';   
        let kid = '${kakao_id}';
        console.log(kid);
@@ -132,7 +130,7 @@ function opensharePage(a){
                     //temporary 테이블에 이메일이 존재하고 연계회원가입이 되어 있는 경우.
                     if(result == 1){ 
                         //공유하는 창으로 보낸다.
-                        planlistcheck(kid,a);
+                        planlistcheck(kid);
                      //temporary 테이블에 이메일이 존재하지만 연계회원가입이 되어 있지 않은 경우.   
                      }else if(result == -1){
                         let ask_result = confirm('일정 공유 기능은 카카오톡연동회원만 가능합니다. 추가정보를 입력하여 가입하겠습니까?');
@@ -153,12 +151,11 @@ function opensharePage(a){
              }); 
           }else if(uid != '' &&  kid == ''){
               console.log(uid);
-              planlistcheck(uid,a);
+              planlistcheck(uid);
           }else{
              alert('로그인이 필요한 기능입니다.');
           }
     }
-    
     function planlistcheck(id,a){
        $.ajax({
           url : "planlistCheck.go",
@@ -172,9 +169,7 @@ function opensharePage(a){
                   //수정하는 창으로 보낸다.
                  let ask_result = confirm('일정정보를 공유하시겠습니까?');
                   if(ask_result){
-                     window.open(a, "친구에게 일정공유", 
-                          "titlebar=0,height=300,width=600,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0"
-                          , "");
+                	  sendLink();
                   }
                   //해당 아이디로 저장된 일정리스트가 없는 경우.   
                }else if(result == -1){
@@ -184,13 +179,8 @@ function opensharePage(a){
            error:function(error){
                alert("통신 오류.");
            } 
-          
        }); 
     }
-    
-       
-    
-    
     //정회원 회원 여부 구분 후 modify page 이동.
    function openModifyPage(){
       let kid = '${kakao_id}';
@@ -282,7 +272,6 @@ function opensharePage(a){
 			});
 		}
 	}
-   
    $(document).ready(function(){
        $(".deleteButton").click(function(e) {
            e.stopPropagation(); 
@@ -304,6 +293,46 @@ function opensharePage(a){
            });
        });
    });
+</script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script language="javascript">
+let parameter_id = '${user_id}';
+let normal_session = '${normal_session}'
+console.log('normal_session');
+//기존의 로그인 했던 카카오 유저의 친구목록 찌끄래기를 날려주는 메서드
+Kakao.init("ddee3a2c7a119e1824460c4c13d5fd83");
+try {
+  function sendLink() {
+	  /* if(normal_session != ''){
+			 Kakao.Auth.logout();
+		}  */
+
+		let is_guest = 'y';  
+    Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: 'JejuTree일정에 당신을 초대합니다.',
+        description: parameter_id + '님이 일정에 당신을 초대했어요',
+        imageUrl: 'https://ifh.cc/g/P8cvPg.png',
+        link: {
+          webUrl: 'http://localhost:8585/model/plan_list.go?id=' + parameter_id + '&is_guest=' + is_guest + '' // parameter_id 변수를 파라미터로 추가
+        },
+      },
+      buttons: [
+        {
+          title: '일정확인하기',
+          link: {
+            webUrl: 'http://localhost:8585/model/plan_list.go?id=' + parameter_id + '&is_guest=' + is_guest + '' // parameter_id 변수를 파라미터로 추가
+          },
+        },
+      ],
+    });
+  }
+
+  window.kakaoDemoCallback && window.kakaoDemoCallback();
+} catch (e) {
+  window.kakaoDemoException && window.kakaoDemoException(e);
+}
 </script>
 </body>
 <div class="mypage_footer">

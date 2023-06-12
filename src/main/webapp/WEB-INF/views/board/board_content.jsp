@@ -45,6 +45,10 @@
                <div class="board_board_col">
                <span id ="col_span">plan : </span>
                <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">${board_content.writer} 님의 시간표 보기</a></div>
+            </div>
+             <div id="table_row">
+               <div class="board_board_col">
+               <span id ="col_span">Dragplan : </span>
                <a class="planList_btn" href="get_others_plans.go?otherUserId=${board_content.writer}&is_guest=1">${board_content.writer}일정 보기</a></div>
             </div>
             <div id="table_row" class = "textarea_row">
@@ -106,7 +110,16 @@
 		   	    });
 		       
 		     function loadComments() {
-		    
+		    	 let kakao_id = '${kakao_id}';
+		    	 let normal_session = '${normal_session}';
+		    	 let writer = '';
+		    	 
+		    	 if(kakao_id != ''){
+		    		 writer = kakao_id;
+		    	 }else if(user_id != ''){
+		    		 writer = normal_session;
+		    	 }
+		    	 
 		         let commentListContainer = $('#commentListContainer');
 		         commentListContainer.empty();
 		   		
@@ -122,15 +135,17 @@
 		                     let commentHeader = $('<div class="comment-header"></div>');
 		                     
 		                     let writerSpan = $('<span class="writer"></span>').text(comment.writer);
-		                     console.log(comment.wirter);
 		                     let regdateSpan = $('<span class="regdate"></span>').text(comment.regdate);
-		                     console.log(comment.regdate);
 		                     commentHeader.append(writerSpan).append(regdateSpan);
 		                     let commentContent = $('<div class="comment-content"></div>');
 		                     let contentSpan = $('<span></span>').text(comment.content);
 		                     let btnwrap = $('<div class="btnwrap"></div>');
 		                     let editBtn = $('<button class = "editBtn"></button>').text('수정');
+		                     console.log(kakao_id);
+		                     console.log(normal_session);
 		                     let deleteBtn = $('<button = class="deleteBtn"></button></div>').text('삭제');
+		                     
+
 		                     editBtn.click(function() {
 		                              
 		                         let originalContent = contentSpan.text();
@@ -211,7 +226,9 @@
 		                           commentContent.append(contentSpan).append(btnwrap);
 		                           
 		                           commentListItem.append(commentHeader).append(commentContent);
-		                           
+		                           if (writer != comment.writer) {
+		                        	     btnwrap.hide(); // 수정 버튼 숨김
+				                    	} 
 		                           if (index < data.length - 1) {
 		                               let commentDivider = $('<div class="comment-divider"></div>');
 		                               commentListItem.append(commentDivider);

@@ -167,14 +167,14 @@ public class kakaoLoginController {
 				// share_id 전송 해주는 이유는 간직하다가 회원가입 직전에 insert 할떄 필요 하기 떄문.
 				out.println("<script>");
 				out.println("window.open('kakaoAlert.go?user_email=" + user_email + "&share_id=" + share_id
-						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
+						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=500,width=370,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
 				out.println("</script>");
 			} else if (kakao_user == null) {
 				// 최초 로그인이니까 임시정보 입력해버리기.
 				int check = dao.kakao_insert(user_email);
 				out.println("<script>");
 				out.println("window.open('kakaoAlert.go?user_email=" + user_email + "&share_id=" + share_id
-						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
+						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=500,width=370,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
 				out.println("</script>");
 			}
 		} else {
