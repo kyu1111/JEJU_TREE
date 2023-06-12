@@ -59,7 +59,7 @@
 	width: 40px;
 }
 
-#selectBtn1 {
+.selectBt {
 	border: none;
 	background-color: #99dce6;
 	color: white;
@@ -101,13 +101,13 @@
 	padding-left: 20;
 }
 
-.search_input {
-	width: 70%;
+.text_custom {
+	width: 60%;
 	height: 21px;
 	border: none;
 	border-bottom: 1px solid #6a6a6a;
 	margin-top: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	border-radius: 0 !important;
 	outline: none;
 }
@@ -217,7 +217,10 @@
 
 #crawlingResult {
 	width: 100%;
-	margin-top: 50px;
+}
+
+.crawling_title {
+	margin-top: 150px;
 }
 
 .crawling_title_b {
@@ -244,4 +247,86 @@
 
 .tmap_footer {
 	padding-top: 100px;
+}
+
+#btn_clear {
+	font-size: 14px;
+    width: 70px; /* 버튼 너비 지정 */
+    height: 25px; /* 버튼 높이 지정 */
+    margin: 8px 0; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+#btn_clear:hover {
+	background-color: #8bc9d2;
+}
+
+.map_div > div > div > div {
+	border: 1px solid #000;
+	padding: 0px !important;
+}
+
+.name_div, .addr_div {
+	font-family: "맑은 고딕", sans-serif;
+	font-size: 12px;
+}
+
+@media (max-width: 1300px) {
+  /* 768px 이상의 큰 화면에 대한 스타일 규칙 */
+  .weather_table {
+    padding-left: 450px; /* 큰 화면용 패딩 값 */
+  }
+}
+
+.search_intro {
+	font-size: 11px;
+	text-align: left;
+	color: #6a6a6a;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.start_bt {
+	font-size: 14px;
+    width: 70px; /* 버튼 너비 지정 */
+    height: 25px; /* 버튼 높이 지정 */
+    margin: 8px 0; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+.start_bt:hover {
+	background-color: #8bc9d2;
+}
+
+.end_bt {
+	font-size: 14px;
+    width: 50px; /* 버튼 너비 지정 */
+    height: 25px; /* 버튼 높이 지정 */
+    margin: 8px 0; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+.end_bt:hover {
+	background-color: #8bc9d2;
 }

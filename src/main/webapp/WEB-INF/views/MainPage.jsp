@@ -7,17 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mainpage/mainpage.css"> 
     <!-- Add jQuery library -->
-<<<<<<< HEAD
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-	 
-    <title>JEJU TREE</title>
-=======
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-    <title>GIF 슬라이드</title>
-   
->>>>>>> 36bf302a308ab63fa65e144cac396cb933db2f73
+    
+    <title>JEJU TREE</title>
     <script type="text/javascript">
         let slideIndex = 0;
 
@@ -81,17 +74,13 @@
 
 <!-- 상단바 설정하기  -->
 <%@ include file="./include/navbar.jsp" %>
-<<<<<<< HEAD
-	 <div class = "container">
-	 <div class="main_content">
-=======
+
     <div class = "container">
     
     <div class="main_content">
->>>>>>> 36bf302a308ab63fa65e144cac396cb933db2f73
      <div class="container_wrap">  
         <div class="intro-text" align="center">
-            <p style="font-size:26px; text-align: left; padding-left: 21%">
+            <p style="font-size:26px; text-align: left;">
                  <b style="font-size:28px;">JEJU TREE</b> 에서 손쉽게 <br>
                   여행 일정을 계획하세요.
             </p>
@@ -143,7 +132,7 @@
     <!-- 인스타 핫플 영역 -->
     <div class="container-insta-hot">
         <div class="insta-hot">
-            <h2 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h2>
+            <h3 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h3>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
             <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=엘리펀트힙">
            <img src="<%=request.getContextPath()%>/resources/images/카페 엘리펀트힙-470.jpg" alt="Image 1">
@@ -180,7 +169,7 @@
     <!-- 스테디 인기 영역 -->
     <div class="container-steady-hot">
         <div class="steady-hot">
-            <h2 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h2>
+            <h3 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h3>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
                  <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=오설록티뮤지엄">
            <img src="<%=request.getContextPath()%>/resources/images/오설록티뮤지엄-470.jpg" alt="Image 1">
@@ -217,7 +206,7 @@
     <!-- 사진 핫플 영역 -->
     <div class="container-photo-hot">
         <div class="photo-hot">
-            <h2 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h2>
+            <h3 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h3>
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
                  <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=김녕바다">
            <img src="<%=request.getContextPath()%>/resources/images/김녕바닷길-470.jpg" alt="Image 1">
@@ -265,10 +254,10 @@
 </script>
     <span class="to-top" onclick="scrollToTop()">&#9650;</span>
 
-	</div>
-	</div>
-	</body>
-	<div>
-   	<%@ include file="./include/footer.jsp" %>
+   </div>
+   </div>
+   </body>
+   <div>
+      <%@ include file="./include/footer.jsp" %>
    </div>
 </html>

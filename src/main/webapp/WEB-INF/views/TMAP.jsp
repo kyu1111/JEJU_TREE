@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>simpleMap</title>
 <!-- Add jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src = "https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/sidebar.css">
@@ -133,6 +134,11 @@ var infoWindow;
 var marker;
 var markerArr = [], labelArr = [];
 var popupCount2 = 0;
+var isDrawing = false;
+var fixedMarkers = [];
+var userMarkers = [];
+var infoWindow = null;  // 전역 변수로 선언
+
 // map 생성
 function initTmap() {
       // map 생성 
@@ -144,6 +150,123 @@ function initTmap() {
          // zoomControl : true,
        // scrollwheel : true
       });
+      
+      fixedMarkers[0] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.361666, 126.529166), // 한라산 국립공원
+         map : map,
+         visible : false
+      });
+
+      fixedMarkers[0].addListener( "click", function() {
+               var content = "<form id='infoWindowForm'>"
+                   + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+                   + "<div style='font-size: 12px; line-height: 15px;'>"
+                   + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>티맵 모빌리티"
+                   + "</div>"
+                   + "</div>"
+                   + "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+                   + "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"
+                   + "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"
+                   + "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울 중구 삼일대로 343 (우)04538</span>"
+                   + "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(지번) 저동1가 114</span>"
+                   + "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"
+                 //+ "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+                 //+ "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+                   + "<input type='submit' style='position: absolute; top: 0; right: 0;' value='Close' />"
+                   + "</div>"
+                   + "</div>"
+                   + "</form>";
+
+                     var infoWindow = new Tmapv2.InfoWindow({
+                        position : new Tmapv2.LatLng(33.361666, 126.529166),
+                        content : content,
+                        map : map
+                     });
+                     
+                  });
+
+      fixedMarkers[1] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.458875, 126.942933), // 성산일출봉
+         map : map,
+         visible : false
+      });
+
+      fixedMarkers[1].addListener( "click", function() {
+         var content = "<form id='infoWindowForm'>"
+             + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+             + "<div style='font-size: 12px; line-height: 15px;'>"
+             + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>티맵 모빌리티"
+             + "</div>"
+             + "</div>"
+             + "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+             + "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"
+             + "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"
+             + "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울 중구 삼일대로 343 (우)04538</span>"
+             + "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(지번) 저동1가 114</span>"
+             + "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"
+             //+ "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+             //+ "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+             + "<input type='submit' style='position: absolute; top: 0; right: 0;' value='Close' />"
+             + "</div>"
+             + "</div>"
+             + "</form>";
+
+                  var infoWindow = new Tmapv2.InfoWindow({
+                     position : new Tmapv2.LatLng(33.458875, 126.942933),
+                     content : content,
+                     map : map
+                  });
+                  
+               });
+
+      fixedMarkers[2] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+         map : map,
+         visible : false
+      });
+
+      fixedMarkers[2].addListener( "click", function() {
+         var content = "<form id='infoWindowForm'>"
+             + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
+             + "<div style='font-size: 12px; line-height: 15px;'>"
+             + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>티맵 모빌리티"
+             + "</div>"
+             + "</div>"
+             + "<div style='position: relative; padding-top: 5px; display:inline-block'>"
+             + "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"
+             + "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"
+             + "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울 중구 삼일대로 343 (우)04538</span>"
+             + "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(지번) 저동1가 114</span>"
+             + "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"
+             //+ "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+             //+ "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+             + "<input type='submit' style='position: absolute; top: 0; right: 0;' value='Close' />"
+             + "</div>"
+             + "</div>"
+             + "</form>";
+
+                  var infoWindow = new Tmapv2.InfoWindow({
+                     position : new Tmapv2.LatLng(33.455483, 126.768394),
+                     content : content,
+                     map : map
+                  });
+                  
+               });
+
+      map.addListener("click", function(e) {
+               if (isDrawing) {
+                  var position = new Tmapv2.LatLng(e.latLng.lat(),
+                        e.latLng.lng());
+                  var marker = new Tmapv2.Marker({
+                     position : position,
+                     map : map
+                  });
+                  userMarkers.push(marker);
+                  if (userMarkers.length == 4) {
+                     drawPolygon();
+                  }
+               }
+            });
    // 2. POI 통합 검색 API 요청
   $("#btn_select").click(
      function() {
@@ -196,14 +319,11 @@ function initTmap() {
                  var pointCng = new Tmapv2.Point(
                        noorLon, noorLat);
                  // EPSG3857좌표계를 WGS84GEO좌표계로 변환
-                 var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
-                       pointCng);
+                 var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
                  var lat = projectionCng._lat;
                  var lon = projectionCng._lng;
                  // 좌표 설정
-                 var markerPosition = new Tmapv2.LatLng(
-                       lat, lon);
-
+                 var markerPosition = new Tmapv2.LatLng(lat, lon);
                  // Marker 설정
                  marker = new Tmapv2.Marker(
                     {
@@ -451,7 +571,7 @@ function initTmap() {
                    "<input type='hidden' name='title' value='" + item.title + "'>" +
                    "<input type='hidden' name='addr' value='" + item.addr1 + "'>" +
                    "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>" +
-                   "<button id='" + selectButtonId2 + "' type='submit'>일정 추가</button><a id='" + closeButtonId2 + "' class='close-btn'>×</a></div>" + 
+                   "<button class='selectBt' id='" + selectButtonId2 + "' type='submit'>일정 추가</button><a id='" + closeButtonId2 + "' class='close-btn'>×</a></div>" + 
                    "<input type='hidden' name='location' value='" + item.title + "'>" +
                    "<input type='hidden' name='markerLat' value='" + latlng._lat + "'>" + // latitude input field
                    "<input type='hidden' name='markerLng' value='" + latlng._lng + "'>" + // longitude input field
@@ -537,12 +657,11 @@ function initTmap() {
 
 var popupCount = 0;
 
-//4. POI 상세 정보 API
+// 4. POI 상세 정보 API
 function poiDetail(poiId) {
    console.log(poiId);
    var headers = {}; 
    headers["appKey"]="857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ";
-
    $.ajax({
       method : "GET", // 요청 방식
       headers : headers,
@@ -556,72 +675,62 @@ function poiDetail(poiId) {
          var detailInfo = response.poiDetailInfo;
          var name = detailInfo.name;
          var address = detailInfo.address;
-
          var noorLat = Number(detailInfo.frontLat);
          var noorLon = Number(detailInfo.frontLon);
-
          var pointCng = new Tmapv2.Point(noorLon, noorLat);
          var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
                pointCng);
-
          var lat = projectionCng._lat;
          var lon = projectionCng._lng;
-
          var labelPosition = new Tmapv2.LatLng(lat, lon);
-         
          popupCount++;
-         
          var popupId = 'popup' + popupCount;
          var selectButtonId = 'selectBtn' + popupCount;
          var closeButtonId = 'closeBtn' + popupCount;
-         
          // 상세보기 클릭 시 지도에 표출할 popup창
          var content = "<form id='" + popupId + "' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post' style='background-color: white; font-size: 14px;' >"
-                        + "<input type='hidden' name='title' value='" + name + "'>"
-                        + "<input type='hidden' name='addr' value='" + address + "'>"
-                        + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>"
-                            + "<button id='" + selectButtonId + "' type='submit'>일정 추가</button><a id='" + closeButtonId + "' class='close-btn'>×</a></div>"
-                        + "<input type='hidden' name='location' value='비자림'>"
-                        + "<input type='hidden' name='markerLat' value='" + lat + "'>" // latitude input field
-                        + "<input type='hidden' name='markerLng' value='" + lon + "'>" // longitude input field 
-                        + "<div style='padding:10px; width:250px;'>"
-                        + name
-                        + "<div>"
-                        + address
-                        + "</div>"
-                        // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
-                        + "<p class='start'>입장 : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
-                        + "<p class='end'>퇴장 : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
-                        + "</form>";
-
-                  var labelInfo = new Tmapv2.Label({
-                     position : labelPosition,
-                     content : content,
-                     map : map
-                  });
-
-                  $(document).on('click', '#' + closeButtonId,
-                        function() {
-                           labelInfo.setMap(null); // Removes the label (popup) from the map
-                           $(this).off('click');
-                        });
-
-                  document.getElementById('selectBtn').addEventListener('click',function(e) {
-                      console.log('The select button was clicked.');
-                   });
-
-                  //popup 생성
-
-                  // popup들을 담을 배열에 팝업 저장
-                  labelArr.push(labelInfo);
-               },
-               error : function(request, status, error) {
-                  console.log("code:" + request.status + "\n"
-                        + "message:" + request.responseText + "\n"
-                        + "error:" + error);
-               }
-            });
-   } // 종료.
+                     + "<input type='hidden' name='title' value='" + name + "'>"
+                     + "<input type='hidden' name='addr' value='" + address + "'>"
+                     + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+ name +"\")\'><i id='heart' class='fas fa-heart'></i></a>"
+                     + "<button class='selectBt' id='" + selectButtonId + "' type='submit'>일정 추가</button><a id='" + closeButtonId + "' class='close-btn'>×</a></div>"
+                     + "<input type='hidden' name='location' value='비자림'>"
+                     + "<input type='hidden' name='markerLat' value='" + lat + "'>" // latitude input field
+                     + "<input type='hidden' name='markerLng' value='" + lon + "'>" // longitude input field 
+                     + "<div class='name_div' style='padding:10px; width:250px;'>" + name
+                     + "<div class='addr_div'>"
+                     + address
+                     + "</div>"
+                     // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
+                     + "<p>입장 : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+                     + "<p>퇴장 : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+                     + "</form>";
+               var labelInfo = new Tmapv2.Label({
+                  position : labelPosition,
+                  content : content,
+                  map : map
+               });
+               
+               $(document).on('click', '#' + closeButtonId,
+                     function() {
+                        labelInfo.setMap(null); // Removes the label (popup) from the map
+                        $(this).off('click');
+                     });
+               
+               document.getElementById('selectBtn').addEventListener('click',function(e) {
+                   console.log('The select button was clicked.');
+                });
+               
+               //popup 생성
+               // popup들을 담을 배열에 팝업 저장
+               labelArr.push(labelInfo);
+            },
+            error : function(request, status, error) {
+               console.log("code:" + request.status + "\n"
+                     + "message:" + request.responseText + "\n"
+                     + "error:" + error);
+            }
+         });
+} // 종료.
 
    $(document).ready(function() {
       $('.location').click(function() {
@@ -724,7 +833,76 @@ function poiDetail(poiId) {
        }else if("ROAD" == type){
            map.setMapType(Tmapv2.Map.MapType.ROAD)
        }
-   }   
+   }
+   
+   // form의 제출 이벤트에 대응하는 함수.
+   function closeInfoWindow(event) {
+     event.preventDefault();
+     if (infoWindow !== null) {
+       infoWindow.setMap(null);  // InfoWindow를 제거.
+       infoWindow = null;
+     }
+   }
+   
+   // form의 제출 이벤트에 대응하는 함수를 전역으로 등록.
+   window.addEventListener('load', function() {
+     document.getElementById('infoWindowForm').addEventListener('submit', closeInfoWindow);
+   });
+   
+   function drawPolygon() {
+      var path = userMarkers.map(function(marker) {
+         return marker.getPosition();
+      });
+      path.push(userMarkers[0].getPosition());
+      var polygon = new Tmapv2.Polygon({
+         path : path,
+         strokeColor : "#000000",
+         strokeOpacity : 0.5,
+         strokeWeight : 2,
+         fillColor : "#000000",
+         fillOpacity : 0.35,
+         map : map
+      });
+      isDrawing = false;
+   }
+
+   function startDrawing() {
+      isDrawing = true;
+      userMarkers.forEach(function(marker) {
+         marker.setMap(null);
+      });
+      userMarkers = [];
+
+      // Hide all fixed markers.
+      //fixedMarkers.forEach(function(marker) {
+      //marker.setVisible(false);
+      //});
+   }
+
+   function hideMarkers() {
+      // Hide all fixed markers.
+      fixedMarkers.forEach(function(marker) {
+         marker.setVisible(false);
+      });
+   }
+
+   function stopDrawing() {
+      var path = userMarkers.map(function(marker) {
+         return [ marker.getPosition().lng(), marker.getPosition().lat() ];
+      });
+      path.push(path[0]); // Add the first point to the end to close the polygon.
+      var polygon = turf.polygon([ path ]);
+      fixedMarkers.forEach(function(marker) {
+         var point = turf.point([ marker.getPosition().lng(),
+               marker.getPosition().lat() ]);
+         if (turf.booleanPointInPolygon(point, polygon)) {
+            marker.setVisible(true);
+         }
+      });
+      console.log(userMarkers.map(function(marker) {
+         return marker.getPosition();
+      }));
+   }
 
 
 </script>
@@ -747,12 +925,21 @@ function poiDetail(poiId) {
                     <input type="text" class="text_custom" id="searchKeyword" name="searchKeyword" value="<%=request.getAttribute("searchKeyword")%>">
                 </c:otherwise>
             </c:choose>&nbsp;&nbsp;&nbsp;
-            <button class="search_bt" id="btn_select">적용하기</button>
-            <button id="btn_clear">마커 초기화</button>
-              <button onclick="MapType('ROAD')">ROAD</button>
-          </div>
+            <button class="search_bt" id="btn_select">검색</button>
+            <button id="btn_clear">초기화</button>
+            <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
+            <button class="end_bt" onclick="stopDrawing()">끝점</button>
+           </div> 
+           
+            <div class="search_intro">
+            	<span>
+            		시작점 버튼을 누른 후 추출하고 싶은 장소 주위를 지도에 찍어보세요.<br>
+            		그 후 끝점을 누르면 시작점 좌표 중심에 추출하고 싶던 장소가 표시됩니다.
+            	</span>
+            </div>
+            
          <div class="rst_wrap">
-            <div class="rst_mCustomScrollbar" style="height: 346.5px; overflow: auto;">
+            <div class="rst_mCustomScrollbar" style="height: 277px; overflow: auto;">
                <ul id="searchResult" name="searchResult" style="padding-left: 20px;">
                   <li class="search_list">검색결과</li>
                </ul>
@@ -762,103 +949,106 @@ function poiDetail(poiId) {
 
 
 
-    <div id="map_div" class="map_wrap" style="float:left">
+    <div class="map_div" id="map_div" class="map_wrap" style="float:left">
         <!-- 맵 생성 실행 -->
-	</div>
+   </div>
     
     <!-- 사이드바 설정하기 -->
-	<div id = "container">
-	<%@ include file="./include/sidebar2.jsp" %>
-	<c:if test="${!empty user_id}">
-	<div class="planList_btn_div" align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')"><b class="text_b">일정 관리</b></a></div>
-	</c:if>
-	
-	<c:if test="${!empty kakao_id}">
-	<div class="planList_btn_div"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}')"><b class="text_b">일정 관리</b></a></div>
-	</c:if>
-	
-	<c:if test="${empty user_id and empty kakao_id}">
-	<div class="no_logind_planList_btn_div"></div>
-	</c:if>
-	
-	
+   <div id = "container">
+   <%@ include file="./include/sidebar2.jsp" %>
+   <c:if test="${!empty user_id}">
+   <div class="planList_btn_div" align="center"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath()%>/plan_list.go?id=${user_id}')"><b class="text_b">일정 관리</b></a></div>
+   </c:if>
+   
+   <c:if test="${!empty kakao_id}">
+   <div class="planList_btn_div"><a class = "planList_btn" onclick="planList_check('<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}')"><b class="text_b">일정 관리</b></a></div>
+   </c:if>
+   
+   <c:if test="${empty user_id and empty kakao_id}">
+   <div class="no_logind_planList_btn_div"></div>
+   </c:if>
+   
+   
 
         <!-- 날씨 관련 출력창 -->
         <div id="weather-widget" style="float:center" height="400" width="800">
-		    <table class="weather_table">
-		        <tr>
-		            <td>
-		               <div id="date1">
-		               
-		               </div>
-		                <div id="weather">
-		                    <img id="icon" src="" alt="">
-		                </div>
-		                <div id="temperature">
-		                    <p id="temp"></p>
-		                </div>
-		            </td>
-		            <td>
-		               <div id=date2>
-		               
-		               </div>
-		                <div id="forecast-day2">
-		                    <div id="forecast-weather">
-		                        <img id="day2-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day2">
-		                        <p id="forecast-temp-day2"></p>
-		                    </div>
-		                </div>
-		            </td>
-		            <td>
-		               <div id="date3">
-		               
-		               </div>
-		                <div id="forecast-day3">
-		                    <div id="forecast-weather">
-		                        <img id="day3-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day3">
-		                        <p id="forecast-temp-day3"></p>
-		                    </div>
-		                </div>
-		            </td>
-		            <td>
-		               <div id="date4">
-		               
-		               </div>
-		                <div id="forecast-day4">
-		                    <div id="forecast-weather">
-		                        <img id="day4-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day4">
-		                        <p id="forecast-temp-day4"></p>
-		                    </div>
-		                </div>
-		            </td>
-		            <td>
-		               <div id="date5">
-		               
-		               </div>
-		                <div id="forecast-day5">
-		                    <div id="forecast-weather">
-		                        <img id="day5-icon" src="" alt="">
-		                    </div>
-		                    <div id="forecast-info-day5">
-		                        <p id="forecast-temp-day5"></p>
-		                    </div>
-		                </div>
-		            </td>
-		        </tr>
-		    </table>
-		</div>
-	</div>	<!-- container div end -->	
-	
+          <table class="weather_table">
+              <tr>
+                  <td>
+                     <div id="date1">
+                     
+                     </div>
+                      <div id="weather">
+                          <img id="icon" src="" alt="">
+                      </div>
+                      <div id="temperature">
+                          <p id="temp"></p>
+                      </div>
+                  </td>
+                  <td>
+                     <div id=date2>
+                     
+                     </div>
+                      <div id="forecast-day2">
+                          <div id="forecast-weather">
+                              <img id="day2-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day2">
+                              <p id="forecast-temp-day2"></p>
+                          </div>
+                      </div>
+                  </td>
+                  <td>
+                     <div id="date3">
+                     
+                     </div>
+                      <div id="forecast-day3">
+                          <div id="forecast-weather">
+                              <img id="day3-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day3">
+                              <p id="forecast-temp-day3"></p>
+                          </div>
+                      </div>
+                  </td>
+                  <td>
+                     <div id="date4">
+                     
+                     </div>
+                      <div id="forecast-day4">
+                          <div id="forecast-weather">
+                              <img id="day4-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day4">
+                              <p id="forecast-temp-day4"></p>
+                          </div>
+                      </div>
+                  </td>
+                  <td>
+                     <div id="date5">
+                     
+                     </div>
+                      <div id="forecast-day5">
+                          <div id="forecast-weather">
+                              <img id="day5-icon" src="" alt="">
+                          </div>
+                          <div id="forecast-info-day5">
+                              <p id="forecast-temp-day5"></p>
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+          </table>
+      </div>
+   </div>   <!-- container div end -->   
+   
 
 <div id="crawlingResult" align="center">
     <!-- 크롤링 결과 -->
-    <div class="crawling_title"><b class="crawling_title_b">제주 여행지 추천 자료</b></div>
+    <c:if test="${!empty crawlingDataList}">
+        <div class="crawling_title"><b class="crawling_title_b">제주 여행지 추천 자료</b></div>
+    </c:if>
+    
     <table class="crawling_table" border="0" cellspacing="0">
         <tr>
             <th id="titleHeader" colspan="5"></th>
@@ -875,7 +1065,6 @@ function poiDetail(poiId) {
                 </a>
             </td>
             <c:if test="${loop.index % 5 == 4 or loop.last}">
-                </tr>
             </c:if>
         </c:forEach>
     </table>
@@ -891,7 +1080,7 @@ function poiDetail(poiId) {
 </body>
 
 <div class="tmap_footer">
-	<%@ include file="./include/footer.jsp" %>
+   <%@ include file="./include/footer.jsp" %>
 </div>
 
 </html>

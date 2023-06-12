@@ -46,34 +46,46 @@ body {
    padding: 3px 9px; /* 필요에 따라 조정하세요 */
 }
 
+#mypage_profile .change_profile_btn:hover {
+ background-color: #8bc9d2;
+}
+
 #mypage_profile p {
   padding-top: 0;
   margin-top: 0;
 }
 
+#sharePlan #sharePlan {
+   color: #6a6a6a;
+   font-size: 14px;
+   cursor: pointer;
+   font-weight: bold;
+}
+
 .draggable {
-	cursor: move;
+   cursor: move;
 }
 
 .container {
-	position: relative;
+   position: relative;
     top: 100px; /* 원하는 만큼의 픽셀 값으로 조정 */
-	display: flex;
-	justify-content: space-around;
+   display: flex;
+   justify-content: space-around;
 }
 
 #your-plans, #others-plans {
-	min-height: 50px;
-	border: 1px solid #aaa;
-	border-radius: 2%;
-	margin-top: 200px;
-	margin-bottom: 200px;
-	padding: 10px;
-	width: 35%; /* Adjust this value to change the width of the boxes */
+   min-height: 50px;
+   border: 1px solid #aaa;
+   border-radius: 2%;
+   margin-top: 200px;
+   margin-bottom: 200px;
+   padding: 10px;
+   width: 35%; /* Adjust this value to change the width of the boxes */
     align-items: center;
  margin: 0 10px; /* Adjust the margin value as needed */
   flex-basis: 40%; /* Adjust the flex-basis value as needed */    
 }
+
 .plan_box {
   display: flex;
   flex-wrap: wrap;
@@ -83,7 +95,7 @@ body {
 }
 
 .plan_box p {
-  display: flex;
+  display: inline-flex;
   align-items: center;
 }
 
@@ -95,16 +107,61 @@ body {
 .plan_box .details {
   display: none;
 }
+.plan_box .hidden {
+  display: none;
+  color: #FFF;
+}
 .plan_box .plan {
+   
   flex-basis: calc(33.33% - 10px);
   margin: 5px;
   transition: box-shadow 0.3s ease;
   flex-direction: column;
 }
 
+.plan_box .location_img{
+    height: 150px;
+  width: 200px
+}
+.plan_box .default_location_img{
+    height: 150px;
+  width: 150px;
+}
+
 .plan-shadow:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+.search_share {
+    font-size: 14px;
+    width: 50px; /* 버튼 너비 지정 */
+    height: 25px; /* 버튼 높이 지정 */
+    margin: 8px 0; /* 버튼 간격 조정 */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #99dce6;
+    transition: background-color 0.3s;
+    justify-content: center; /* 추가 */
+    align-items: center; /* 추가 */
+}
+
+ .search_share:hover {
+      background-color: #8bc9d2;
+}
+
 .mypage_footer {
-	padding-top : 500px;
+   padding-top : 400px;
+}
+
+.plan_box .deleteButton {
+  border: 0;
+  background-color: #FFF;
+  font-size: 14px;
+}
+
+
+.deleteButton:hover {
+   color: #99dce6;
 }
