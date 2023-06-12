@@ -3,6 +3,10 @@
 제주도로 여행을 일정표 형식으로 짜고 공유할 수 있는 앱입니다.
 지도 검색, 경유지 경로 최적화, 폴리곤, 캘린더 일정 수정, 동행 모집과 같은 기능을 가진 Spring Framework를 이용하여 제주도 여행 플래너 웹 애플리케이션을 제작하였습니다.
 
+# 기술 스택
+java, spring, javascript, jquery, ajax, tomcat, mysql, 
+api, html5/css, library(toast_calendar), Adobe Photoshop
+
 # 프로젝트 기간 & 팀원
 2023 05/8 ~ 6/15 1개월
 석하림 - 
@@ -18,12 +22,6 @@
 
 
 # Usecase
-
-
-# 기술 스택
-java, spring, javascript, jquery, ajax, tomcat, mysql, 
-api, html5/css, library(toast_calendar), Adobe Photoshop
-
 
 # 기능 소개
 1. 메인페이지 - 사진 클릭 시 지도에 키워드에 해당하는 마커 띄우기, 관리자와 채팅 api
