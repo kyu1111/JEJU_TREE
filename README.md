@@ -1,27 +1,37 @@
 # JEJU_TREE
 프로젝트 개요
-제주도로 여행을 일정표 형식으로 짜고 공유할 수 있는 앱입니다.
-지도 검색, 경유지 경로 최적화, 폴리곤, 캘린더 일정 수정, 동행 모집과 같은 기능을 가진 Spring Framework를 이용하여 제주도 여행 플래너 웹 애플리케이션을 제작하였습니다.
+<bn>
+제주도 여행은 많은 사람들이 코로나 완화 이후 기대하고 있는 특별한 경험입니다. 그러나 제주도의 넓은 지역과 다양한 명소들로 인해 여행 일정을 계획하는 것은 복잡성을 가지고 있습니다. 특히 코 로나 완화 이후 여행객의 증가로 인해 일정을 조율하는 것이 더욱 중요해졌습니다. ​
+<br>JEJUTREE는 사용자들에게 제주도 여행 일정을 계획하는 데 필요한 정보를 제공하여 증가하는 여행객들이 더 효 율적으로 여행을 즐길 수 있도록 도와줍니다.
 
 # 기술 스택
-java, spring, javascript, jquery, ajax, tomcat, mysql, 
-api, html5/css, library(toast_calendar), Adobe Photoshop
+ <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/fontawesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white">
+
 
 # 프로젝트 기간 & 팀원
 2023 05/8 ~ 6/15 1개월
+<br>
 석하림 - 
+<br>
 황규한 - 
+<br>
 홍재영 - 
+<br>
 도수경 - 
+<br>
 김정빈 - 
 
 # 요구사항 정의서
+![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/720dcf4f-dade-42d4-907e-192337d2c70a)
 
+
+ 
 # ERD<br>
 <img width="543" alt="jeju_tree_erd" src="https://github.com/harim-000/JEJU_TREE/assets/81612425/2a300a51-0de5-4f47-bacd-0b4121b00af6">
 
 
 # Usecase
+![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/dc0e18e2-a25a-4c9f-b888-f7ce9c2bd204)
 
 # 기능 소개
 1. 메인페이지 - 사진 클릭 시 지도에 키워드에 해당하는 마커 띄우기, 관리자와 채팅 api
@@ -36,9 +46,14 @@ api, html5/css, library(toast_calendar), Adobe Photoshop
 
 # reference(API 주소 등등)
 https://tmapapi.sktelecom.com
+ <br>
 https://channel.io/ko
+ <br>
 https://github.com/nhn/tui.calendar
+ <br>
 https://www.data.go.kr/    => tour 4.0
+ <br>
 https://developers.kakao.com/ => 로그인, 공유
+ <br>
 https://openweathermap.org/api
 
