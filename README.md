@@ -23,37 +23,31 @@
 
 # 요구사항 정의서
 ![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/720dcf4f-dade-42d4-907e-192337d2c70a)
-
-
  
 # ERD<br>
 <img width="543" alt="jeju_tree_erd" src="https://github.com/harim-000/JEJU_TREE/assets/81612425/2a300a51-0de5-4f47-bacd-0b4121b00af6">
 
 
-# 기능 소개
+# 기능 구조
 ![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/dc0e18e2-a25a-4c9f-b888-f7ce9c2bd204)
 
-# 기능 소개
-1. 메인페이지 - 사진 클릭 시 지도에 키워드에 해당하는 마커 띄우기, 관리자와 채팅 api
-2. 일정 저장 페이지 - 사용자가 키워드 검색 및 지도를 통해 일정 추가 기능, 일정을 검색할 때마다 장소에 맞는 추천 여행지를 크롤링, 실시간 날씨 보이게 하는 기능
-3. 일정관리 페이지 - 캘린더에서 드래그&드롭  방식으로 일정을 수정할 수 있음, 마커 사이에 폴리곤 띄워서 새로운 여행지 추천도 가능
-4. 마이페이지 - 일정 드래그 및 상대방과 일정공유, 본인 일정 삭제하 게시판
-5. 사이드 페이지 - 지도에서 찜 누른 목록 보여주기 및 해제 기능이 있는 페이지
+#기능 소개
  
  
 # 시연(데모 링크 or 배포링크)
  
 
 # reference(API 주소 등등)
+🔎
 https://tmapapi.sktelecom.com
  <br>
 https://channel.io/ko
  <br>
 https://github.com/nhn/tui.calendar
  <br>
-https://www.data.go.kr/    => tour 4.0
+https://www.data.go.kr/ 
  <br>
-https://developers.kakao.com/ => 로그인, 공유
+https://developers.kakao.com/ 
  <br>
 https://openweathermap.org/api
 
