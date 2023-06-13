@@ -30,7 +30,7 @@
 <img width="543" alt="jeju_tree_erd" src="https://github.com/harim-000/JEJU_TREE/assets/81612425/2a300a51-0de5-4f47-bacd-0b4121b00af6">
 
 
-# Usecase
+# 기능 소개
 ![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/dc0e18e2-a25a-4c9f-b888-f7ce9c2bd204)
 
 # 기능 소개
