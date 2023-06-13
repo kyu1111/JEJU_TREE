@@ -120,5 +120,8 @@
 		<select id="selfShareCheck" parameterType="java.util.HashMap" resultType="int">
 			select count(*) from plan_participants where user_id = #{user_id} and user_share_id= #{user_share_id}
 		</select>
+		<select id="participantsList" resultType="participantsDto" parameterType="String">
+			select * from plan_participants where user_id = #{user_id}
+		</select>
  </mapper>
  

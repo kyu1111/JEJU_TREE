@@ -18,7 +18,17 @@
     <div id="mypage_profile">
         <img src="<%=request.getContextPath() %>${user.user_image }" alt="profile" class="profile_img" />
         <input type="hidden" name="user_image" value="${user.user_image }"><p>${user.user_nickname }</p>
+          <c:set var = "participantlist" value="${participantlist}"/>
          <button class="change_profile_btn" onclick="openModifyPage()">프로필 수정</button>
+         <!--동행자 목록 a태그 옵션 박스 -->
+         <c:forEach items="${participantlist}" var="participant">
+    		<select onchange="location.href='plan_list.go?id=${participant.user_share_id}'">
+        		<option>동행자 목록</option>
+        		<option value="plan_list.go?id=${participant.user_share_id}">
+           		 ${participant.user_share_id} 님과의 일정 확인
+        		</option>
+    		</select>
+		  </c:forEach>
    </div>
    <br>
    <br>

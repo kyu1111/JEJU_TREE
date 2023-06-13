@@ -160,13 +160,16 @@ html, body {
 #paging_area {
 	display: flex;
 	justify-content: center;
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 #paging_area a {
 	cursor: pointer;
 	text-decoration: none;
 	background: none;
+	color: #6a6a6a;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 #paging_area a:hover {

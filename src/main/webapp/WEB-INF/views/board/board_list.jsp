@@ -49,7 +49,7 @@
 			<div id="paging_area">
 				<c:if test="${paging.page > paging.block }">
 					<a href="PlanBoardList.go?page=1">처음으로</a>
-					<a href="PlanBoardList.go?page=${paging.startBlock - 1 }">back</a>
+					<a href="PlanBoardList.go?page=${paging.startBlock - 1 }">이전</a>
 				</c:if>
 				<c:forEach begin="${paging.startBlock }" end="${paging.endBlock }"
 					var="i">
@@ -61,8 +61,8 @@
 					</c:if>
 				</c:forEach>
 				<c:if test="${paging.endBlock < paging.allPage }">
-					<a href="PlanBoardList.go?page=${paging.endBlock + 1 }">next</a>
-					<a href="PlanBoardList.go?page=${paging.allPage }">[마지막으로]</a>
+					<a href="PlanBoardList.go?page=${paging.endBlock + 1 }">다음</a>
+					<a href="PlanBoardList.go?page=${paging.allPage }">마지막</a>
 				</c:if>
 			</div>
 			<div id="board_searchform">
