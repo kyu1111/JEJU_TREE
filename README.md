@@ -23,7 +23,10 @@ api, html5/css, library(toast_calendar), Adobe Photoshop
 
 # 요구사항 정의서
  ![요구사항 정의서1 2023-06-13 오후 12_05_21](https://github.com/harim-000/JEJU_TREE/assets/81612425/d1bb81d9-df05-431f-81c0-d3fbeb42d430)
-<img width="543" alt="요구사항 정의서1" src="[https://github.com/harim-000/JEJU_TREE/assets/81612425/2a300a51-0de5-4f47-bacd-0b4121b00af6](https://github.com/harim-000/JEJU_TREE/assets/81612425/d1bb81d9-df05-431f-81c0-d3fbeb42d430)">
+![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/ba3dc425-ae0d-4b66-82b5-fed65fbc33fd)
+![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/c10c2ca7-4326-4916-8154-2297268fe4b6)
+![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/bf8af207-1413-4fcd-a17f-21b7082c5d7f)
+![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/e72da621-24aa-4535-8754-53fb0a12f331)
 
  
 # ERD<br>
