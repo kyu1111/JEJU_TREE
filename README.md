@@ -40,7 +40,7 @@
 # 🔎 reference(API 주소 등등)
 TMAP API 👉  https://tmapapi.sktelecom.com
  <br>
-채넗톡 API 👉 https://channel.io/ko
+채널톡 API 👉 https://channel.io/ko
  <br>
 토스트 캘린더 API 👉 https://github.com/nhn/tui.calendar
  <br>
