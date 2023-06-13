@@ -22,12 +22,19 @@ api, html5/css, library(toast_calendar), Adobe Photoshop
 김정빈 - 
 
 # 요구사항 정의서
+ ![요구사항 정의서1 2023-06-13 오후 12_05_21](https://github.com/harim-000/JEJU_TREE/assets/81612425/d1bb81d9-df05-431f-81c0-d3fbeb42d430)
+![요구사항 정의서2 2023-06-13 오후 12_08_08](https://github.com/harim-000/JEJU_TREE/assets/81612425/bec7ef38-2eeb-4861-8c72-1b01166b9809)
+![요구사항 정의서3 2023-06-13 오후 12_09_15](https://github.com/harim-000/JEJU_TREE/assets/81612425/9a9a94f0-1bfc-4932-87f1-c2d70a6a9ca2)
+![요구사항 정의서4 2023-06-13 오후 12_11_04](https://github.com/harim-000/JEJU_TREE/assets/81612425/68434f38-81a4-41f5-bd26-7bbd30e54d71)
+![요구사항 정의서6 2023-06-13 오후 12_09_15](https://github.com/harim-000/JEJU_TREE/assets/81612425/613100d7-91cb-4e94-86fb-424adf4d2bc0)
 
+ 
 # ERD<br>
 <img width="543" alt="jeju_tree_erd" src="https://github.com/harim-000/JEJU_TREE/assets/81612425/2a300a51-0de5-4f47-bacd-0b4121b00af6">
 
 
 # Usecase
+![image](https://github.com/harim-000/JEJU_TREE/assets/81612425/dc0e18e2-a25a-4c9f-b888-f7ce9c2bd204)
 
 # 기능 소개
 1. 메인페이지 - 사진 클릭 시 지도에 키워드에 해당하는 마커 띄우기, 관리자와 채팅 api
