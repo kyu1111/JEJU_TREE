@@ -1,7 +1,8 @@
 # JEJU_TREE
 프로젝트 개요
-제주도로 여행을 일정표 형식으로 짜고 공유할 수 있는 앱입니다.
-지도 검색, 경유지 경로 최적화, 폴리곤, 캘린더 일정 수정, 동행 모집과 같은 기능을 가진 Spring Framework를 이용하여 제주도 여행 플래너 웹 애플리케이션을 제작하였습니다.
+<bn>
+제주도 여행은 많은 사람들이 코로나 완화 이후 기대하고 있는 특별한 경험입니다. 그러나 제주도의 넓은 지역과 다양한 명소들로 인해 여행 일정을 계획하는 것은 복잡성을 가지고 있습니다. 특히 코 로나 완화 이후 여행객의 증가로 인해 일정을 조율하는 것이 더욱 중요해졌습니다. ​
+<br>JEJUTREE는 사용자들에게 제주도 여행 일정을 계획하는 데 필요한 정보를 제공하여 증가하는 여행객들이 더 효 율적으로 여행을 즐길 수 있도록 도와줍니다.
 
 # 기술 스택
 java, spring, javascript, jquery, ajax, tomcat, mysql, 
@@ -9,10 +10,15 @@ api, html5/css, library(toast_calendar), Adobe Photoshop
 
 # 프로젝트 기간 & 팀원
 2023 05/8 ~ 6/15 1개월
+<br>
 석하림 - 
+<br>
 황규한 - 
+<br>
 홍재영 - 
+<br>
 도수경 - 
+<br>
 김정빈 - 
 
 # 요구사항 정의서
@@ -36,9 +42,14 @@ api, html5/css, library(toast_calendar), Adobe Photoshop
 
 # reference(API 주소 등등)
 https://tmapapi.sktelecom.com
+ <br>
 https://channel.io/ko
+ <br>
 https://github.com/nhn/tui.calendar
+ <br>
 https://www.data.go.kr/    => tour 4.0
+ <br>
 https://developers.kakao.com/ => 로그인, 공유
+ <br>
 https://openweathermap.org/api
 
