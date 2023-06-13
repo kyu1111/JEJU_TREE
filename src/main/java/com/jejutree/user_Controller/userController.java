@@ -78,44 +78,46 @@ public class userController {
 	public void user_join_ok(@RequestParam(value = "upload") MultipartFile mFile, HttpServletResponse response, UserDTO dto, HttpServletRequest request, HttpSession session,
 			@RequestParam(value = "share_id", required = false) String user_share_id) throws Exception {
 		 // 절대경로 가져오기
-		 Properties prop = new Properties();
-	       
-	       FileInputStream fis = new FileInputStream(request.getRealPath("WEB-INF\\classes\\config\\fileupload.properties"));
-	       System.out.println();
-	       prop.load(new InputStreamReader(fis, "UTF-8"));
-	       fis.close();
-	       
-	        String originalFileName = mFile.getOriginalFilename();
-	        
-	        if(!originalFileName.isEmpty()) {
-	           System.out.println("originalFileName: " + originalFileName);
-	              
-	           String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
-	               String saveFileName = "";
-	               
-	                 File path1 = new File(saveFolder);
+		 // 절대경로 가져오기
+	    Properties prop = new Properties();
+	    FileInputStream fis = new FileInputStream(request.getRealPath("WEB-INF\\classes\\config\\fileupload.properties"));
+	    prop.load(new InputStreamReader(fis, "UTF-8"));
+	    fis.close();
+	    
+	    Calendar cal = Calendar.getInstance();
+	    int year = cal.get(Calendar.YEAR);
+	    int month = cal.get(Calendar.MONTH) + 1;
+	    int day = cal.get(Calendar.DAY_OF_MONTH);
+		  
+		  String originalFileName = mFile.getOriginalFilename();
+		  
+		  if(!originalFileName.isEmpty()) {
+			  System.out.println("originalFileName: " + originalFileName);
+		        
+		         String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\"+year+month+day;
+		         String saveFileName = "";
+		         
+			        File path1 = new File(saveFolder);
+			        System.out.println("경로1"+path1);
 
-	                 if (!path1.exists()) {
-	                    path1.mkdirs();
-	                 }
-	                 
-	                 
-	                 System.out.println("경로1"+path1);
-	                 
+			        if (!path1.exists()) {
+			        	path1.mkdirs();
+			        }
+			        
 
 
-	                 if (!originalFileName.equals(dto.getUser_image())) {
-	                     saveFileName = System.currentTimeMillis() + "_" + originalFileName;
-	                        
-	                        dto.setUser_image("/resources/images/profile/"  +saveFileName);
-	                     try {
-	                        mFile.transferTo(new File(saveFolder, saveFileName));
+			        if (!originalFileName.equals(dto.getUser_image())) {
+			            saveFileName = System.currentTimeMillis() + "_" + originalFileName;
+			            	
+			            	dto.setUser_image("/resources/images/profile/" +year+month+day+ "/" +saveFileName);
+			            try {
+			            	mFile.transferTo(new File(saveFolder, saveFileName));
 
-	                     } catch (IOException e) {
-	                         e.printStackTrace();
-	                     }
-	                 } 
-	             } else {
+			            } catch (IOException e) {
+			                e.printStackTrace();
+			            }
+			        } 
+			    } else {
 	                  // 기본이미지 세팅
 	                dto.setUser_image("/resources/images/profile/default_profileImg.jpg");
 	              }

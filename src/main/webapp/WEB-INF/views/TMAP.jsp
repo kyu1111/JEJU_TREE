@@ -923,15 +923,22 @@ function poiDetail(poiId) {
                     <input type="text" class="text_custom" id="searchKeyword" name="searchKeyword" value="<%=request.getAttribute("searchKeyword")%>">
                 </c:otherwise>
             </c:choose>&nbsp;&nbsp;&nbsp;
-            <button class="search_bt" id="btn_select">적용하기</button>
-            <button id="btn_clear">마커 초기화</button>
-              <button onclick="MapType('ROAD')">ROAD</button>
-          </div>
-            <button onclick="startDrawing()">Start Drawing</button>
-            <button onclick="stopDrawing()">Stop Drawing</button>
-            <button onclick="hideMarkers()">Hide Markers</button>
+
+            <button class="search_bt" id="btn_select">검색</button>
+            <button id="btn_clear">초기화</button><br>
+            <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
+            <button class="end_bt" onclick="stopDrawing()">끝점</button>
+           </div> 
+           
+            <div class="search_intro">
+               <span>
+                  시작점 버튼을 누른 후 추출하고 싶은 장소 주위를 지도에 찍어보세요.<br>
+                  그 후 끝점을 누르면 시작점 좌표 중심에 추출하고 싶던 장소가 표시됩니다.
+               </span>
+            </div>
+
          <div class="rst_wrap">
-            <div class="rst_mCustomScrollbar" style="height: 346.5px; overflow: auto;">
+            <div class="rst_mCustomScrollbar" style="height: 277px; overflow: auto;">
                <ul id="searchResult" name="searchResult" style="padding-left: 20px;">
                   <li class="search_list">검색결과</li>
                </ul>
@@ -941,7 +948,7 @@ function poiDetail(poiId) {
 
 
 
-    <div id="map_div" class="map_wrap" style="float:left">
+    <div class="map_div" id="map_div" class="map_wrap" style="float:left">
         <!-- 맵 생성 실행 -->
    </div>
     
@@ -970,7 +977,7 @@ function poiDetail(poiId) {
                      <div id="date1">
                      
                      </div>
-                      <div id="weather">
+                      <div id="weather" align="center">
                           <img id="icon" src="" alt="">
                       </div>
                       <div id="temperature">
@@ -982,7 +989,7 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day2">
-                          <div id="forecast-weather">
+                          <div id="forecast-weather" align="center">
                               <img id="day2-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day2">
@@ -995,7 +1002,7 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day3">
-                          <div id="forecast-weather">
+                          <div id="forecast-weather" align="center">
                               <img id="day3-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day3">
@@ -1008,7 +1015,7 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day4">
-                          <div id="forecast-weather">
+                          <div id="forecast-weather" align="center">
                               <img id="day4-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day4">
@@ -1021,7 +1028,7 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day5">
-                          <div id="forecast-weather">
+                          <div id="forecast-weather" align="center">
                               <img id="day5-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day5">

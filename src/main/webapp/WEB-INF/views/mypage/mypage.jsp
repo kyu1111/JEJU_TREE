@@ -37,80 +37,81 @@
    <br>
    <div class="container">
 			<div id="your-plans" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<h4>나의 일정</h4>
-				  <!--공유버튼 -->
-               	  <c:if test="${!empty kakao_id }">
-		          <button id = "sharePlan" onclick="opensharePage()">일정공유</button>
-		          </c:if>
-		          <c:if test="${!empty user_id }">
-		          <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-		          <button id = "sharePlan" onclick="opensharePage()">일정공유</button>
-		          </c:if>
-				<c:set var="plan" value="${List }" />
-				<div class="plan_box">
-				<c:if test="${!empty plan }">
-					<c:forEach items="${plan }" var="dto">
-					<div class="plan-shadow">
-						<p id="${dto.title}" draggable="true" ondragstart="drag(event)">
-							<span class="details" style="display: none;"> Description:
-								${dto.description}<br> Location: ${dto.location}<br>
-								Marker Latitude: ${dto.markerLat}<br> Marker Longitude:
-								${dto.markerLng}<br>
-							</span>
-							<c:if test="${!empty dto.image }">
-								  <img src="${dto.image }" alt="location_img" class="location_img"/><br>
-							</c:if>
-							<c:if test="${empty dto.image }">
-								<img src="<%=request.getContextPath() %>/resources/images/title.png" alt="location_img" class="default_location_img" /><br>
-							</c:if>
-							<span class="hidden" style="color: #FFF">Plan ID: ${dto.id} User ID: ${dto.user_id}</span>
-								 위치: ${dto.addr}<br>장소명: ${dto.title}<br>
-								${dto.start_date}&nbsp;&nbsp;&nbsp; ${dto.end_date}
-							<button class="deleteButton" data-plan-id="${dto.id}">일정삭제</button>
-						</p>
-						</div>
-					</c:forEach>
-				</c:if>
-				</div>
-			</div>
-			<div id="others-plans" ondrop="drop(event)" ondragover="allowDrop(event)">
-				<h4>상대방 일정</h4>
+            <h4>나의 일정</h4>
+              <!--공유버튼 -->
+                    <c:if test="${!empty kakao_id }">
+                <a id = "sharePlan" onclick="opensharePage()">카카오톡 일정공유</a>
+                </c:if>
+                <c:if test="${!empty user_id }">
+                <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
+                <a id = "sharePlan" onclick="opensharePage()">카카오톡 일정공유</a>
+                </c:if>
+            <c:set var="plan" value="${List }" />
+            <div class="plan_box">
+            <c:if test="${!empty plan }">
+               <c:forEach items="${plan }" var="dto">
+               <div class="plan-shadow">
+                  <p id="${dto.title}" draggable="true" ondragstart="drag(event)">
+                     <span class="details" style="display: none;"> Description:
+                        ${dto.description}<br> Location: ${dto.location}<br>
+                        Marker Latitude: ${dto.markerLat}<br> Marker Longitude:
+                        ${dto.markerLng}<br>
+                     </span>
+                     <c:if test="${!empty dto.image }">
+                          <img src="${dto.image }" alt="location_img" class="location_img"/><br>
+                     </c:if>
+                     <c:if test="${empty dto.image }">
+                        <img src="<%=request.getContextPath() %>/resources/images/mypage_img.jpg" alt="location_img" class="default_location_img" /><br>
+                     </c:if>
+                     <span class="hidden" style="color: #FFF">Plan ID: ${dto.id} User ID: ${dto.user_id}</span>
+                         위치: ${dto.addr}<br>장소명: ${dto.title}<br>
+                        ${dto.start_date}&nbsp;&nbsp;&nbsp; ${dto.end_date}
+                     <a class="deleteButton" data-plan-id="${dto.id}">×</a>
+                  </p>
+                  </div>
+               </c:forEach>
+            </c:if>
+            </div>
+         </div>
+         <div id="others-plans" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h4>상대방 일정</h4>
 
-				<form method="POST" action="get_others_plans.go">
-					<input type="text" name="otherUserId"
-						placeholder="Enter user's id..." required> <input
-						type="submit" class="search_share" value="Search">
-				</form>
-				<div class="plan_box">
-				<c:if test="${!empty otherUserList }">
-					<c:forEach items="${otherUserList }" var="dto">
-					<div class="plan-shadow">
-						<div class="plan" draggable="true" ondragstart="drag(event)">
-							<p id="${dto.title}" draggable="true" ondragstart="drag(event)">
-								<span class="details" style="display: none;">
-									Description: ${dto.description}<br> Location:
-									${dto.location}<br> Marker Latitude: ${dto.markerLat}<br>
-									Marker Longitude: ${dto.markerLng}<br>
-								</span>
-								<c:if test="${!empty dto.image }">
-								    <img src="${dto.image }" alt="location_img" /><br>
-								</c:if>
-								<c:if test="${empty dto.image }">
-								    <img src="<%=request.getContextPath() %>/resources/images/title.png" alt="location_img" /><br>
-								</c:if>
-								Plan ID: ${dto.id}<br> User ID: ${dto.user_id}<br>Address: ${dto.addr}<br>
-								Title: ${dto.title}<br> Start Date: ${dto.start_date}<br>
-								End Date: ${dto.end_date}<br>
-							</p>
-						</div>
-						</div>
-					</c:forEach>
-				</c:if>
-				</div>
-				
-			</div>
-		</div>
+            <form method="POST" action="get_others_plans.go">
+               <input class="search_id" type="text" name="otherUserId"
+                  placeholder="상대방 아이디 입력" required> <input
+                  type="submit" class="search_share" value="검색">
+            </form>
+            <div class="plan_box">
+            <c:if test="${!empty otherUserList }">
+               <c:forEach items="${otherUserList }" var="dto">
+               <div class="plan-shadow">
+                  <div class="plan" draggable="true" ondragstart="drag(event)">
+                     <p id="${dto.title}" draggable="true" ondragstart="drag(event)">
+                        <span class="details" style="display: none;">
+                           Description: ${dto.description}<br> Location:
+                           ${dto.location}<br> Marker Latitude: ${dto.markerLat}<br>
+                           Marker Longitude: ${dto.markerLng}<br>
+                        </span>
+                        <c:if test="${!empty dto.image }">
+                            <img src="${dto.image }" alt="location_img" /><br>
+                        </c:if>
+                        <c:if test="${empty dto.image }">
+                            <img src="<%=request.getContextPath() %>/resources/images/mypage_img.jpg" alt="location_img" /><br>
+                        </c:if>
+                        Plan ID: ${dto.id}<br> User ID: ${dto.user_id}<br>Address: ${dto.addr}<br>
+                        Title: ${dto.title}<br> Start Date: ${dto.start_date}<br>
+                        End Date: ${dto.end_date}<br>
+                     </p>
+                  </div>
+                  </div>
+               </c:forEach>
+            </c:if>
+            </div>
+            
+         </div>
+      </div>
   </div>
+   
 <!--굥유 버튼 ajax스크립트 태그  -->
 <script type="text/javascript">
 	let uid = '${user_id}'

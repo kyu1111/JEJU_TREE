@@ -11,6 +11,8 @@
 <body>
 	<div id="container">
 	<%@ include file="../include/navbar.jsp"%>
+	<br>
+	<br>
 		<div id="board_content">
 			<div id="board_title">SHARE SCHEDULE</div>
 				<div class="title-account">JEJU TREE일정에 초대하세요</div>
