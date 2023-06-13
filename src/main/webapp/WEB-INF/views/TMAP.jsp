@@ -138,6 +138,8 @@ var isDrawing = false;
 var fixedMarkers = [];
 var userMarkers = [];
 var infoWindow = null;  // 전역 변수로 선언
+var line = null;
+var polygon = null;
 
 // map 생성
 function initTmap() {
@@ -190,7 +192,8 @@ function initTmap() {
          map : map,
          visible : false
       });
-
+      
+      // 시작.
       fixedMarkers[1].addListener( "click", function() {
          var content = "<form id='infoWindowForm'>"
              + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
@@ -218,55 +221,104 @@ function initTmap() {
                   });
                   
                });
-
+     
       fixedMarkers[2] = new Tmapv2.Marker({
-         position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
-         map : map,
-         visible : false
-      });
-
+          position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+          icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_g_m_h.png",
+          iconSize : new Tmapv2.Size(24, 38),
+          map : map,
+          visible : false
+       });
+     
       fixedMarkers[2].addListener( "click", function() {
-         var content = "<form id='infoWindowForm'>"
-             + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
-             + "<div style='font-size: 12px; line-height: 15px;'>"
-             + "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>티맵 모빌리티"
-             + "</div>"
-             + "</div>"
-             + "<div style='position: relative; padding-top: 5px; display:inline-block'>"
-             + "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"
-             + "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"
-             + "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울 중구 삼일대로 343 (우)04538</span>"
-             + "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(지번) 저동1가 114</span>"
-             + "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"
-             //+ "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
-             //+ "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
-             + "<input type='submit' style='position: absolute; top: 0; right: 0;' value='Close' />"
-             + "</div>"
-             + "</div>"
-             + "</form>";
+          var content = "<form id='infoWindowForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
+              + "<input type='hidden' name='title' value='주상절리대'>"
+              + "<input type='hidden' name='addr' value='제주특별자치도 서귀포시 이어도로 36-24'>"
+              + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\"주상절리대\")\'><i id='heart' class='fas fa-heart'></i></a>"
+              + "<button id='selectButtonPlaceholder' type='submit'>일정 추가</button><a id='closeButtonPlaceholder' class='close-btn'>×</a></div>"
+              + "<input type='hidden' name='location' value='주상절리대'>"
+              + "<input type='hidden' name='markerLat' value='33.455483'>" // replace 'latitude' with real value
+              + "<input type='hidden' name='markerLng' value='126.768394'>" // replace 'longitude' with real value
+              + "<div style='padding:10px; width:250px;'>주상절리대"
+              + "<div>제주특별자치도 서귀포시 이어도로 36-24</div>"
+              + "<p class='start'>입장 : <input type='date' class='plan_start_date' name='start_date'></p>" // Start Date input field
+              + "<p class='end'>퇴장 : <input type='date' class='plan_end_date' name='end_date'></p>" // End Date input field
+              + "</form>";
+            
+           var infoWindow = new Tmapv2.InfoWindow({
+              position : new Tmapv2.LatLng(33.455483, 126.768394),
+              content : content,
+              map : map
+           });
+                 
+                 setTimeout(function() {
+                     var closeButton = document.getElementById('closeButtonPlaceholder');
+                     var submitButton = document.getElementById('selectButtonPlaceholder');
 
-                  var infoWindow = new Tmapv2.InfoWindow({
-                     position : new Tmapv2.LatLng(33.455483, 126.768394),
-                     content : content,
-                     map : map
-                  });
-                  
-               });
+                     if (closeButton) {
+                         closeButton.addEventListener('click', function(event) {
+                             event.preventDefault();
+                             infoWindow.setMap(null);
+                         });
+                     }
 
-      map.addListener("click", function(e) {
-               if (isDrawing) {
-                  var position = new Tmapv2.LatLng(e.latLng.lat(),
-                        e.latLng.lng());
-                  var marker = new Tmapv2.Marker({
-                     position : position,
-                     map : map
-                  });
-                  userMarkers.push(marker);
-                  if (userMarkers.length == 4) {
-                     drawPolygon();
+                     if (submitButton) {
+                         submitButton.addEventListener('click', function(event) {
+                             // 원하는 경우 이 라인을 제거하여 폼 제출 시 페이지 새로고침을 허용
+                             event.preventDefault(); 
+                             document.getElementById('infoWindowForm').submit();
+                         });
+                     }
+                 }, 200);  
+             }); // 종료.
+
+             // map.addListener 메서드 시작.
+             map.addListener("click", function(e) {
+                  if (isDrawing) {
+                      var position = new Tmapv2.LatLng(e.latLng.lat(), e.latLng.lng());
+                      var marker = new Tmapv2.Marker({
+                          position : position,
+                           icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+                           iconSize : new Tmapv2.Size(24, 38),
+                          map : map
+                      });
+                      userMarkers.push(marker);
+                      if (userMarkers.length > 1 && userMarkers.length < 4) {
+                          if (line) {
+                              line.setMap(null);
+                          }
+                          var path = userMarkers.map(function(marker) {
+                              return marker.getPosition();
+                          });
+                          line = new Tmapv2.Polyline({
+                              path: path,
+                              strokeColor: "blue",
+                              strokeWeight: 4,
+                              map: map
+                          });
+                      } 
+                      else if (userMarkers.length === 4) {
+                          if (line) {
+                              line.setMap(null);
+                              line = null;
+                          }
+                          if (polygon) {
+                              polygon.setMap(null);
+                          }
+                          var path = userMarkers.map(function(marker) {
+                              return marker.getPosition();
+                          });
+                          polygon = new Tmapv2.Polygon({
+                              paths: path,
+                              strokeColor: "#99dce6",
+                              fillColor: "#99dce6",
+                              fillOpacity: 0.5,
+                              map: map
+                          });
+                          isDrawing = false;
+                      }
                   }
-               }
-            });
+              }); // map.addListener 메서드 종료.
    // 2. POI 통합 검색 API 요청
   $("#btn_select").click(
      function() {
@@ -570,6 +622,7 @@ function initTmap() {
                 var content = "<form id='" + popupId2 + "' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>" +
                    "<input type='hidden' name='title' value='" + item.title + "'>" +
                    "<input type='hidden' name='addr' value='" + item.addr1 + "'>" +
+                   "<input type='hidden' name='image' value='" + item.firstimage2 + "'>" +
                    "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>" +
                    "<button id='" + selectButtonId2 + "' type='submit'>일정 추가</button><a id='" + closeButtonId2 + "' class='close-btn'>×</a></div>" + 
                    "<input type='hidden' name='location' value='" + item.title + "'>" +
@@ -847,43 +900,44 @@ function poiDetail(poiId) {
      document.getElementById('infoWindowForm').addEventListener('submit', closeInfoWindow);
    });
    
+   var drawingObject = null;
    function drawPolygon() {
-      var path = userMarkers.map(function(marker) {
-         return marker.getPosition();
-      });
-      path.push(userMarkers[0].getPosition());
-      var polygon = new Tmapv2.Polygon({
-         path : path,
-         strokeColor : "#000000",
-         strokeOpacity : 0.5,
-         strokeWeight : 2,
-         fillColor : "#000000",
-         fillOpacity : 0.35,
-         map : map
-      });
-      isDrawing = false;
+       var path = userMarkers.map(function(marker) {
+           return marker.getPosition();
+       });
+       drawingObject = new Tmapv2.extension.Drawing({
+           map:map, // 지도 객체
+           strokeWeight: 4, // 테두리 두께
+           strokeColor:"blue", // 테두리 색상
+           strokeOpacity:1, // 테두리 투명도
+           fillColor:"red", // 도형 내부 색상
+           fillOpacity: 0.5 // 투명도 조정
+       });
+       drawingObject.drawPolygon({
+           paths : path,
+       });
    }
-
    function startDrawing() {
       isDrawing = true;
       userMarkers.forEach(function(marker) {
          marker.setMap(null);
       });
       userMarkers = [];
-
       // Hide all fixed markers.
       //fixedMarkers.forEach(function(marker) {
       //marker.setVisible(false);
       //});
    }
-
    function hideMarkers() {
-      // Hide all fixed markers.
       fixedMarkers.forEach(function(marker) {
-         marker.setVisible(false);
+       marker.setVisible(false);
       });
+      
+      if(polygon) {
+         polygon.setMap(null);
+         polygon = null;
+      }
    }
-
    function stopDrawing() {
       var path = userMarkers.map(function(marker) {
          return [ marker.getPosition().lng(), marker.getPosition().lat() ];
@@ -928,6 +982,7 @@ function poiDetail(poiId) {
             <button id="btn_clear">초기화</button><br>
             <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
             <button class="end_bt" onclick="stopDrawing()">끝점</button>
+            <button class="end_bt" onclick="hideMarkers()">숨김</button>
            </div> 
            
             <div class="search_intro">
@@ -945,13 +1000,9 @@ function poiDetail(poiId) {
             </div>
          </div>
       </div>
-
-
-
     <div class="map_div" id="map_div" class="map_wrap" style="float:left">
         <!-- 맵 생성 실행 -->
    </div>
-    
     <!-- 사이드바 설정하기 -->
    <div id = "container">
    <%@ include file="./include/sidebar2.jsp" %>
@@ -1040,8 +1091,6 @@ function poiDetail(poiId) {
           </table>
       </div>
    </div>   <!-- container div end -->   
-   
-
 <div id="crawlingResult" align="center">
     <!-- 크롤링 결과 -->
     <div class="crawling_title"><b class="crawling_title_b">제주 여행지 추천 자료</b></div>
@@ -1065,18 +1114,12 @@ function poiDetail(poiId) {
         </c:forEach>
     </table>
 </div>
-
-       
-
 </div>
-
 <br>
 <br>
 <br>
 </body>
-
 <div class="tmap_footer">
    <%@ include file="./include/footer.jsp" %>
 </div>
-
 </html>
