@@ -10,7 +10,6 @@
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/navbar.css">
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage/userProfile.css">
- 
 </head>
 <body>
     <c:set var="user" value="${UserInfo}" />
@@ -34,8 +33,6 @@
         	<input class="file-input" type="file" name="upload" id="upload" value="${user.user_image }" onchange="previewProfileImage(event)">
         	<input type="hidden" name="user_image" value="${user.user_image }">
         </div>
-        
-
         <div>
            	<input name="user_nickname" class="user_nickname" value="${user.user_nickname }"  >
             <p id="name_check" class="name_check"></p>

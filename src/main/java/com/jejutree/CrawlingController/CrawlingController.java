@@ -26,6 +26,15 @@ public class CrawlingController {
         return "TMAP"; // assuming the name of your HTML page is 'TMAP'
     }
 
+    @RequestMapping(value = "/TMAP.go")
+    public String crawlDataByTitleAlt(@RequestParam("title") String title, Model model) {
+       List<CrawlingData> crawlingDataList = getCrawlingDataByTitle(title);
+        
+        model.addAttribute("crawlingDataList", crawlingDataList);
+        
+        return "TMAP"; // assuming the name of your HTML page is 'TMAP'
+        }
+    
     public List<CrawlingData> getCrawlingDataByTitle(String title) {
         List<CrawlingData> crawlingDataList = new ArrayList<>();
 
@@ -48,11 +57,7 @@ public class CrawlingController {
 
                 Element thumbArea = post.select(".thumb_area").first();
                 if (thumbArea != null) {
-                    if (thumbArea.hasClass("type_solo")) {
-                        thumbnailUrl = thumbArea.select("img").attr("src");
-                    } else {
-                        thumbnailUrl = thumbArea.select(".thumb_area img").attr("src");
-                    }
+                   thumbnailUrl = post.select(".thumb_area img").attr("src");
                 }
 
                 postTitle = Jsoup.parse(postTitle).text();

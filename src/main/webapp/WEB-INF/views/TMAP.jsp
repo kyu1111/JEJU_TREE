@@ -192,8 +192,7 @@ function initTmap() {
          map : map,
          visible : false
       });
-      
-      // 시작.
+
       fixedMarkers[1].addListener( "click", function() {
          var content = "<form id='infoWindowForm'>"
              + "<div style='width:200px; height:20px; position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"
@@ -221,7 +220,7 @@ function initTmap() {
                   });
                   
                });
-     
+
       fixedMarkers[2] = new Tmapv2.Marker({
           position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
           icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_g_m_h.png",
@@ -229,7 +228,7 @@ function initTmap() {
           map : map,
           visible : false
        });
-     
+
       fixedMarkers[2].addListener( "click", function() {
           var content = "<form id='infoWindowForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
               + "<input type='hidden' name='title' value='주상절리대'>"
@@ -244,81 +243,82 @@ function initTmap() {
               + "<p class='start'>입장 : <input type='date' class='plan_start_date' name='start_date'></p>" // Start Date input field
               + "<p class='end'>퇴장 : <input type='date' class='plan_end_date' name='end_date'></p>" // End Date input field
               + "</form>";
-            
-           var infoWindow = new Tmapv2.InfoWindow({
-              position : new Tmapv2.LatLng(33.455483, 126.768394),
-              content : content,
-              map : map
-           });
-                 
-                 setTimeout(function() {
-                     var closeButton = document.getElementById('closeButtonPlaceholder');
-                     var submitButton = document.getElementById('selectButtonPlaceholder');
 
-                     if (closeButton) {
-                         closeButton.addEventListener('click', function(event) {
-                             event.preventDefault();
-                             infoWindow.setMap(null);
-                         });
-                     }
+                  var infoWindow = new Tmapv2.InfoWindow({
+                     position : new Tmapv2.LatLng(33.455483, 126.768394),
+                     content : content,
+                     map : map
+                  });
+                  
+                  setTimeout(function() {
+                      var closeButton = document.getElementById('closeButtonPlaceholder');
+                      var submitButton = document.getElementById('selectButtonPlaceholder');
 
-                     if (submitButton) {
-                         submitButton.addEventListener('click', function(event) {
-                             // 원하는 경우 이 라인을 제거하여 폼 제출 시 페이지 새로고침을 허용
-                             event.preventDefault(); 
-                             document.getElementById('infoWindowForm').submit();
-                         });
-                     }
-                 }, 200);  
-             }); // 종료.
-
-             // map.addListener 메서드 시작.
-             map.addListener("click", function(e) {
-                  if (isDrawing) {
-                      var position = new Tmapv2.LatLng(e.latLng.lat(), e.latLng.lng());
-                      var marker = new Tmapv2.Marker({
-                          position : position,
-                           icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
-                           iconSize : new Tmapv2.Size(24, 38),
-                          map : map
-                      });
-                      userMarkers.push(marker);
-                      if (userMarkers.length > 1 && userMarkers.length < 4) {
-                          if (line) {
-                              line.setMap(null);
-                          }
-                          var path = userMarkers.map(function(marker) {
-                              return marker.getPosition();
+                      if (closeButton) {
+                          closeButton.addEventListener('click', function(event) {
+                              event.preventDefault();
+                              infoWindow.setMap(null);
                           });
-                          line = new Tmapv2.Polyline({
-                              path: path,
-                              strokeColor: "blue",
-                              strokeWeight: 4,
-                              map: map
-                          });
-                      } 
-                      else if (userMarkers.length === 4) {
-                          if (line) {
-                              line.setMap(null);
-                              line = null;
-                          }
-                          if (polygon) {
-                              polygon.setMap(null);
-                          }
-                          var path = userMarkers.map(function(marker) {
-                              return marker.getPosition();
-                          });
-                          polygon = new Tmapv2.Polygon({
-                              paths: path,
-                              strokeColor: "#99dce6",
-                              fillColor: "#99dce6",
-                              fillOpacity: 0.5,
-                              map: map
-                          });
-                          isDrawing = false;
                       }
-                  }
-              }); // map.addListener 메서드 종료.
+
+                      if (submitButton) {
+                          submitButton.addEventListener('click', function(event) {
+                              // 원하는 경우 이 라인을 제거하여 폼 제출 시 페이지 새로고침을 허용
+                              event.preventDefault(); 
+                              document.getElementById('infoWindowForm').submit();
+                          });
+                      }
+                  }, 200);  
+                  
+               });
+
+      // map.addListener 메서드 시작.
+      map.addListener("click", function(e) {
+           if (isDrawing) {
+               var position = new Tmapv2.LatLng(e.latLng.lat(), e.latLng.lng());
+               var marker = new Tmapv2.Marker({
+                   position : position,
+                    icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+                    iconSize : new Tmapv2.Size(24, 38),
+                   map : map
+               });
+               userMarkers.push(marker);
+               if (userMarkers.length > 1 && userMarkers.length < 4) {
+                   if (line) {
+                       line.setMap(null);
+                   }
+                   var path = userMarkers.map(function(marker) {
+                       return marker.getPosition();
+                   });
+                   line = new Tmapv2.Polyline({
+                       path: path,
+                       strokeColor: "blue",
+                       strokeWeight: 4,
+                       map: map
+                   });
+               } 
+               else if (userMarkers.length === 4) {
+                   if (line) {
+                       line.setMap(null);
+                       line = null;
+                   }
+                   if (polygon) {
+                       polygon.setMap(null);
+                   }
+                   var path = userMarkers.map(function(marker) {
+                       return marker.getPosition();
+                   });
+                   polygon = new Tmapv2.Polygon({
+                       paths: path,
+                       strokeColor: "#99dce6",
+                       fillColor: "#99dce6",
+                       fillOpacity: 0.5,
+                       map: map
+                   });
+                   isDrawing = false;
+               }
+           }
+       }); // map.addListener 메서드 종료.
    // 2. POI 통합 검색 API 요청
   $("#btn_select").click(
      function() {
@@ -622,9 +622,8 @@ function initTmap() {
                 var content = "<form id='" + popupId2 + "' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>" +
                    "<input type='hidden' name='title' value='" + item.title + "'>" +
                    "<input type='hidden' name='addr' value='" + item.addr1 + "'>" +
-                   "<input type='hidden' name='image' value='" + item.firstimage2 + "'>" +
                    "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+item.title+"\")\'><i id='heart' class='fas fa-heart'></i></a>" +
-                   "<button id='" + selectButtonId2 + "' type='submit'>일정 추가</button><a id='" + closeButtonId2 + "' class='close-btn'>×</a></div>" + 
+                   "<button class='selectBt' id='" + selectButtonId2 + "' type='submit'>일정 추가</button><a id='" + closeButtonId2 + "' class='close-btn'>×</a></div>" + 
                    "<input type='hidden' name='location' value='" + item.title + "'>" +
                    "<input type='hidden' name='markerLat' value='" + latlng._lat + "'>" + // latitude input field
                    "<input type='hidden' name='markerLng' value='" + latlng._lng + "'>" + // longitude input field
@@ -744,16 +743,18 @@ function poiDetail(poiId) {
          var content = "<form id='" + popupId + "' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post' style='background-color: white; font-size: 14px;' >"
                      + "<input type='hidden' name='title' value='" + name + "'>"
                      + "<input type='hidden' name='addr' value='" + address + "'>"
+                     + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\""+ name +"\")\'><i id='heart' class='fas fa-heart'></i></a>"
+                     + "<button class='selectBt' id='" + selectButtonId + "' type='submit'>일정 추가</button><a id='" + closeButtonId + "' class='close-btn'>×</a></div>"
                      + "<input type='hidden' name='location' value='비자림'>"
                      + "<input type='hidden' name='markerLat' value='" + lat + "'>" // latitude input field
                      + "<input type='hidden' name='markerLng' value='" + lon + "'>" // longitude input field 
-                     + "<div style='padding:10px; width:250px;'>" + name + "&nbsp;&nbsp;<button id='" + selectButtonId + "' type='submit'>Select</button>&nbsp;&nbsp;<button id='" + closeButtonId + "' class='close-btn'>Close</button>"
-                     + "<div>"
+                     + "<div class='name_div' style='padding:10px; width:250px;'>" + name
+                     + "<div class='addr_div'>"
                      + address
                      + "</div>"
                      // + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
-                     + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
-                     + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
+                     + "<p>입장 : <input type='date' class = 'plan_start_date' name='start_date'></p>" // Start Date input field
+                     + "<p>퇴장 : <input type='date' class = 'plan_end_date' name='end_date'></p>" // End Date input field
                      + "</form>";
                var labelInfo = new Tmapv2.Label({
                   position : labelPosition,
@@ -979,7 +980,8 @@ function poiDetail(poiId) {
             </c:choose>&nbsp;&nbsp;&nbsp;
 
             <button class="search_bt" id="btn_select">검색</button>
-            <button id="btn_clear">초기화</button><br>
+            <button id="btn_clear" onclick="clearMarkers()">초기화</button>
+            <br>
             <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
             <button class="end_bt" onclick="stopDrawing()">끝점</button>
             <button class="end_bt" onclick="hideMarkers()">숨김</button>
@@ -1000,9 +1002,13 @@ function poiDetail(poiId) {
             </div>
          </div>
       </div>
+
+
+
     <div class="map_div" id="map_div" class="map_wrap" style="float:left">
         <!-- 맵 생성 실행 -->
    </div>
+    
     <!-- 사이드바 설정하기 -->
    <div id = "container">
    <%@ include file="./include/sidebar2.jsp" %>
@@ -1091,6 +1097,8 @@ function poiDetail(poiId) {
           </table>
       </div>
    </div>   <!-- container div end -->   
+   
+
 <div id="crawlingResult" align="center">
     <!-- 크롤링 결과 -->
     <div class="crawling_title"><b class="crawling_title_b">제주 여행지 추천 자료</b></div>
@@ -1114,12 +1122,18 @@ function poiDetail(poiId) {
         </c:forEach>
     </table>
 </div>
+
+       
+
 </div>
+
 <br>
 <br>
 <br>
 </body>
+
 <div class="tmap_footer">
    <%@ include file="./include/footer.jsp" %>
 </div>
+
 </html>
