@@ -12,40 +12,39 @@
 </head>
 <body>
    <!-- 상단바 설정하기  -->
-   <%@ include file="../include/navbar.jsp" %>
    <c:set var="user" value="${UserInfo}" />
-   <div>
+   <div id = "container">
+     <%@ include file="../include/navbar.jsp" %>
     <div id="mypage_profile">
+        <div class = "imageBox">
         <img src="<%=request.getContextPath() %>${user.user_image }" alt="profile" class="profile_img" />
-        <input type="hidden" name="user_image" value="${user.user_image }"><p>${user.user_nickname }</p>
+        </div>
+        <input type="hidden" name="user_image" value="${user.user_image }">
+        <p>${user.user_nickname }</p>
           <c:set var = "participantlist" value="${participantlist}"/>
          <button class="change_profile_btn" onclick="openModifyPage()">프로필 수정</button>
          <!--동행자 목록 a태그 옵션 박스 -->
-         <c:forEach items="${participantlist}" var="participant">
-    		<select onchange="location.href='plan_list.go?id=${participant.user_share_id}'">
-        		<option>동행자 목록</option>
-        		<option value="plan_list.go?id=${participant.user_share_id}">
-           		 ${participant.user_share_id} 님과의 일정 확인
-        		</option>
-    		</select>
-		  </c:forEach>
+         <div id = "share_btn_area">
+	         <c:forEach items="${participantlist}" var="participant">
+	    		<select onchange="location.href='plan_list.go?id=${participant.user_share_id}'">
+	        		<option>동행자 목록</option>
+	        		<option value="plan_list.go?id=${participant.user_share_id}">
+	           		 ${participant.user_share_id} 님과의 일정 확인
+	        		</option>
+	    		</select>
+			  </c:forEach>
+			  <!--공유버튼 -->
+	          <c:if test="${!empty kakao_id }">
+	          <a id = "sharePlan" onclick="opensharePage()">일정공유</a>
+	          </c:if>
+	          <c:if test="${!empty user_id }">
+	          <a id = "sharePlan" onclick="opensharePage()">일정공유</a>
+	          </c:if>
+          </div>
    </div>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
    <div class="container">
 			<div id="your-plans" ondrop="drop(event)" ondragover="allowDrop(event)">
             <h4>나의 일정</h4>
-              <!--공유버튼 -->
-                    <c:if test="${!empty kakao_id }">
-                <a id = "sharePlan" onclick="opensharePage()">카카오톡 일정공유</a>
-                </c:if>
-                <c:if test="${!empty user_id }">
-                <%-- <button id = "sharePlan" onclick="openjoinPage('<%=request.getContextPath()%>/share.go')">일정공유</button> --%>
-                <a id = "sharePlan" onclick="opensharePage()">카카오톡 일정공유</a>
-                </c:if>
             <c:set var="plan" value="${List }" />
             <div class="plan_box">
             <c:if test="${!empty plan }">

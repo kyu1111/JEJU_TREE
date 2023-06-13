@@ -11,23 +11,85 @@ body {
 }
 
 /* 유저 프로필 header */
-
+#container{
+  display: flex;	
+  flex-direction:column;	 
+}
 #mypage_profile {
+  display:flex;
+  flex-direction:column;
   align-items: center;
   align-content: center;
   text-align: center;
-  margin-top: 5%;
+  margin-top: 10%;
   top: 0;
   left: 0;
   right: 0;
-  height: 100px; /* 적절한 높이 값으로 조정해주세요 */
 }
-
+.imageBox {
+  width: 200px;
+  height: 200px;
+  border-radius: 70%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+#share_btn_area{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  color: #6a6a6a;
+}
+#share_btn_area select{
+	width: 40%;
+	margin: 5px;
+	box-sizing: border-box; /* 추가 */
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+	border: none;
+	text-align: center;
+	height: 70%;
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+#share_btn_area option{
+	width: 40%;
+	margin: 5px;
+	box-sizing: border-box; /* 추가 */
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+	border: none;
+	text-align: center;
+	height: 70%;
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+#share_btn_area a{
+	margin-left: 8px;
+	cursor: pointer;
+}
+#share_btn_area a:hover{
+	color: #EBEBEB;
+}
+.profile_img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
 #mypage_profile .profile_img {
   height: 150px;
   width: 150px;
 }
-
+.imageBox p{
+  margin-top:10px;
+  font-size: 12px;
+  letter-spacing: -0.9px;
+  color: #6a6a6a;
+  padding-bottom: 50px;
+  padding-right: 5px;
+  text-align: center;
+}
 #mypage_profile .change_profile_btn {
    font-size: 13px;
    width: 88px;
