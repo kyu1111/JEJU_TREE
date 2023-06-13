@@ -1,8 +1,8 @@
 # JEJU_TREE
 프로젝트 개요
 <bn>
-제주도 여행은 많은 사람들이 코로나 완화 이후 기대하고 있는 특별한 경험입니다. 그러나 제주도의 넓은 지역과 다양한 명소들로 인해 여행 일정을 계획하는 것은 복잡성을 가지고 있습니다. 특히 코 로나 완화 이후 여행객의 증가로 인해 일정을 조율하는 것이 더욱 중요해졌습니다. ​
-<br>JEJUTREE는 사용자들에게 제주도 여행 일정을 계획하는 데 필요한 정보를 제공하여 증가하는 여행객들이 더 효 율적으로 여행을 즐길 수 있도록 도와줍니다.
+제국내 여행지 중 제주도는 가장 사랑받는 여행지 입니다.보통 제주도로 여행을 떠날 때에는 동서남북으로 나누어 여행 계획을 짜게 되는데,​ 이러한 일정들을 손쉽고 편리하게 정할 수 있도록 여행 일정을 관리하는 프로젝트를 구상하게 되었습니다.​
+<br>JEJUTREE는 사용자들에게 제주도 여행 일정을 계획하는 데 필요한 정보를 제공하여 여행객들이 더 효 율적으로 여행을 즐길 수 있도록 도와줍니다.
 
 # 기술 스택
  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/fontawesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white">
