@@ -37,7 +37,7 @@
 # ✈️ 시연(데모 링크 or 배포링크)
  
 
-#🔎 reference(API 주소 등등)
+# 🔎 reference(API 주소 등등)
 TMAP API 👉  https://tmapapi.sktelecom.com
  <br>
 채넗톡 API 👉 https://channel.io/ko
