@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar">
     <div class="left">
-        <a href="<%=request.getContextPath()%>/MainPage.go"><img src="/model/resources/images/title.png"></a>
+        <a href="<%=request.getContextPath()%>/MainPage.go"><img src="<%=request.getContextPath() %>/resources/images/title.png"></a>
     </div>
         <div class="right">
         <c:set var = "kakao_session" value="${Kakao_info}"/>
