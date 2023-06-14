@@ -113,6 +113,10 @@ body {
  background-color: #8bc9d2;
 }
 
+#mypage_profile .change_profile_btn:hover {
+ background-color: #8bc9d2;
+}
+
 #mypage_profile p {
   padding-top: 0;
   margin-top: 0;
@@ -184,7 +188,11 @@ body {
 }
 
 .plan_box .location_img{
+<<<<<<< HEAD
+    height: 150px;
+=======
    height: 150px;
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
   width: 200px
 }
 .plan_box .default_location_img{
@@ -196,6 +204,8 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+<<<<<<< HEAD
+=======
 .search_id {
    width: 170px;
    height: 20px;
@@ -211,6 +221,7 @@ body {
     border-bottom: 1px solid #99dce6;
 }
 
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
 .search_share {
     font-size: 14px;
     width: 50px; /* 버튼 너비 지정 */
@@ -234,19 +245,16 @@ body {
    padding-top : 400px;
 }
 
-.plan_box {
+
+.plan_box .deleteButton {
   border: 0;
   background-color: #FFF;
   font-size: 14px;
-}
+} Rud
 
 .deleteButton {
    font-size: 20px;
    cursor: pointer;
    margin-left: 50px;
    margin-right: 30px;
-}
-
-.deleteButton:hover {
-   color: #99dce6;
 }

@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mainpage/mainpage.css"> 
     <!-- Add jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-	 
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
+
     <title>JEJU TREE</title>
     <script type="text/javascript">
         let slideIndex = 0;
@@ -193,16 +193,14 @@
                 <img src="<%=request.getContextPath()%>/resources/images/신창풍차해안도로-470.jpg" alt="Image 3">
                 <div class="hidden-content" >
                    <span class="sp-cont"><span class="sp-title">신창풍차해안도로</span><br>
-                         예쁜 바다와 풍차를 한번에 찍을 수 있는 곳<br>
-                         해질녘 드라이브 최고의 명소<br><br>
+                       	  예쁜 바다와 풍차를 한번에 찍을 수 있는 곳<br>
+                       	  해질녘 드라이브 최고의 명소<br><br>
                          #커플 #노을맛집 #드라이브 #사진필수</span>
             </div>
-            
          </a>
             </div>
         </div>
     </div>
-    
     <!-- 사진 핫플 영역 -->
     <div class="container-photo-hot">
         <div class="photo-hot">
@@ -253,10 +251,10 @@
 </script>
     <span class="to-top" onclick="scrollToTop()">&#9650;</span>
 
-	</div>
-	</div>
-	</body>
-	<div>
-   	<%@ include file="./include/footer.jsp" %>
+   </div>
+   </div>
+   </body>
+   <div>
+      <%@ include file="./include/footer.jsp" %>
    </div>
 </html>

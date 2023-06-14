@@ -26,9 +26,9 @@
 
 <style type="text/css">
 #map_div {
-	margin-top: 30px;
-	height: 400px; /* adjust as needed */
-	width: 100%; /* adjust as needed */
+   margin-top: 30px;
+   height: 400px; /* adjust as needed */
+   width: 100%; /* adjust as needed */
 }
 
 :root {
@@ -61,8 +61,8 @@ select:focus {
   }
   
 #selectLevel {
-	width: 160px;
- 	height: 30px;
+   width: 160px;
+    height: 30px;
     padding: 5px 20px 0px 5px;
     background: url('<%=request.getContextPath()%>/resources/images/arrow.png') calc(100% - 10px) center no-repeat;
     background-size: 14px;
@@ -71,20 +71,22 @@ select:focus {
 }
 
 .weekly_navbar {
-	height: 15px;
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
+   height: 15px;
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
 }
 
 .select, .save {
-  width: 20%;
+  width: 30%;
 }
 
 .date {
-	margin-top: 8px;
-	flex-grow: 1;
-	text-align: center;
+   width: 200px;
+   margin-top: 8px;
+   flex-grow: 1;
+   text-align: center;
+   margin-right: 150px;
 }
 
 .today {
@@ -109,21 +111,28 @@ select:focus {
 }
 
 #result {
-	width: 300px;
-	font-size: 12px;
-	text-align: left;
-}
-
-#nextBtn {
-	margin-right: 400px;
+   width: 500px;
+   font-size: 11px;
+   text-align: left;
 }
 
 #saveAsPDF {
-	margin-left: 65px;
+	width: 70px;
+   margin-left: 50px;
+}
+
+#savePlan {
+	width: 70px;
 }
 
 #container {
-	margin-top: 25px;
+   margin-top: 25px;
+}
+
+.runTraffic {
+	width: 250px;
+	margin-top: 8px;
+	margin-right: 200px;
 }
 
 </style>
@@ -154,22 +163,22 @@ select:focus {
    
    
    <div class="select">
-   
       <select id="selectLevel">
          <option value="0" selected="selected">교통최적+추천</option>
          <option value="1" >교통최적+무료우선</option>
          <option value="2" >교통최적+최소시간</option>
          <option value="3" >교통최적+초보</option>
       </select>
-      <button id="btn_select">적용</button>
-      
+      <button id="btn_select">적용</button>     
    </div>
    
-   <br>
    <p id="result"></p>
    <c:set var="user" value="${List }"/>
    
-   <button onClick="runTraffic()">교통 정보 on/off</button>
+   <div class="runTraffic">
+   	<button onClick="runTraffic()">교통 정보 on/off</button>
+   </div>
+   
    <div class="date">
       <button class="button is-rounded prev" id="prevBtn">
          <i class="fa-solid fa-angle-left"></i>
@@ -181,8 +190,7 @@ select:focus {
    </div>
    
    
-   <div class="save">
-        
+   <div class="save"> 
       <button id="saveAsPDF">PDF 저장</button>
       <button id="savePlan" onclick ="isGuestJoingCheck();">일정저장(변경사항)</button>
       <span class="navbar--range"></span>
