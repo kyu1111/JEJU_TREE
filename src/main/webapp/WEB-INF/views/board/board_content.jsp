@@ -49,7 +49,9 @@
              <div id="table_row">
                <div class="board_board_col">
                <span id ="col_span">Dragplan : </span>
-               <a class="planList_btn" href="get_others_plans.go?otherUserId=${board_content.writer}&is_guest=1">${board_content.writer}일정 보기</a></div>
+               <button class="planList_btn" onclick="sharevalidcheck()">${board_content.writer}일정 보기</button>
+    			
+				</div>
             </div>
             <div id="table_row" class = "textarea_row">
                <div class="board_board_col">
@@ -84,7 +86,7 @@
 	  </div>
     </div>
   </div>
-<script type="text/javascript">
+<script type="text/javascript" src = "">
 	 $(document).ready(function() {
 		   	var board_no = ${board_content.board_no};
 		       var user_id = "${board_content.writer}";
@@ -292,6 +294,27 @@
 		           }
 		   });
 		   }
-	</script>
+</script>
+<script type="text/javascript">
+function sharevalidcheck(){
+	   let writer = '${board_content.writer}';
+	   let kakao_id = '${kakao_id}';
+	   let normal_session = '${normal_session}';
+	   let user_id = '';
+	   let url = 'get_others_plans.go?otherUserId='+writer+'&is_guest=1';
+	   if (kakao_id != '') {
+	       user_id = kakao_id;
+	   } else if (normal_session != '') {
+	       user_id = normal_session;
+	   }
+	   console.log(user_id);
+	   
+	   if (user_id == writer) {
+		   alert('본인 작성 게시글 입니다.')
+	   } else {
+	       location.href = url;
+		}
+}
+</script>
 </body>
 </html>

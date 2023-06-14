@@ -78,7 +78,8 @@
 				</form>
 			</div>
 			<div id="board_button_area">
-				<input id="board_submit" type="button" value="글쓰기" onclick="location.href='board_write.go'">
+				<script language="javascript" src="<%=request.getContextPath()%>/resources/js/board/board_list.js"></script>
+				<input id="board_submit" type="button" value="글쓰기" onclick="planlistcheck()">
 		    </div>
 		</div>
 	</div>

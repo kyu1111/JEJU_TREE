@@ -65,6 +65,7 @@ public interface UserDAO {
 		int insertParticipant(Plan_participantsDTO dto);
 		//공유 받은 경로를 타고 로그인 시 직전에 공유 유저 insert 하기전 본인이 작성한 plan인지 확인 하는 작업.
 		int selfshareCheck(HashMap<String, String> paramMap);
+		//동행자 정보 조회 dto 출력
 		
 		List<Plan_participantsDTO> getparticipantsList(String user_id);
 

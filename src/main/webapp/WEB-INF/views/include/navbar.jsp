@@ -39,7 +39,9 @@
               <a href="PlanBoardList.go" class="nav_mypage"><font size="4">COMMUNITY</font></a>&nbsp;&nbsp;&nbsp;
               <a href="mypage.go" class="nav_mypage"><font size="4">MYPAGE</font></a>&nbsp;&nbsp;&nbsp;
               <!--카카오 계정과 함께 로그아웃-->
-              <a href="https://kauth.kakao.com/oauth/logout?client_id=b1b9f0baef115c1e6588625cf198429b&logout_redirect_uri=http://localhost:8585/model/logout.go"  class="logout"><font size="4">LOGOUT</font></a>
+              <a href="https://kauth.kakao.com/oauth/logout?client_id=b1b9f0baef115c1e6588625cf198429b&logout_redirect_uri=http://localhost:8585/model/logout.go"  class="logout"><font size="4">LOGOUT</font></a> 
+           	  <!--배포주소 요청 경로  -->
+             <!--  <a href="https://kauth.kakao.com/oauth/logout?client_id=b1b9f0baef115c1e6588625cf198429b&logout_redirect_uri=http://13.209.236.56:8080/jeju_tree/logout.go"  class="logout"><font size="4">LOGOUT</font></a> -->
            </c:if>
         <c:if test="${empty kakao_session and empty normal_session}">
         <!--어느 계정으로도 로그인 되지 않은 경우  -->

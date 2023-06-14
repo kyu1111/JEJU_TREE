@@ -114,7 +114,7 @@ function toggleBm(title) {
       if(response>0) {
           let table = "<tr>" +
                         "<td>"+title+"</td>" +
-                        "<td><input type='button' value='해제' onclick='bookmark_del(\""+title+"\",this)'></td>" +
+                        "<td class='td_x'><input type='button' value='×' onclick='bookmark_del(\""+title+"\",this)'></td>" +
                        "</tr>";
          $('.blist_table').append(table);
        }else if(response == -1){
@@ -983,7 +983,7 @@ function poiDetail(poiId) {
             <button id="btn_clear" onclick="clearMarkers()">초기화</button>
             <br>
             <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
-            <button class="end_bt" onclick="stopDrawing()">끝점</button>
+            <button class="end_bt" onclick="stopDrawing()">끝점</button>&nbsp;
             <button class="end_bt" onclick="hideMarkers()">숨김</button>
            </div> 
            

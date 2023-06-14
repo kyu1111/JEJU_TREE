@@ -8,11 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 @Controller
 @RequestMapping("/model")
 public class CrawlingController {
@@ -84,8 +82,6 @@ public class CrawlingController {
                     }
                 }
             }
-
-
             System.out.println("CrawlingController crawlingDataList :::" + crawlingDataList);
 
         } catch (IOException e) {

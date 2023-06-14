@@ -109,3 +109,8 @@ function opensharePage(){
          location.href='userprofile.go';
       }
    }
+   //일반 공유 일정 확인
+   function redirectToPlanList(selectElement) {
+    var selectedId = selectElement.value;
+    window.location.href = 'plan_list.go?id=' + selectedId;
+  	}

@@ -25,14 +25,16 @@
          <button class="change_profile_btn" onclick="openModifyPage()">프로필 수정</button>
          <!--동행자 목록 a태그 옵션 박스 -->
          <div id = "share_btn_area">
-	         <c:forEach items="${participantlist}" var="participant">
-	    		<select onchange="location.href='plan_list.go?id=${participant.user_share_id}'">
-	        		<option>동행자 목록</option>
-	        		<option value="plan_list.go?id=${participant.user_share_id}">
-	           		 ${participant.user_share_id} 님과의 일정 확인
-	        		</option>
-	    		</select>
-			  </c:forEach>
+	       <c:if test="${!empty participantlist}">
+			  <select id="participantSelect" onchange="redirectToPlanList(this)">
+			    <option>동행자 목록</option>
+			    <c:forEach items="${participantlist}" var="participant">
+			      <option value="${participant.user_share_id}">
+			        ${participant.user_share_id} 님과의 일정 확인
+			      </option>
+			    </c:forEach>
+			  </select>
+			</c:if>
 			  <!--공유버튼 -->
 	          <c:if test="${!empty kakao_id }">
 	          <a id = "sharePlan" onclick="opensharePage()">일정공유</a>
@@ -106,7 +108,6 @@
                </c:forEach>
             </c:if>
             </div>
-            
          </div>
       </div>
   </div>

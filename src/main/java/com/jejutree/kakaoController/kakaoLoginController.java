@@ -29,10 +29,13 @@ public class kakaoLoginController {
 	private UserDAO dao;
 
 	@RequestMapping(value = "kakaologin.go", method = RequestMethod.GET)
+	//@RequestMapping(value = "jeju_tree/kakaologin.go", method = RequestMethod.GET)
 	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session,
-			HttpServletResponse response) throws Exception {
+		HttpServletResponse response) throws Exception {
 		System.out.println("#########" + code);
 		String expectedRedirectUri = "http://localhost:8585/model/kakaologin.go";
+		//배포 주소 요청 경로
+		//String expectedRedirectUri = "http://13.209.236.56:8080/jeju_tree/kakaologin.go";
 		String access_Token = ks.getAccessToken(code, expectedRedirectUri);
 		HashMap<String, Object> userInfo = ks.getUserInfo(access_Token);
 		// 연결 테스트
@@ -108,12 +111,17 @@ public class kakaoLoginController {
 
 	// 공유 받은 회원이 유입되는 로그인 경로.
 	@RequestMapping(value = "/invited_kakaologin.go", method = RequestMethod.GET)
+	//배포 경로
+	//@RequestMapping(value = "jeju_tree/invited_kakaologin.go", method = RequestMethod.GET)
 	public String invited_kakaoLogin(@RequestParam(value = "code", required = false) String code,
 			@RequestParam(value = "state", required = false) String share_id, HttpSession session,
 			HttpServletResponse response, Model model) throws Exception {
 		System.out.println(share_id);
 		System.out.println("#########" + code);
 		String expectedRedirectUri = "http://localhost:8585/model/invited_kakaologin.go";
+		//배포 주소 요청 경로
+		//String expectedRedirectUri = "http://13.209.236.56:8080/jeju_tree/invited_kakaologin.go";
+		
 		String access_Token = ks.getAccessToken(code, expectedRedirectUri);
 		HashMap<String, Object> userInfo = ks.getUserInfo(access_Token);
 		// 연결 테스트
