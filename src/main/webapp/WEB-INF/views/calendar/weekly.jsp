@@ -192,7 +192,7 @@ select:focus {
    
    <div class="save"> 
       <button id="saveAsPDF">PDF 저장</button>
-      <button id="savePlan">일정저장</button>
+      <button id="savePlan" onclick ="isGuestJoingCheck();">일정저장(변경사항)</button>
       <span class="navbar--range"></span>
    </div>
    </div>
@@ -246,7 +246,7 @@ select:focus {
           center: new Tmapv2.LatLng(33.3617, 126.5292),
           width : "100%",
           height : "400px",
-          zoom : 12,
+          zoom : 10,
           zoomControl : true,
           scrollwheel : true
           
@@ -612,6 +612,16 @@ end: '2023-05-19T23:59:59',
 });
 
  </script>
-
+<script type="text/javascript">
+function isGuestJoingCheck(){
+		let is_guest = '${is_guest}'
+			let share_id = '${share_id}'
+			console.log(is_guest);
+		if(is_guest != ''){
+			alert('로그인이 필요한 서비스 입니다.');
+			location.href = 'guest_login_page.go?share_id='+share_id+'';
+		}
+	}
+</script>
 </body>
 </html>

@@ -114,7 +114,7 @@ function toggleBm(title) {
       if(response>0) {
           let table = "<tr>" +
                         "<td>"+title+"</td>" +
-                        "<td><input type='button' value='해제' onclick='bookmark_del(\""+title+"\",this)'></td>" +
+                        "<td class='td_x'><input type='button' value='×' onclick='bookmark_del(\""+title+"\",this)'></td>" +
                        "</tr>";
          $('.blist_table').append(table);
        }else if(response == -1){
@@ -138,6 +138,11 @@ var isDrawing = false;
 var fixedMarkers = [];
 var userMarkers = [];
 var infoWindow = null;  // 전역 변수로 선언
+<<<<<<< HEAD
+=======
+var line = null;
+var polygon = null;
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
 
 // map 생성
 function initTmap() {
@@ -220,6 +225,7 @@ function initTmap() {
                });
 
       fixedMarkers[2] = new Tmapv2.Marker({
+<<<<<<< HEAD
          position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
          map : map,
          visible : false
@@ -244,6 +250,29 @@ function initTmap() {
              + "</div>"
              + "</div>"
              + "</form>";
+=======
+          position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+          icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_g_m_h.png",
+          iconSize : new Tmapv2.Size(24, 38),
+          map : map,
+          visible : false
+       });
+
+      fixedMarkers[2].addListener( "click", function() {
+          var content = "<form id='infoWindowForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
+              + "<input type='hidden' name='title' value='주상절리대'>"
+              + "<input type='hidden' name='addr' value='제주특별자치도 서귀포시 이어도로 36-24'>"
+              + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\"주상절리대\")\'><i id='heart' class='fas fa-heart'></i></a>"
+              + "<button id='selectButtonPlaceholder' type='submit'>일정 추가</button><a id='closeButtonPlaceholder' class='close-btn'>×</a></div>"
+              + "<input type='hidden' name='location' value='주상절리대'>"
+              + "<input type='hidden' name='markerLat' value='33.455483'>" // replace 'latitude' with real value
+              + "<input type='hidden' name='markerLng' value='126.768394'>" // replace 'longitude' with real value
+              + "<div style='padding:10px; width:250px;'>주상절리대"
+              + "<div>제주특별자치도 서귀포시 이어도로 36-24</div>"
+              + "<p class='start'>입장 : <input type='date' class='plan_start_date' name='start_date'></p>" // Start Date input field
+              + "<p class='end'>퇴장 : <input type='date' class='plan_end_date' name='end_date'></p>" // End Date input field
+              + "</form>";
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
 
                   var infoWindow = new Tmapv2.InfoWindow({
                      position : new Tmapv2.LatLng(33.455483, 126.768394),
@@ -251,6 +280,7 @@ function initTmap() {
                      map : map
                   });
                   
+<<<<<<< HEAD
                });
 
       map.addListener("click", function(e) {
@@ -267,6 +297,77 @@ function initTmap() {
                   }
                }
             });
+=======
+                  setTimeout(function() {
+                      var closeButton = document.getElementById('closeButtonPlaceholder');
+                      var submitButton = document.getElementById('selectButtonPlaceholder');
+
+                      if (closeButton) {
+                          closeButton.addEventListener('click', function(event) {
+                              event.preventDefault();
+                              infoWindow.setMap(null);
+                          });
+                      }
+
+                      if (submitButton) {
+                          submitButton.addEventListener('click', function(event) {
+                              // 원하는 경우 이 라인을 제거하여 폼 제출 시 페이지 새로고침을 허용
+                              event.preventDefault(); 
+                              document.getElementById('infoWindowForm').submit();
+                          });
+                      }
+                  }, 200);  
+                  
+               });
+
+      // map.addListener 메서드 시작.
+      map.addListener("click", function(e) {
+           if (isDrawing) {
+               var position = new Tmapv2.LatLng(e.latLng.lat(), e.latLng.lng());
+               var marker = new Tmapv2.Marker({
+                   position : position,
+                    icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png",
+                    iconSize : new Tmapv2.Size(24, 38),
+                   map : map
+               });
+               userMarkers.push(marker);
+               if (userMarkers.length > 1 && userMarkers.length < 4) {
+                   if (line) {
+                       line.setMap(null);
+                   }
+                   var path = userMarkers.map(function(marker) {
+                       return marker.getPosition();
+                   });
+                   line = new Tmapv2.Polyline({
+                       path: path,
+                       strokeColor: "blue",
+                       strokeWeight: 4,
+                       map: map
+                   });
+               } 
+               else if (userMarkers.length === 4) {
+                   if (line) {
+                       line.setMap(null);
+                       line = null;
+                   }
+                   if (polygon) {
+                       polygon.setMap(null);
+                   }
+                   var path = userMarkers.map(function(marker) {
+                       return marker.getPosition();
+                   });
+                   polygon = new Tmapv2.Polygon({
+                       paths: path,
+                       strokeColor: "#99dce6",
+                       fillColor: "#99dce6",
+                       fillOpacity: 0.5,
+                       map: map
+                   });
+                   isDrawing = false;
+               }
+           }
+       }); // map.addListener 메서드 종료.
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
    // 2. POI 통합 검색 API 요청
   $("#btn_select").click(
      function() {
@@ -849,6 +950,7 @@ function poiDetail(poiId) {
      document.getElementById('infoWindowForm').addEventListener('submit', closeInfoWindow);
    });
    
+<<<<<<< HEAD
    function drawPolygon() {
       var path = userMarkers.map(function(marker) {
          return marker.getPosition();
@@ -866,18 +968,41 @@ function poiDetail(poiId) {
       isDrawing = false;
    }
 
+=======
+   var drawingObject = null;
+   function drawPolygon() {
+       var path = userMarkers.map(function(marker) {
+           return marker.getPosition();
+       });
+       drawingObject = new Tmapv2.extension.Drawing({
+           map:map, // 지도 객체
+           strokeWeight: 4, // 테두리 두께
+           strokeColor:"blue", // 테두리 색상
+           strokeOpacity:1, // 테두리 투명도
+           fillColor:"red", // 도형 내부 색상
+           fillOpacity: 0.5 // 투명도 조정
+       });
+       drawingObject.drawPolygon({
+           paths : path,
+       });
+   }
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
    function startDrawing() {
       isDrawing = true;
       userMarkers.forEach(function(marker) {
          marker.setMap(null);
       });
       userMarkers = [];
+<<<<<<< HEAD
 
+=======
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
       // Hide all fixed markers.
       //fixedMarkers.forEach(function(marker) {
       //marker.setVisible(false);
       //});
    }
+<<<<<<< HEAD
 
    function hideMarkers() {
       // Hide all fixed markers.
@@ -886,6 +1011,18 @@ function poiDetail(poiId) {
       });
    }
 
+=======
+   function hideMarkers() {
+      fixedMarkers.forEach(function(marker) {
+       marker.setVisible(false);
+      });
+      
+      if(polygon) {
+         polygon.setMap(null);
+         polygon = null;
+      }
+   }
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
    function stopDrawing() {
       var path = userMarkers.map(function(marker) {
          return [ marker.getPosition().lng(), marker.getPosition().lat() ];
@@ -925,6 +1062,7 @@ function poiDetail(poiId) {
                     <input type="text" class="text_custom" id="searchKeyword" name="searchKeyword" value="<%=request.getAttribute("searchKeyword")%>">
                 </c:otherwise>
             </c:choose>&nbsp;&nbsp;&nbsp;
+<<<<<<< HEAD
             <button class="search_bt" id="btn_select">검색</button>
             <button id="btn_clear">초기화</button>
             <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
@@ -938,6 +1076,24 @@ function poiDetail(poiId) {
             	</span>
             </div>
             
+=======
+
+            <button class="search_bt" id="btn_select">검색</button>
+            <button id="btn_clear" onclick="clearMarkers()">초기화</button>
+            <br>
+            <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
+            <button class="end_bt" onclick="stopDrawing()">끝점</button>&nbsp;
+            <button class="end_bt" onclick="hideMarkers()">숨김</button>
+           </div> 
+           
+            <div class="search_intro">
+               <span>
+                  시작점 버튼을 누른 후 추출하고 싶은 장소 주위를 지도에 찍어보세요.<br>
+                  그 후 끝점을 누르면 시작점 좌표 중심에 추출하고 싶던 장소가 표시됩니다.
+               </span>
+            </div>
+
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
          <div class="rst_wrap">
             <div class="rst_mCustomScrollbar" style="height: 277px; overflow: auto;">
                <ul id="searchResult" name="searchResult" style="padding-left: 20px;">
@@ -978,7 +1134,11 @@ function poiDetail(poiId) {
                      <div id="date1">
                      
                      </div>
+<<<<<<< HEAD
                       <div id="weather">
+=======
+                      <div id="weather" align="center">
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
                           <img id="icon" src="" alt="">
                       </div>
                       <div id="temperature">
@@ -990,7 +1150,11 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day2">
+<<<<<<< HEAD
                           <div id="forecast-weather">
+=======
+                          <div id="forecast-weather" align="center">
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
                               <img id="day2-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day2">
@@ -1003,7 +1167,11 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day3">
+<<<<<<< HEAD
                           <div id="forecast-weather">
+=======
+                          <div id="forecast-weather" align="center">
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
                               <img id="day3-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day3">
@@ -1016,7 +1184,11 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day4">
+<<<<<<< HEAD
                           <div id="forecast-weather">
+=======
+                          <div id="forecast-weather" align="center">
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
                               <img id="day4-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day4">
@@ -1029,7 +1201,11 @@ function poiDetail(poiId) {
                      
                      </div>
                       <div id="forecast-day5">
+<<<<<<< HEAD
                           <div id="forecast-weather">
+=======
+                          <div id="forecast-weather" align="center">
+>>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
                               <img id="day5-icon" src="" alt="">
                           </div>
                           <div id="forecast-info-day5">

@@ -61,13 +61,16 @@ if (request.getProtocol().equals("HTTP/1.1"))
 					
 					<c:if test="${empty share_id}">
 					<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=b1b9f0baef115c1e6588625cf198429b&redirect_uri=http://localhost:8585/model/kakaologin.go&response_type=code">
+					<!--배포주소 요청 경로  -->
+					<!-- <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=b1b9f0baef115c1e6588625cf198429b&redirect_uri=http://13.209.236.56:8080/jeju_tree/kakaologin.go&response_type=code"> -->
 					<img src="<%=request.getContextPath() %>/resources/icon/kakao_login_medium_wide.png">
 		      		</a>
 		      		</c:if>
 		      		<!--공유 화면일시 파라미터로 share_id 같이 주기.-->
 		      		<c:if test="${!empty share_id}">
-		      		지금 공유 전용 로그인임.
 		      		<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=b1b9f0baef115c1e6588625cf198429b&redirect_uri=http://localhost:8585/model/invited_kakaologin.go&state=${share_id}&response_type=code">
+		      		<!--배포주소 요청 경로  -->
+		      		<%-- <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=b1b9f0baef115c1e6588625cf198429b&redirect_uri=http://13.209.236.56:8080/jeju_tree/invited_kakaologin.go&state=${share_id}&response_type=code"> --%>
 					<img src="<%=request.getContextPath() %>/resources/icon/kakao_login_medium_wide.png">
 		      		</a>
 		      		</c:if>

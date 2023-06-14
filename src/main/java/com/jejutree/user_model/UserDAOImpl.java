@@ -109,7 +109,11 @@ public class UserDAOImpl implements UserDAO {
 	public int selfshareCheck(HashMap<String, String> paramMap) {
 	    return this.sqlSession.selectOne("selfShareCheck", paramMap);
 	}
-	
+	//동행자 리스트
+	@Override
+	public List<Plan_participantsDTO> getparticipantsList(String user_id) {
+		return this.sqlSession.selectList("participantsList", user_id);
+	}
 	/*이메일 기능*/
 	@Override
 	public int checkEmail(String email) {
@@ -164,6 +168,7 @@ public class UserDAOImpl implements UserDAO {
     public void updatepwd(UserDTO dto) {
         this.sqlSession.update("updatepwd", dto);
     }
+	
 	
 	
 	

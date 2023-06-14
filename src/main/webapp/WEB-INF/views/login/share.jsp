@@ -11,29 +11,41 @@
 </head>
 <body>
 <c:set var = "normal_session" value="${user_id}"/>
-<div class="content E-Solution" id="content" align="center">
-	<h2>카톡계정의 친구에게 일정을 공유해 보세요</h2> 
-	<input type="hidden" onclick="sendLinkCustom();" value="Custom" /> 
-	<h3><a onclick="sendLink();" value="공유하기">친구목록 불러오기</a></h3>
-	<input type="button" onclick="sendLink();" value="공유하기" />
-	<a id="kakaotalk-sharing-btn" href="javascript:;"> 
-	 <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-    alt="카카오톡 공유 보내기 버튼" />
-    </a>
-</div>
+	<div class="find_id_container" align="center">
+		<div class="find_id_title">
+			<div class="search_id">아이디 찾기</div>
+			<div class="title-account">제주 여행의 시작 JEJU TREE</div>
+		</div>
+	
+		<div class="find_id_cont">
+			<form method="post" action="<%=request.getContextPath()%>/id_search.go">
+			    <div>
+		            <div class="find_id_text">
+		            	<div class="content E-Solution" id="content" align="center">
+					<a onclick="sendLink();" value="공유하기">
+  					<img style="width: -webkit-fill-available;" src="<%=request.getContextPath()%>/resources/images/kakao_logo/btn_sns_kakao.png">
+					</a>
+					</div>
+		            </div>
+		            <div class="find_id_text">
+		            	<span class="find_id_span">
+		            		* 메일이 도착하기까지 몇 분 정도 소요될 수 있습니다.
+		            	</span>
+		            	<span class="find_id_span">
+		            		* 스팸 메일함으로 발송될 수 있으니 체크바랍니다.
+		            	</span>
+		            </div>
+			    </div>
+			</form>
+		</div>
+	</div>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script language="javascript">
 let parameter_id = '${user_id}';
 let normal_session = '${normal_session}'
-
 console.log('normal_session');
 //기존의 로그인 했던 카카오 유저의 친구목록 찌끄래기를 날려주는 메서드
- 
-
-
-
 Kakao.init("ddee3a2c7a119e1824460c4c13d5fd83");
-
 try {
   function sendLink() {
 	  /* if(normal_session != ''){

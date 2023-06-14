@@ -10,7 +10,6 @@
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/navbar.css">
  <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/mypage/userProfile.css">
- 
 </head>
 <body>
     <c:set var="user" value="${UserInfo}" />
@@ -18,24 +17,22 @@
     <%@ include file="../include/navbar.jsp" %> 
     <div class="userProfile">
     <form method="post" id="frm1" enctype="multipart/form-data" >
-    
-    <div>
-    	<h3>${user.user_id }님 프로필 수정</h3>
-    </div>
-    
+   
     <div id="user_container" align = "center">
         <div class="userprofile_div">
-        
         <div class="img_div">
-             <img id="previewImg"  src="<%=request.getContextPath() %>${user.user_image }" alt="profile" width="200px" height="200px" style="justify-content: center;">
+             <img id="previewImg"  src="<%=request.getContextPath() %>${user.user_image }" alt="profile">
         </div>
-        
+        <div id = "profile_title_wrap">
+	   		 <div id = "profile_title">
+	    	 ${user.user_nickname }
+	    	</div>
+	    	<div class="title-account">개인 정보를 확인하세요</div>
+    	</div>
         <div class="file-div">
         	<input class="file-input" type="file" name="upload" id="upload" value="${user.user_image }" onchange="previewProfileImage(event)">
         	<input type="hidden" name="user_image" value="${user.user_image }">
         </div>
-        
-
         <div>
            	<input name="user_nickname" class="user_nickname" value="${user.user_nickname }"  >
             <p id="name_check" class="name_check"></p>
@@ -78,7 +75,7 @@
     </div>
     
     </div>
-    
+    <div id = "delete_button">
     <c:if test="${empty Kakao_info}">
     <input class="out_input" type="submit" value="회원탈퇴" onclick='btn_click("delete");'>
     </c:if>
@@ -88,7 +85,7 @@
                                                location.href='deletekakaoUser.go?user_email=${kakao_id}&access_Token=${kakao_token}'
                                                    } else{return;}" >
      </c:if> 
-    
+    </div>
      </form>
 	</div>
     

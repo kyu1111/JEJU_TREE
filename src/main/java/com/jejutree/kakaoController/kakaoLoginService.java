@@ -40,6 +40,7 @@ public class kakaoLoginService {
 			sb.append("&client_id=b1b9f0baef115c1e6588625cf198429b"); //본인이 발급받은 key
 			
 			if (expectedRedirectUri.equals("http://localhost:8585/model/invited_kakaologin.go")) {
+			//if (expectedRedirectUri.equals("http://13.209.236.56:8080/jeju_tree/invited_kakaologin.go")) {
 		            sb.append("&redirect_uri=" + expectedRedirectUri);
 		    } else {
 		            sb.append("&redirect_uri=" + expectedRedirectUri);

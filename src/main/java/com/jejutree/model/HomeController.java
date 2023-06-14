@@ -16,7 +16,7 @@ import com.jejutree.CrawlingController.CrawlingData;
 @Controller
 public class HomeController {
 
-	@Autowired
+   @Autowired
    private final CrawlingController crawlingController;
 
    @Autowired
@@ -60,7 +60,12 @@ public class HomeController {
    
    @RequestMapping(value = "/TMAP.go", method = RequestMethod.GET)
    public String toTmapPage(@RequestParam("searchKeyword") String searchKeyword, Model model) {
+       List<CrawlingData> crawlingDataList = crawlingController.getCrawlingDataByTitle(searchKeyword);
+       System.out.println("crawlingDataList :::" + crawlingDataList);
+          
+       // Model에 크롤링 결과를 추가
        model.addAttribute("searchKeyword", searchKeyword);
+       model.addAttribute("crawlingDataList", crawlingDataList);
        return "TMAP";
    } 
 }

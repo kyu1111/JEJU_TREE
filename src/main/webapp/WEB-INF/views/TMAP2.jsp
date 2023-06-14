@@ -1,201 +1,192 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="org.jsoup.Jsoup" %>
+<%@ page import="org.jsoup.nodes.Document" %>
+<%@ page import="org.jsoup.nodes.Element" %>
+<%@ page import="org.jsoup.select.Elements" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>simpleMap</title>
-
-<style type="text/css">
-
-#container{
-  
-      display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50%;
-    width: 100%;
-    position: relative;
-    z-index: 1; /* container2 보다 앞에 표시되도록 설정 */
-
-}
-
-#sidebar {
-
-    width: 25%; /* adjust this value to change the width of the sidebar */
-    height: 100%;
-    position: fixed;
-    overflow: auto;
-    z-index: 1; /* add this line to ensure the sidebar appears above the map */
-
-}
-
-#map_div {
-
-    margin-top: 70px;
-    margin-right: auto;
-    margin-left:auto;
-    display: block;
-
-}
-
-#container2{
-   
-   display: block;
-   justify-content: center;
-   align-items: center;
-   height: 50%;
-   width: 100%;
-   position: absolute; /* 추가: container2를 절대적인 위치로 설정 */
-   bottom: 0; /* 추가: container 하단에 고정 */
-
-}
-</style>
-
-<!-- Add jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=857KZ5RE6M1rUW7d6KPzX3cF1f6pgN017jnAkmdJ"></script>
-
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/sidebar.css">
-<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar_ajax.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/include/sidebar.js"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/include/footer.css">
-  
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 <script type="text/javascript">
+
    var map;
-   var infoWindow;
-   var marker;
+   var isDrawing = false;
+   var fixedMarkers = [];
+   var userMarkers = [];
 
    function initTmap() {
-      // map 생성 
       map = new Tmapv2.Map("map_div", {
-         center : new Tmapv2.LatLng(33.3617, 126.5292),
-         width : "1000px", // 지도의 넓이
-         height : "400px", // 지도의 높이
+         center : new Tmapv2.LatLng(33.3666, 126.5333),
+         width : "100%",
+         height : "400px",
          zoom : 10
       });
 
-      // Map click event listener
-      map.addListener("click", function(e) {
-          var latlng = e.latLng; // 클릭한 위치의 위도, 경도 정보
-          console.log(latlng);
-          $.ajax({
-              url: 'https://apis.data.go.kr/B551011/KorService1/locationBasedList1?MobileOS=ETC&MobileApp=AppTest&_type=json&numOfRows=10&pageNo=1',
-              data: {
-                  serviceKey: decodeURIComponent('h25GokrXt4MRvyzdkh5DJNs8HRscb9jBf6OX/Fy3AiiTckC7U+HPtX+hXL7yWVJdYWnq4FrIDyjNbM6XQ5iPwA=='),
-                  mapX: latlng._lng,
-                  mapY: latlng._lat,
-                  radius: 100
-              },
-              success: function(data) {
-                  if (data && data.response && data.response.body && data.response.body.items && data.response.body.items.item.length > 0) {
-                      var item = data.response.body.items.item[0]; // 첫 번째 아이템
-
-                      // Add a marker and infoWindow at the click position
-                      marker = new Tmapv2.Marker({
-                          position: new Tmapv2.LatLng(latlng._lat, latlng._lng),
-                          map: map
-                      });
-                      
-                      var content = "<form id='markerDataForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
-                          + "<input type='hidden' class = 'plan_title' name='title' value='" + item.title + "'>" 
-                          + "<input type='hidden' class = 'plan_address' name='address' value='" + item.addr1 + "'>"
-                          + "<input type='hidden' class = 'plan_location' name='location'  value='" + item.title + "'>" 
-                          + "<input type='hidden' class = 'plan_markerLat' name='markerLat' value='" + latlng._lat + "'>"  // latitude input field
-                          + "<input type='hidden' class = 'plan_markerLng' name='markerLng' value='" + latlng._lng + "'>"  // longitude input field
-                          + "<div style='padding:10px; width:250px;'>" + item.title + "&nbsp;&nbsp;<button id='selectBtn' type='button'>Select</button>&nbsp;&nbsp;<button id='closeBtn'>Close</button>" +  "</div>"
-                          + "<div>" + item.addr1 + "</div>"
-                          + "<div><img src='" + item.firstimage2 + "' alt='Image' style='width:100px; height:auto;'></div>"
-                          + "<p>Start Date : <input type='date' class = 'plan_start_date' name='start_date'></p>"  // Start Date input field
-                          + "<p>End Date : <input type='date' class = 'plan_end_date' name='end_date'></p>"  // End Date input field
-                          + "</form>";
-
-                          infoWindow = new Tmapv2.InfoWindow({
-                              position: new Tmapv2.LatLng(latlng._lat, latlng._lng),
-                              content: content,
-                              type: 2,
-                              map: map
-                          });
-
-                      // Close button event
-                      $(document).on('click', '#closeBtn', function(e) {
-                          e.preventDefault();
-                          if(infoWindow) infoWindow.setVisible(false); //팝업창 제거
-                          if(marker) marker.setMap(null); // marker 제거
-                      });
-
-                      $(document).on('click', '#selectBtn', function(e) {
-                          e.preventDefault();
-                          validateAndSubmitForm();
-                          
-                          
-                      });
-      
-                  } else {
-                      console.error("Unexpected API response", data);
-                  }
-              }
-          });
+      fixedMarkers[0] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.361666, 126.529166), // 한라산 국립공원
+         map : map,
+         visible : false
       });
-   }   
       
-   $(document).ready(function() {
-        $('.location').click(function() {
-            var lat = $(this).data('lat');
-            var lng = $(this).data('lng');
+      fixedMarkers[0].addListener("click", function() {
+           var content ="<div style=' position: relative; border-bottom: 1px solid #dcdcdc; line-height: 18px; padding: 0 35px 2px 0;'>"+
+               "<div style='font-size: 12px; line-height: 15px;'>"+
+                   "<span style='display: inline-block; width: 14px; height: 14px; background-image: url(/resources/images/common/icon_blet.png); vertical-align: middle; margin-right: 5px;'></span>SK T-타워"+
+               "</div>"+
+            "</div>"+
+            "<div style='position: relative; padding-top: 5px; display:inline-block'>"+
+               "<div style='display:inline-block; border:1px solid #dcdcdc;'><img src='/resources/images/common/sk_logo.png' width='73' height='70'></div>"+
+               "<div style='display:inline-block; margin-left:5px; vertical-align: top;'>"+
+                   "<span style='font-size: 12px; margin-left:2px; margin-bottom:2px; display:block;'>서울특별시 중구 을지로 65 SK T-타워</span>"+
+                   "<span style='font-size: 12px; color:#888; margin-left:2px; margin-bottom:2px; display:block;'>(우)100-999  (지번)을지로2가 11</span>"+
+                   "<span style='font-size: 12px; margin-left:2px;'><a href='https://openapi.sk.com/' target='blank'>개발자센터</a></span>"+
+               "</div>"+
+            "</div>";
+
+           var infoWindow = new Tmapv2.InfoWindow({
+               position: new Tmapv2.LatLng(33.361666, 126.529166),
+               content: content,
+               map: map
+           });
+       });
       
-            // Create a new marker
-            marker = new Tmapv2.Marker({
-                position: new Tmapv2.LatLng(lat, lng),
+      fixedMarkers[1] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.458875, 126.942933), // 성산일출봉
+         map : map,
+         visible : false
+      });
+      
+      fixedMarkers[1].addListener("click", function() {
+           var infoWindow = new Tmapv2.InfoWindow({
+               position: new Tmapv2.LatLng(33.458875, 126.942933),
+               content: "<p>이곳은 성산일출봉입니다.</p>",
+               map: map
+           });
+       });
+
+      fixedMarkers[2] = new Tmapv2.Marker({
+         position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+         map : map,
+         visible : false
+      });
+      
+      fixedMarkers[2].addListener("click", function() {
+           var infoWindow = new Tmapv2.InfoWindow({
+               position: new Tmapv2.LatLng(33.455483, 126.768394),
+               content: "<p>이곳은 주상절리대입니다.</p>",
+               map: map
+           });
+       });
+      
+      fixedMarkers[3] = new Tmapv2.Marker({
+          position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+          map : map,
+          visible : false
+       });
+       
+       fixedMarkers[3].addListener("click", function() {
+            var infoWindow = new Tmapv2.InfoWindow({
+                position: new Tmapv2.LatLng(33.455483, 126.768394),
+                content: "<p>이곳은 주상절리대입니다.</p>",
                 map: map
             });
-
-            // Center the map on the new marker
-            map.setCenter(new Tmapv2.LatLng(lat, lng));
-   
         });
+       
+       fixedMarkers[4] = new Tmapv2.Marker({
+           position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+           map : map,
+           visible : false
+        });
+        
+        fixedMarkers[4].addListener("click", function() {
+             var infoWindow = new Tmapv2.InfoWindow({
+                 position: new Tmapv2.LatLng(33.455483, 126.768394),
+                 content: "<p>이곳은 주상절리대입니다.</p>",
+                 map: map
+             });
+         });
+      
+      map.addListener("click", function(e) {
+               if (isDrawing) {
+                  var position = new Tmapv2.LatLng(e.latLng.lat(),
+                        e.latLng.lng());
+                  var marker = new Tmapv2.Marker({
+                     position : position,
+                     map : map
+                  });
+                  userMarkers.push(marker);
+                  if (userMarkers.length == 4) {
+                     drawPolygon();
+                  }
+               }
+            });
+   } // initTmap() 메서드 종료.
    
-   });
    
-   ///////////////////////////////////////////
-   function validateAndSubmitForm(){
-	   if(PlanListValidCheck()){
-		   $('#markerDataForm').submit();
-	   }else{
-		   alert('항목을 모두 입력하셔야 합니다.');   
-	   }
-	} 
-   function PlanListValidCheck() {
-	   
-	    if ($('.plan_start_date').val() == '') {
-	        return false;
-	    }
-	    if ($('.plan_end_date').val() == '') {
-	    	return false;
-	    }
-	    return true;
-	} 
+   function drawPolygon() {
+      var path = userMarkers.map(function(marker) {
+         return marker.getPosition();
+      });
+      path.push(userMarkers[0].getPosition());
+      var polygon = new Tmapv2.Polygon({
+         path : path,
+         strokeColor : "#000000",
+         strokeOpacity : 0.5,
+         strokeWeight : 2,
+         fillColor : "#000000",
+         fillOpacity : 0.35,
+         map : map
+      });
+      isDrawing = false;
+   }
+
+   function startDrawing() {
+      isDrawing = true;
+      userMarkers.forEach(function(marker) {
+         marker.setMap(null);
+      });
+      userMarkers = [];
+
+      // Hide all fixed markers.
+      //fixedMarkers.forEach(function(marker) {
+      //marker.setVisible(false);
+      //});
+   }
+
+   function hideMarkers() {
+      // Hide all fixed markers.
+      fixedMarkers.forEach(function(marker) {
+         marker.setVisible(false);
+      });
+   }
+
+   function stopDrawing() {
+      var path = userMarkers.map(function(marker) {
+         return [ marker.getPosition().lng(), marker.getPosition().lat() ];
+      });
+      path.push(path[0]); // Add the first point to the end to close the polygon.
+      var polygon = turf.polygon([ path ]);
+      fixedMarkers.forEach(function(marker) {
+         var point = turf.point([ marker.getPosition().lng(),
+               marker.getPosition().lat() ]);
+         if (turf.booleanPointInPolygon(point, polygon)) {
+            marker.setVisible(true);
+         }
+      });
+      console.log(userMarkers.map(function(marker) {
+         return marker.getPosition();
+      }));
+   }
 </script>
 </head>
 <body onload="initTmap()">
- <c:set var = "normal_session" value="${user_id}"/>
-<!-- 상단바 설정하기  -->
-<%@ include file="./include/navbar.jsp" %>
-<!-- 사이드바 설정하기 -->
-<div id = "container">
-<!-- 맵 생성 실행 -->
-<div id="map_div"></div>
-</div>
-<br>
-<c:if test="${empty kakao_session }">
-<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${user_id}" onclick = "return PlanListValidCheck();">상세설정</a></div>
-</c:if>
-<c:if test="${!empty kakao_session }">
-<div align="center"><a href="<%=request.getContextPath() %>/plan_list.go?id=${kakao_id}" onclick = "return PlanListValidCheck();">상세설정</a></div>
-</c:if>
-<br>
-<br>
-<div align="center"><%@ include file="./include/footer.jsp" %></div>
-<br>
+   <button onclick="startDrawing()">Start Drawing</button>
+   <button onclick="stopDrawing()">Stop Drawing</button>
+   <button onclick="hideMarkers()">Hide Markers</button>
+   <div id="map_div"></div>
 </body>
 </html>

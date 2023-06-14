@@ -201,7 +201,7 @@ $("#frm1").validate({
 
 	success: function(label) {
 		// This function is called when a field passes validation
-		label.text("사용가능!").addClass("okayValid");
+		label.text("사용가능").addClass("okayValid");
 	},
 	onkeyup: function(element) {
 		// Trigger validation on keyup event

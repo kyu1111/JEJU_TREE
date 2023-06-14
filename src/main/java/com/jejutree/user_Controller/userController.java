@@ -78,9 +78,9 @@ public class userController {
 	public void user_join_ok(@RequestParam(value = "upload") MultipartFile mFile, HttpServletResponse response, UserDTO dto, HttpServletRequest request, HttpSession session,
 			@RequestParam(value = "share_id", required = false) String user_share_id) throws Exception {
 		 // 절대경로 가져오기
+		 // 절대경로 가져오기
 	    Properties prop = new Properties();
 	    FileInputStream fis = new FileInputStream(request.getRealPath("WEB-INF\\classes\\config\\fileupload.properties"));
-	    System.out.println();
 	    prop.load(new InputStreamReader(fis, "UTF-8"));
 	    fis.close();
 	    
@@ -94,33 +94,33 @@ public class userController {
 		  if(!originalFileName.isEmpty()) {
 			  System.out.println("originalFileName: " + originalFileName);
 		        
-		         String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
-		         String saveFolder2 = prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\"+year+month+day;
+		         String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\"+year+month+day;
 		         String saveFileName = "";
+		         
 			        File path1 = new File(saveFolder);
-			        File path2 = new File(saveFolder2);
+			        System.out.println("경로1"+path1);
 
 			        if (!path1.exists()) {
-			            path1.mkdirs();
+			        	path1.mkdirs();
 			        }
-			        if (!path2.exists()) {
-			        	path2.mkdirs();
-			        }
+			        
+
+
 			        if (!originalFileName.equals(dto.getUser_image())) {
 			            saveFileName = System.currentTimeMillis() + "_" + originalFileName;
 			            	
-			            	dto.setUser_image("/resources/images/profile/" +year+month+day +"/" +saveFileName);
+			            	dto.setUser_image("/resources/images/profile/" +year+month+day+ "/" +saveFileName);
 			            try {
-			            	mFile.transferTo(new File(saveFolder2, saveFileName));
+			            	mFile.transferTo(new File(saveFolder, saveFileName));
 
 			            } catch (IOException e) {
 			                e.printStackTrace();
 			            }
 			        } 
 			    } else {
-		            // 기본이미지 세팅
-			    	dto.setUser_image("/resources/images/profile/default_profileImg.jpg");
-		        }
+	                  // 기본이미지 세팅
+	                dto.setUser_image("/resources/images/profile/default_profileImg.jpg");
+	              }
 		int check = 0;
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();

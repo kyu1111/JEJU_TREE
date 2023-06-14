@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class Plan_participantsDTO {
 	String user_id;
 	String user_share_id;
+	int number;
 }

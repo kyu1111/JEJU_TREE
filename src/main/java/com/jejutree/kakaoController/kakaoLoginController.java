@@ -29,10 +29,13 @@ public class kakaoLoginController {
 	private UserDAO dao;
 
 	@RequestMapping(value = "kakaologin.go", method = RequestMethod.GET)
+	//@RequestMapping(value = "jeju_tree/kakaologin.go", method = RequestMethod.GET)
 	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session,
-			HttpServletResponse response) throws Exception {
+		HttpServletResponse response) throws Exception {
 		System.out.println("#########" + code);
 		String expectedRedirectUri = "http://localhost:8585/model/kakaologin.go";
+		//배포 주소 요청 경로
+		//String expectedRedirectUri = "http://13.209.236.56:8080/jeju_tree/kakaologin.go";
 		String access_Token = ks.getAccessToken(code, expectedRedirectUri);
 		HashMap<String, Object> userInfo = ks.getUserInfo(access_Token);
 		// 연결 테스트
@@ -108,12 +111,17 @@ public class kakaoLoginController {
 
 	// 공유 받은 회원이 유입되는 로그인 경로.
 	@RequestMapping(value = "/invited_kakaologin.go", method = RequestMethod.GET)
+	//배포 경로
+	//@RequestMapping(value = "jeju_tree/invited_kakaologin.go", method = RequestMethod.GET)
 	public String invited_kakaoLogin(@RequestParam(value = "code", required = false) String code,
 			@RequestParam(value = "state", required = false) String share_id, HttpSession session,
 			HttpServletResponse response, Model model) throws Exception {
 		System.out.println(share_id);
 		System.out.println("#########" + code);
 		String expectedRedirectUri = "http://localhost:8585/model/invited_kakaologin.go";
+		//배포 주소 요청 경로
+		//String expectedRedirectUri = "http://13.209.236.56:8080/jeju_tree/invited_kakaologin.go";
+		
 		String access_Token = ks.getAccessToken(code, expectedRedirectUri);
 		HashMap<String, Object> userInfo = ks.getUserInfo(access_Token);
 		// 연결 테스트
@@ -167,14 +175,14 @@ public class kakaoLoginController {
 				// share_id 전송 해주는 이유는 간직하다가 회원가입 직전에 insert 할떄 필요 하기 떄문.
 				out.println("<script>");
 				out.println("window.open('kakaoAlert.go?user_email=" + user_email + "&share_id=" + share_id
-						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
+						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=500,width=370,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
 				out.println("</script>");
 			} else if (kakao_user == null) {
 				// 최초 로그인이니까 임시정보 입력해버리기.
 				int check = dao.kakao_insert(user_email);
 				out.println("<script>");
 				out.println("window.open('kakaoAlert.go?user_email=" + user_email + "&share_id=" + share_id
-						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=700,width=500,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
+						+ "', '카카오톡 연동 회원 가입', 'titlebar=0,height=500,width=370,top=120,left=400,status=0,scrollbars=0,location=0,resizable=0,menubar=0,toolbar=0');");
 				out.println("</script>");
 			}
 		} else {

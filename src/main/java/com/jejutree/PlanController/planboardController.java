@@ -80,22 +80,16 @@ public class planboardController {
 
 	@RequestMapping("board_write.go")
 	public String write(Model model) {
-		
-
-		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	     String userId = (String) session.getAttribute("user_id");
+		String user_id = null;
+		if (session.getAttribute("user_id") != null) {
+	        user_id = (String) session.getAttribute("user_id");
+	    } else if (session.getAttribute("Kakao_info") != null) {
+	        HashMap<String, Object> kakaoInfo = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+	        user_id = (String) kakaoInfo.get("kakao_id");
+	    }
 	     UserDTO dto = new UserDTO();
-		if (KakaoInfo != null || userId != null) {
-			if(userId != null) {
-				dto.setUser_id(userId);
-				dto = this.userdao.getuser(userId);
-				
-			} else if(KakaoInfo != null) {
-				dto.setUser_id(KakaoInfo);
-				dto = this.userdao.getuser(KakaoInfo);
-			} 
-		}
-		System.out.println(userId);
+		dto = this.userdao.getuser(user_id);
+		
 		System.out.println(dto.getUser_id());
 		System.out.println(dto.getUser_nickname());
 		model.addAttribute("User", dto);
@@ -158,7 +152,7 @@ public class planboardController {
                 hm.put("rno", commentList.get(i).getRno());
                 hm.put("content", commentList.get(i).getContent());
                 hm.put("writer", commentList.get(i).getWriter());
-                
+                hm.put("regdate", commentList.get(i).getRegdate());
                 hmlist.add(hm);
             }
           
@@ -252,23 +246,17 @@ public class planboardController {
  	    
  	     PlanBoardDTO dto = this.dao.boardCont(board_no);
  	   
-    	String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	     String userId = (String) session.getAttribute("user_id");
+ 	    String user_id = null;
+		if (session.getAttribute("user_id") != null) {
+	        user_id = (String) session.getAttribute("user_id");
+	    } else if (session.getAttribute("Kakao_info") != null) {
+	        HashMap<String, Object> kakaoInfo = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+	        user_id = (String) kakaoInfo.get("kakao_id");
+	    }
 	     UserDTO userdto = new UserDTO();
-		if (KakaoInfo != null || userId != null) {
-			if(userId != null) {
-				userdto.setUser_id(userId);
-				userdto = this.userdao.getuser(userId);
-				
-			} else if(KakaoInfo != null) {
-				userdto.setUser_id(KakaoInfo);
-				userdto = this.userdao.getuser(KakaoInfo);
-			} 
-		}
-		
+	     userdto = this.userdao.getuser(user_id);
 		String currnick = userdto.getUser_nickname();
 		String boardnick = dto.getUser_Nickname();
-		System.out.println(userId);
 		System.out.println(userdto.getUser_id());
 		System.out.println(userdto.getUser_nickname());
 		model.addAttribute("User", userdto);
@@ -321,19 +309,15 @@ public class planboardController {
 			
  	     PlanBoardDTO dto = this.dao.boardCont(no);
  	   
-    	String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	    String userId = (String) session.getAttribute("user_id");
+ 	    String user_id = null;
+		if (session.getAttribute("user_id") != null) {
+	        user_id = (String) session.getAttribute("user_id");
+	    } else if (session.getAttribute("Kakao_info") != null) {
+	        HashMap<String, Object> kakaoInfo = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+	        user_id = (String) kakaoInfo.get("kakao_id");
+	    }
 	     UserDTO userdto = new UserDTO();
-		if (KakaoInfo != null || userId != null) {
-			if(userId != null) {
-				userdto.setUser_id(userId);
-				userdto = this.userdao.getuser(userId);
-				
-			} else if(KakaoInfo != null) {
-				userdto.setUser_id(KakaoInfo);
-				userdto = this.userdao.getuser(KakaoInfo);
-			} 
-		}
+	     userdto = this.userdao.getuser(user_id);
 		
 		String currnick = userdto.getUser_nickname();
 		String boardnick = dto.getUser_Nickname();
@@ -358,19 +342,15 @@ public class planboardController {
     public String  boardLike(@RequestParam("no") int no, @RequestParam("user_id") String user_id) throws IOException {
 		
 		   
-	   	String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-		    String userId = (String) session.getAttribute("user_id");
-		     UserDTO userdto = new UserDTO();
-			if (KakaoInfo != null || userId != null) {
-				if(userId != null) {
-					userdto.setUser_id(userId);
-					userdto = this.userdao.getuser(userId);
-					
-				} else if(KakaoInfo != null) {
-					userdto.setUser_id(KakaoInfo);
-					userdto = this.userdao.getuser(KakaoInfo);
-				} 
-			}
+    	String userId = null;
+		if (session.getAttribute("user_id") != null) {
+			userId = (String) session.getAttribute("user_id");
+	    } else if (session.getAttribute("Kakao_info") != null) {
+	        HashMap<String, Object> kakaoInfo = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+	        userId = (String) kakaoInfo.get("kakao_id");
+	    }
+	     UserDTO userdto = new UserDTO();
+	     userdto = this.userdao.getuser(userId);
 			String currId = userdto.getUser_id();
 			if(user_id.equals(currId)) {
 				return "-1";
@@ -406,20 +386,15 @@ public class planboardController {
     @ResponseBody
     public String  likeCount(@RequestParam("no") int no, @RequestParam("user_id") String user_id) throws IOException {
 		
-		   
-	   	String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-		    String userId = (String) session.getAttribute("user_id");
-		     UserDTO userdto = new UserDTO();
-			if (KakaoInfo != null || userId != null) {
-				if(userId != null) {
-					userdto.setUser_id(userId);
-					userdto = this.userdao.getuser(userId);
-					
-				} else if(KakaoInfo != null) {
-					userdto.setUser_id(KakaoInfo);
-					userdto = this.userdao.getuser(KakaoInfo);
-				} 
-			}
+    	String userId = null;
+		if (session.getAttribute("user_id") != null) {
+			userId = (String) session.getAttribute("user_id");
+	    } else if (session.getAttribute("Kakao_info") != null) {
+	        HashMap<String, Object> kakaoInfo = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+	        userId = (String) kakaoInfo.get("kakao_id");
+	    }
+	     UserDTO userdto = new UserDTO();
+	     userdto = this.userdao.getuser(userId);
 			String currId = userdto.getUser_id();
 			if(user_id.equals(currId)) {
 				return "-1";

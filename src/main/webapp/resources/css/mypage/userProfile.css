@@ -1,3 +1,27 @@
+#user_container{
+  justify-content: center;	
+	
+}
+#profile_title{
+   font-size: 30px;
+   letter-spacing: -0.9px;
+   color: black;
+   padding-right: 5px;
+   text-align: center;
+   margin-bottom: 10px;
+}
+.title-account {
+   margin-top:10px;
+   font-size: 12px;
+   letter-spacing: -0.9px;
+   color: #6a6a6a;
+   padding-bottom: 50px;
+   padding-right: 5px;
+   text-align: center;
+}
+#profile_title_wrap{
+	margin-bottom: 50px;
+}
 .userProfile {
 	text-align: center;
 	display: flex;
@@ -12,9 +36,21 @@
 }
 
 .img_div {
-	padding: 30px;
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 30px;
 }
-
+#previewImg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
 .file-div {
 	display: flex;
 	justify-content: center;
@@ -23,15 +59,15 @@
 	padding-bottom: 30px;
 }
 
-.userprofile_form span {
-	display: block;
-	text-align: left;
-	font-size: 12px;
-	padding-left: 70px;
-	width: 420px;
-	color: #99dce6;
-	font-weight: 550;
-	
+#frm1 span {
+	display : block;
+    width: auto;
+    border : none;
+    font-size: 12px;
+    margin-top: 3px;
+    color: #99dce6;;
+    font-weight: bold;
+    text-align: left;
 }
 
 .phone_div {
@@ -143,4 +179,8 @@
 
 .edit_footer {
 	margin-top: 100px;
+}
+#delete_button{
+	display: flex;
+	justify-content: center;	
 }

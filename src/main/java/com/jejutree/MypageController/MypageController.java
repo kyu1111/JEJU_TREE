@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.jejutree.Login.JoinEmailService;
 import com.jejutree.kakaoController.kakaoLoginService;
+import com.jejutree.plans_model.Plan_participantsDTO;
 import com.jejutree.plans_model.UserPlansDAO;
 import com.jejutree.plans_model.UserPlansDTO;
 import com.jejutree.user_model.UserDAO;
@@ -41,7 +43,30 @@ public class MypageController {
 	
 	@RequestMapping("mypage.go")
 	public String mypage(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("user_id");
+		String userId = "";
+		String user_id = "";
+		String kakao_id = "";
+		
+		user_id = (String) session.getAttribute("user_id");
+		
+		HashMap<String, Object> hashMap = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+		
+		if(hashMap != null) {
+			kakao_id = (String) hashMap.get("kakao_id");
+		}
+		
+		if (user_id == null && kakao_id == null) {
+		    // user_id와 kakao_id가 모두 null인 경우
+		    userId = ""; // 빈 문자열로 초기화
+		} else if (user_id != null) {
+		    // user_id가 존재하는 경우
+			userId = user_id;
+		} else {
+		    // kakao_id가 존재하는 경우
+		    userId = kakao_id;
+		}
+
+		//본인 일정 정보 출력
 		List<UserPlansDTO> list = this.plansdao.getPlanList(userId);
 		if (!list.isEmpty()) {
 			UserPlansDTO startPlan = list.get(0);
@@ -50,45 +75,56 @@ public class MypageController {
 			model.addAttribute("endPlan", endPlan);
 		}
 		model.addAttribute("List", list);
-		
-		
-		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	     String user_id = (String) session.getAttribute("user_id");
-	     UserDTO dto = new UserDTO();
-		if (KakaoInfo != null || user_id != null) {
-			if(user_id != null) {
-				dto.setUser_id(user_id);
-				dto = this.dao.getuser(user_id);
-				
-			} else if(KakaoInfo != null) {
-				dto.setUser_id(KakaoInfo);
-				dto = this.dao.getuser(KakaoInfo);
-			} 
-		}
-		
+		//사용자 정보 출력
+		UserDTO dto = new UserDTO();
+
+		dto.setUser_id(userId);
+
+		dto = this.dao.getuser(userId);
 		model.addAttribute("UserInfo", dto);
+		//동행자 명단 출력
+		List<Plan_participantsDTO>  participantlist = this.dao.getparticipantsList(userId);
+
+		model.addAttribute("participantlist", participantlist);
+
+		System.out.println(participantlist);
+
+		
 		return "mypage/mypage";
 	}
 	
 	@RequestMapping("userprofile.go")
 	public String userprofile(HttpSession session, Model model) {
-		String KakaoInfo = (String) session.getAttribute("KakaoInfo");
-	     String user_id = (String) session.getAttribute("user_id");
-	     UserDTO dto = new UserDTO();
-		if (KakaoInfo != null || user_id != null) {
-			if(user_id != null) {
-				dto.setUser_id(user_id);
-				dto = this.dao.getuser(user_id);
-				
-			} else if(KakaoInfo != null) {
-				dto.setUser_id(KakaoInfo);
-				dto = this.dao.getuser(KakaoInfo);
-			} 
+		String user_id = "";
+		String normal_id = "";
+		String kakao_id = "";
+
+		normal_id = (String) session.getAttribute("user_id");
+
+		HashMap<String, Object> hashMap = (HashMap<String, Object>) session.getAttribute("Kakao_info");
+
+		if(hashMap != null) {
+			kakao_id = (String) hashMap.get("kakao_id");
 		}
-		
-		
-		
+
+		if (normal_id == null && kakao_id == null) {
+		    // user_id와 kakao_id가 모두 null인 경우
+		    user_id = ""; // 빈 문자열로 초기화
+		} else if (normal_id != null) {
+		    // user_id가 존재하는 경우
+			user_id = normal_id;
+		} else {
+		    // kakao_id가 존재하는 경우
+			user_id = kakao_id;
+		}
+	     UserDTO dto = new UserDTO();
+	     dto.setUser_id(user_id);
+
+	     dto = this.dao.getuser(user_id);
+
 		model.addAttribute("UserInfo", dto);
+		
+		
 		
 		return "mypage/userprofile";
 	}
@@ -127,6 +163,7 @@ public class MypageController {
 	         String saveFileName = "";
 	         
 		        File path1 = new File(saveFolder);
+		        System.out.println("경로1"+path1);
 
 		        if (!path1.exists()) {
 		        	path1.mkdirs();
@@ -137,7 +174,7 @@ public class MypageController {
 		        if (!originalFileName.equals(dto.getUser_image())) {
 		            saveFileName = System.currentTimeMillis() + "_" + originalFileName;
 		            	
-		            	dto.setUser_image("/resources/images/profile/" +year+month+day +"/" +saveFileName);
+		            	dto.setUser_image("/resources/images/profile/" +year+month+day+ "/" +saveFileName);
 		            try {
 		            	mFile.transferTo(new File(saveFolder, saveFileName));
 
