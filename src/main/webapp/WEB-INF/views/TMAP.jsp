@@ -983,7 +983,7 @@ function poiDetail(poiId) {
             <button id="btn_clear" onclick="clearMarkers()">초기화</button>
             <br>
             <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
-            <button class="end_bt" onclick="stopDrawing()">끝점</button>
+            <button class="end_bt" onclick="stopDrawing()">끝점</button>&nbsp;
             <button class="end_bt" onclick="hideMarkers()">숨김</button>
            </div> 
            
