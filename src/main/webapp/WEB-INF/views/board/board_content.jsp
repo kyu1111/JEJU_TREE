@@ -9,10 +9,10 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/board/board_content.css">
 </head>
 <body>
-   <div id="container">
-   	   <%@ include file="../include/navbar.jsp" %>	
+	<div id="container">
+   	<%@ include file="../include/navbar.jsp" %>	
       <div id="board_content">
-      <div id = "write_title">POST DETAILS AND COMMENTS</div>
+      	<div id = "write_title">POST DETAILS AND COMMENTS</div>
          <c:set var="board_content" value="${board_content}" />
          <div id="board_table">
          	<div id="table_row">
@@ -32,30 +32,29 @@
             <div id="table_row">
                <div class="board_board_col"><span id ="col_span">writer : </span>${board_content.writer}</div>
             </div>
-             <div id="table_row">
-                <span id ="col_span">reg :</span>&nbsp;
+            <div id="table_row">
+            	<span id ="col_span">reg :</span>&nbsp;
              	<c:if test="${board_content.board_Update_Date eq board_content.board_RegDate}">
                       <div class="table_col">${board_content.board_RegDate.substring(0, 10) }</div>
-                  </c:if>
-                  <c:if test="${board_content.board_Update_Date ne board_content.board_RegDate}">
-                       <div class="table_col">${board_content.board_Update_Date.substring(0, 10) }</div>
-                  </c:if>
+                </c:if>
+                <c:if test="${board_content.board_Update_Date ne board_content.board_RegDate}">
+                      <div class="table_col">${board_content.board_Update_Date.substring(0, 10) }</div>
+                </c:if>
             </div>
             <div id="table_row">
                <div class="board_board_col">
-               <span id ="col_span">plan : </span>
+               	<span id ="col_span">plan : </span>
                <a class="planList_btn" href="plan_list.go?id=${board_content.writer}">${board_content.writer} 님의 시간표 보기</a></div>
             </div>
              <div id="table_row">
                <div class="board_board_col">
                <span id ="col_span">Dragplan : </span>
-               <button class="planList_btn" onclick="sharevalidcheck()">${board_content.writer}일정 보기</button>
-    			
-				</div>
+               	<button class="planList_btn" onclick="sharevalidcheck()">${board_content.writer}일정 보기</button>
+			   </div>
             </div>
             <div id="table_row" class = "textarea_row">
                <div class="board_board_col">
-                  <textarea rows="25" cols="6" readonly="readonly">${board_content.board_Content}</textarea>
+                 <textarea rows="25" cols="6" readonly="readonly">${board_content.board_Content}</textarea>
                </div>
             </div>
             <div id = "table_row">
@@ -72,18 +71,18 @@
 			</div>
          </div>
          <div id = "comment_area">
-       <div id = "commentform_Title">댓글달기</div>
-	       <div id="commentForm">
-		      <textarea id="commentContent" rows="2" cols="5"></textarea>
-		      <input type="hidden" id="commentId" value="">
-		      <button id="submitComment"><i class="fa-solid fa-pen"></i></button>
-		   </div>
+       		<div id = "commentform_Title">댓글달기</div>
+	       		<div id="commentForm">
+		      		<textarea id="commentContent" rows="2" cols="5"></textarea>
+		      		<input type="hidden" id="commentId" value="">
+		      		<button id="submitComment"><i class="fa-solid fa-pen"></i></button>
+		   		</div>
 		   <div id="commentList">
-		      <div id = "commentList_Title">댓글목록</div>
-		      <ul id="commentListContainer">
-		      </ul>
-		  </div>
-	  </div>
+		      	<div id = "commentList_Title">댓글목록</div>
+		      	<ul id="commentListContainer">
+		      	</ul>
+		   </div>
+	  	</div>
     </div>
   </div>
 <script type="text/javascript" src = "">

@@ -132,11 +132,7 @@
     <!-- 인스타 핫플 영역 -->
     <div class="container-insta-hot">
         <div class="insta-hot">
-<<<<<<< HEAD
-            <h3 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h3>
-=======
             <h3 style="text-align: center; margin-bottom: 20px;">#인스타 핫플</h2>
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
             <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=엘리펀트힙">
            <img src="<%=request.getContextPath()%>/resources/images/카페 엘리펀트힙-470.jpg" alt="Image 1">
@@ -173,11 +169,7 @@
     <!-- 스테디 인기 영역 -->
     <div class="container-steady-hot">
         <div class="steady-hot">
-<<<<<<< HEAD
-            <h3 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h3>
-=======
             <h3 style="text-align: center; margin-bottom: 20px;">#스테디 인기</h2>
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
                  <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=오설록티뮤지엄">
            <img src="<%=request.getContextPath()%>/resources/images/오설록티뮤지엄-470.jpg" alt="Image 1">
@@ -201,24 +193,18 @@
                 <img src="<%=request.getContextPath()%>/resources/images/신창풍차해안도로-470.jpg" alt="Image 3">
                 <div class="hidden-content" >
                    <span class="sp-cont"><span class="sp-title">신창풍차해안도로</span><br>
-                         예쁜 바다와 풍차를 한번에 찍을 수 있는 곳<br>
-                         해질녘 드라이브 최고의 명소<br><br>
+                       	  예쁜 바다와 풍차를 한번에 찍을 수 있는 곳<br>
+                       	  해질녘 드라이브 최고의 명소<br><br>
                          #커플 #노을맛집 #드라이브 #사진필수</span>
             </div>
-            
          </a>
             </div>
         </div>
     </div>
-    
     <!-- 사진 핫플 영역 -->
     <div class="container-photo-hot">
         <div class="photo-hot">
-<<<<<<< HEAD
-            <h3 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h3>
-=======
             <h3 style="text-align: center; margin-bottom: 20px;">#사진 맛집</h2>
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
             <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 60px;">
                  <a class="image-container" href="<%=request.getContextPath()%>/TMAP.go?searchKeyword=김녕바다">
            <img src="<%=request.getContextPath()%>/resources/images/김녕바닷길-470.jpg" alt="Image 1">

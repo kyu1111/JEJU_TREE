@@ -96,7 +96,7 @@ function bookmark_del(location, self){
     });
 }
 
-//북마크 클릭 함수
+// 북마크 클릭 함수
 function toggleBm(title) {
  var h = $('#heart');
  let userId = '${user_id}';
@@ -114,7 +114,7 @@ function toggleBm(title) {
       if(response>0) {
           let table = "<tr>" +
                         "<td>"+title+"</td>" +
-                        "<td class='td_x'><input type='button' value='×' onclick='bookmark_del(\""+title+"\",this)'></td>" +
+                        "<td><input type='button' value='해제' onclick='bookmark_del(\""+title+"\",this)'></td>" +
                        "</tr>";
          $('.blist_table').append(table);
        }else if(response == -1){
@@ -128,7 +128,6 @@ function toggleBm(title) {
    }
  });
 }
-
 
 var map;
 var infoWindow;
@@ -189,7 +188,7 @@ function initTmap() {
                   });
 
       fixedMarkers[1] = new Tmapv2.Marker({
-         position : new Tmapv2.LatLng(33.458875, 126.942933), // 성산일출봉
+         position : new Tmapv2.LatLng(33.455483, 126.768394), // 성산일출봉
          map : map,
          visible : false
       });
@@ -223,7 +222,7 @@ function initTmap() {
                });
 
       fixedMarkers[2] = new Tmapv2.Marker({
-          position : new Tmapv2.LatLng(33.455483, 126.768394), // 주상절리대
+          position : new Tmapv2.LatLng(33.458875, 126.942933), // 주상절리대
           icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_g_m_h.png",
           iconSize : new Tmapv2.Size(24, 38),
           map : map,
@@ -232,15 +231,15 @@ function initTmap() {
 
       fixedMarkers[2].addListener( "click", function() {
           var content = "<form id='infoWindowForm' action='<%=request.getContextPath()%>/plans_insert_ok.go' method='post'>"
-              + "<input type='hidden' name='title' value='주상절리대'>"
-              + "<input type='hidden' name='addr' value='제주특별자치도 서귀포시 이어도로 36-24'>"
-              + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\"주상절리대\")\'><i id='heart' class='fas fa-heart'></i></a>"
+              + "<input type='hidden' name='title' value='성산일출봉'>"
+              + "<input type='hidden' name='addr' value='제주 서귀포시 성산읍 성산리 1'>"
+              + "<div class='heartAddX'><a class='heart' data-item-id='item-1' href='#' onclick=\'toggleBm(\"성산일출봉\")\'><i id='heart' class='fas fa-heart'></i></a>"
               + "<button id='selectButtonPlaceholder' type='submit'>일정 추가</button><a id='closeButtonPlaceholder' class='close-btn'>×</a></div>"
-              + "<input type='hidden' name='location' value='주상절리대'>"
-              + "<input type='hidden' name='markerLat' value='33.455483'>" // replace 'latitude' with real value
-              + "<input type='hidden' name='markerLng' value='126.768394'>" // replace 'longitude' with real value
-              + "<div style='padding:10px; width:250px;'>주상절리대"
-              + "<div>제주특별자치도 서귀포시 이어도로 36-24</div>"
+              + "<input type='hidden' name='location' value='성산일출봉'>"
+              + "<input type='hidden' name='markerLat' value='33.458875'>" // replace 'latitude' with real value
+              + "<input type='hidden' name='markerLng' value='126.942933'>" // replace 'longitude' with real value
+              + "<div style='padding:10px; width:250px;'>성산일출봉"
+              + "<div>제주 서귀포시 성산읍 성산리 1</div>"
               + "<p class='start'>입장 : <input type='date' class='plan_start_date' name='start_date'></p>" // Start Date input field
               + "<p class='end'>퇴장 : <input type='date' class='plan_end_date' name='end_date'></p>" // End Date input field
               + "</form>";
@@ -984,14 +983,15 @@ function poiDetail(poiId) {
             <button id="btn_clear" onclick="clearMarkers()">초기화</button>
             <br>
             <button class="start_bt" onclick="startDrawing()">시작점</button>&nbsp;
-            <button class="end_bt" onclick="stopDrawing()">끝점</button>&nbsp;
+            <button class="end_bt" onclick="stopDrawing()">끝점</button>
             <button class="end_bt" onclick="hideMarkers()">숨김</button>
            </div> 
            
             <div class="search_intro">
                <span>
                   시작점 버튼을 누른 후 추출하고 싶은 장소 주위를 지도에 찍어보세요.<br>
-                  그 후 끝점을 누르면 시작점 좌표 중심에 추출하고 싶던 장소가 표시됩니다.
+                  그 후 끝점을 누르면 시작점 좌표 중심에 추출하고 싶던 장소가 표시됩니다.<br>
+                  숨김버튼을 누르면 폴리곤 영역이 사라집니다.
                </span>
             </div>
 
@@ -1123,9 +1123,6 @@ function poiDetail(poiId) {
         </c:forEach>
     </table>
 </div>
-
-       
-
 </div>
 
 <br>
