@@ -191,8 +191,8 @@ select:focus {
    
    
    <div class="save"> 
-      <button id="saveAsPDF">PDF 저장</button>
-      <button id="savePlan" onclick ="isGuestJoingCheck();">일정저장(변경사항)</button>
+      <button id="saveAsPDF">PDF</button>
+      <button id="savePlan" onclick ="isGuestJoingCheck();">일정저장</button>
       <span class="navbar--range"></span>
    </div>
    </div>

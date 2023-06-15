@@ -54,21 +54,12 @@
 }
 
 .selectBt {
-<<<<<<< HEAD
 	border: none;
 	background-color: #99dce6;
 	color: white;
 	border-radius: 5px;
 	margin-left: 130px;
 	cursor: pointer;
-=======
-   border: none;
-   background-color: #99dce6;
-   color: white;
-   border-radius: 5px;
-   margin-left: 130px;
-   cursor: pointer;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
 }
 
 .close-btn {
@@ -105,7 +96,6 @@
 }
 
 .text_custom {
-<<<<<<< HEAD
 	width: 60%;
 	height: 21px;
 	border: none;
@@ -114,16 +104,6 @@
 	margin-bottom: 10px;
 	border-radius: 0 !important;
 	outline: none;
-=======
-   width: 60%;
-   height: 21px;
-   border: none;
-   border-bottom: 1px solid #6a6a6a;
-   margin-top: 10px;
-   margin-bottom: 10px;
-   border-radius: 0 !important;
-   outline: none;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
 }
 
 .search_bt {
@@ -230,20 +210,14 @@
 }
 
 #crawlingResult {
-<<<<<<< HEAD
 	width: 100%;
 }
 
 .crawling_title {
 	margin-top: 150px;
-=======
    width: 100%;
 }
 
-.crawling_title {
-   margin-top: 150px;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
-}
 
 .crawling_title_b {
    color: #6a6a6a;
@@ -268,20 +242,12 @@
 }
 
 .tmap_footer {
-<<<<<<< HEAD
 	padding-top: 100px;
 }
 
 #btn_clear {
-	font-size: 14px;
-=======
-   padding-top: 100px;
-}
-
-#btn_clear {
-   font-size: 14px;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
-    width: 70px; /* 버튼 너비 지정 */
+    font-size: 14px;
+	width: 70px; /* 버튼 너비 지정 */
     height: 25px; /* 버튼 높이 지정 */
     margin: 8px 0; /* 버튼 간격 조정 */
     cursor: pointer;
@@ -295,7 +261,6 @@
 }
 
 #btn_clear:hover {
-<<<<<<< HEAD
 	background-color: #8bc9d2;
 }
 
@@ -307,7 +272,6 @@
 .name_div, .addr_div {
 	font-family: "맑은 고딕", sans-serif;
 	font-size: 12px;
-=======
    background-color: #8bc9d2;
 }
 
@@ -316,11 +280,6 @@
    padding: 0px !important;
 }
 
-.name_div, .addr_div {
-   font-family: "맑은 고딕", sans-serif;
-   font-size: 12px;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
-}
 
 @media (max-width: 1300px) {
   /* 768px 이상의 큰 화면에 대한 스타일 규칙 */
@@ -330,7 +289,6 @@
 }
 
 .search_intro {
-<<<<<<< HEAD
 	font-size: 11px;
 	text-align: left;
 	color: #6a6a6a;
@@ -338,19 +296,9 @@
 	margin-bottom: 5px;
 }
 
-.start_bt {
-	font-size: 14px;
-=======
-   font-size: 11px;
-   text-align: left;
-   color: #6a6a6a;
-   margin-top: 5px;
-   margin-bottom: 5px;
-}
 
 .start_bt {
    font-size: 14px;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
     width: 70px; /* 버튼 너비 지정 */
     height: 25px; /* 버튼 높이 지정 */
     margin: 8px 0; /* 버튼 간격 조정 */
@@ -365,19 +313,11 @@
 }
 
 .start_bt:hover {
-<<<<<<< HEAD
 	background-color: #8bc9d2;
 }
 
 .end_bt {
-	font-size: 14px;
-=======
-   background-color: #8bc9d2;
-}
-
-.end_bt {
    font-size: 14px;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
     width: 50px; /* 버튼 너비 지정 */
     height: 25px; /* 버튼 높이 지정 */
     margin: 8px 0; /* 버튼 간격 조정 */
@@ -392,9 +332,5 @@
 }
 
 .end_bt:hover {
-<<<<<<< HEAD
-	background-color: #8bc9d2;
-=======
    background-color: #8bc9d2;
->>>>>>> f4cebea0ff097b0380bae9f019b8228f5db579ed
 }
